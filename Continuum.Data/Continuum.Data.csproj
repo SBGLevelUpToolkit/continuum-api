@@ -48,6 +48,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assessment.cs">
+      <DependentUpon>ContinuumData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AssessmentItem.cs">
+      <DependentUpon>ContinuumData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AssessmentResult.cs">
+      <DependentUpon>ContinuumData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AssessmentStatus.cs">
+      <DependentUpon>ContinuumData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AvatarType.cs">
+      <DependentUpon>ContinuumData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Capabilty.cs">
+      <DependentUpon>ContinuumData.tt</DependentUpon>
+    </Compile>
     <Compile Include="ContinuumData.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -66,7 +84,25 @@
     <Compile Include="Dimension.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Goal.cs">
+      <DependentUpon>ContinuumData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Level.cs">
+      <DependentUpon>ContinuumData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lookup.cs">
+      <DependentUpon>ContinuumData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Organisation.cs">
+      <DependentUpon>ContinuumData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Team.cs">
+      <DependentUpon>ContinuumData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TeamMember.cs">
+      <DependentUpon>ContinuumData.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ContinuumData.edmx">

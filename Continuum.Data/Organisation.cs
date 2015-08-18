@@ -12,16 +12,16 @@ namespace Continuum.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Dimension
+    public partial class Organisation
     {
-        public Dimension()
+        public Organisation()
         {
-            this.Capabilties = new HashSet<Capabilty>();
+            this.Teams = new HashSet<Team>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<Capabilty> Capabilties { get; set; }
+        public virtual ICollection<Team> Teams { get; set; }
     }
 }

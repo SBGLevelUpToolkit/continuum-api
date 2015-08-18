@@ -4,8 +4,52 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="61597bfe427c4a38acf3223e6227eab7" Name="Diagram1" >
-        <EntityTypeShape EntityType="ContinuumData.Dimension" Width="1.5" PointX="4.5" PointY="1.75" />
+      <Diagram DiagramId="61597bfe427c4a38acf3223e6227eab7" Name="Diagram1" ZoomLevel="100" >
+        <EntityTypeShape EntityType="ContinuumData.Dimension" Width="1.5" PointX="3.5" PointY="3.25" />
+        <EntityTypeShape EntityType="ContinuumData.Capabilty" Width="1.5" PointX="0.625" PointY="2.625" />
+        <EntityTypeShape EntityType="ContinuumData.Level" Width="1.5" PointX="0.625" PointY="6.375" />
+        <AssociationConnector Association="ContinuumData.CapabiltyLevel" />
+        <AssociationConnector Association="ContinuumData.DimensionCapabilty" />
+        <EntityTypeShape EntityType="ContinuumData.Organisation" Width="1.5" PointX="4.125" PointY="5.375" />
+        <EntityTypeShape EntityType="ContinuumData.Team" Width="1.5" PointX="6.875" PointY="5" />
+        <AssociationConnector Association="ContinuumData.OrganisationTeam" />
+        <EntityTypeShape EntityType="ContinuumData.Assessment" Width="1.875" PointX="8.875" PointY="5" />
+        <EntityTypeShape EntityType="ContinuumData.Lookup" Width="1.5" PointX="8.875" PointY="9.375" />
+        <EntityTypeShape EntityType="ContinuumData.AssessmentStatus" Width="2.25" PointX="8.5" PointY="7.875" />
+        <InheritanceConnector EntityType="ContinuumData.AssessmentStatus" />
+        <AssociationConnector Association="ContinuumData.AssessmentAssessmentStatus" />
+        <AssociationConnector Association="ContinuumData.TeamAssessment" />
+        <EntityTypeShape EntityType="ContinuumData.Goal" Width="1.5" PointX="2.375" PointY="8.75" />
+        <AssociationConnector Association="ContinuumData.TeamGoal" />
+        <EntityTypeShape EntityType="ContinuumData.AssessmentItem" Width="1.5" PointX="12.125" PointY="5.875" />
+        <AssociationConnector Association="ContinuumData.AssessmentAssessmentItem" />
+        <EntityTypeShape EntityType="ContinuumData.TeamMember" Width="1.5" PointX="12.625" PointY="9.375" />
+        <AssociationConnector Association="ContinuumData.TeamTeamMember" ManuallyRouted="true" >
+          <ConnectorPoint PointX="7.5522480202136659" PointY="7.7494921875" />
+          <ConnectorPoint PointX="7.5522480202136659" PointY="13.498515625" />
+          <ConnectorPoint PointX="13.247874073842917" PointY="13.498515625" />
+          <ConnectorPoint PointX="13.247874073842917" PointY="11.355286458333334" />
+        </AssociationConnector>
+        <AssociationConnector Association="ContinuumData.AssessmentItemTeamMember" />
+        <AssociationConnector Association="ContinuumData.AssessmentItemCapabilty" ManuallyRouted="true" >
+          <ConnectorPoint PointX="12.875" PointY="5.875" />
+          <ConnectorPoint PointX="12.875" PointY="1.7927864583333339" />
+          <ConnectorPoint PointX="1.3962069761924112" PointY="1.7927864583333339" />
+          <ConnectorPoint PointX="1.3962069761924112" PointY="2.625" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="ContinuumData.AssessmentResult" Width="1.5" PointX="8.75" PointY="2.125" />
+        <AssociationConnector Association="ContinuumData.AssessmentAssessmentResult" />
+        <AssociationConnector Association="ContinuumData.AssessmentResultDimension" />
+        <AssociationConnector Association="ContinuumData.GoalCapabilty" />
+        <EntityTypeShape EntityType="ContinuumData.AvatarType" Width="1.5" PointX="8.125" PointY="12" />
+        <InheritanceConnector EntityType="ContinuumData.AvatarType" />
+        <AssociationConnector Association="ContinuumData.TeamAvatarType" ManuallyRouted="true" >
+          <ConnectorPoint PointX="7.7832904650761137" PointY="7.7494921875" />
+          <ConnectorPoint PointX="7.7832904650761137" PointY="7.92054862255371" />
+          <ConnectorPoint PointX="7.7929690625" PointY="7.92054862255371" />
+          <ConnectorPoint PointX="7.7929690625" PointY="12.509389648437502" />
+          <ConnectorPoint PointX="8.125" PointY="12.509389648437502" />
+        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

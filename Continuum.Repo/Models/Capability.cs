@@ -27,5 +27,10 @@ namespace Continuum.Repo.Models
         /// The set of capabilities that must be gained before achieving this capability.
         /// </summary>
         public IEnumerable<Capability> Predecessors { get; set; }
+
+        /// <summary>
+        /// Used to order the display of this capability on the assessment screen.
+        /// </summary>
+        public int DisplayOrder { get; set; }
     }
 }
