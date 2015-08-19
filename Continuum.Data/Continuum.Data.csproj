@@ -107,6 +107,7 @@
     <Compile Include="TeamMember.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
+    <Compile Include="TeamRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ContinuumData.edmx">

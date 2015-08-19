@@ -14,6 +14,9 @@ namespace Continuum.WebApi
             // it is NOT necessary to register your controllers
             
             // e.g. container.RegisterType<ITestService, TestService>();
+
+
+            container.RegisterType<Data.IRepository<Data.Team>, Data.TeamRepository>();
             
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
