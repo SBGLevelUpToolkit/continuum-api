@@ -10,7 +10,7 @@ namespace Continuum.Tests
         [TestMethod]
         public void DimensionControllerMustNotReturnInactiveDimensions()
         {
-           
+               
         }
 
         [TestMethod]

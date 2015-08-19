@@ -9,17 +9,32 @@ namespace Continuum.WebApi.Controllers
 {
     public class TeamController : ApiController
     {
-        public void CreateTeam(Models.Team team)
+        private readonly Data.IRepository<Data.Team> _teamRepo;
+
+        public TeamController(Data.IRepository<Data.Team> teamRepo)
         {
+            _teamRepo = teamRepo;
+        }
 
-            //Create the team and make set the user as the team lead. 
-
-            //Try to get user from token.
+        public void Put(Models.Team team)
+        {
+            if (_teamRepo.All().Any(i => i.Name == team.Name.Trim()))
+            {
+                var resp = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent(string.Format("A Team called {0} already exists.", team.Name)),
+                    ReasonPhrase = "Duplicate Team"
+                };
+                
+                throw new HttpResponseException(resp);
+            }
         }
 
         public IEnumerable<Models.Team> Get()
         {
-            return new List<Models.Team>() { new Models.Team() { Name="Team 1" }, new Models.Team() { Name = "Team 2" } };
+            return new List<Models.Team>() { 
+                new Models.Team() { Name="Team 1", TeamLeadName = "Bob" }, 
+                new Models.Team() { Name = "Team 2", TeamLeadName = "Fred" } };
         }
     }
 }

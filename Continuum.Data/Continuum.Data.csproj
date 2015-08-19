@@ -96,6 +96,7 @@
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
     <Compile Include="Mocks\MockDimensionRepo.cs" />
+    <Compile Include="Mocks\MockTeamRepo.cs" />
     <Compile Include="Organisation.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
