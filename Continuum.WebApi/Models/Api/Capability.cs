@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-namespace Continuum.Repo.Models
+namespace Continuum.WebApi.Models
 {
     /// <summary>
     ///  A capability in the model.

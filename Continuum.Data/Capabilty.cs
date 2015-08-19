@@ -23,6 +23,7 @@ namespace Continuum.Data
         public string Description { get; set; }
         public int LevelId { get; set; }
         public int DimensionId { get; set; }
+        public bool Active { get; set; }
     
         public virtual Level Level { get; set; }
         public virtual Dimension Dimension { get; set; }

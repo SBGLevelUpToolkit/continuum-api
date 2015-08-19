@@ -84,15 +84,18 @@
     <Compile Include="Dimension.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
+    <Compile Include="DimensionRepo.cs" />
     <Compile Include="Goal.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
+    <Compile Include="IRepository.cs" />
     <Compile Include="Level.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
     <Compile Include="Lookup.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Mocks\MockDimensionRepo.cs" />
     <Compile Include="Organisation.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>

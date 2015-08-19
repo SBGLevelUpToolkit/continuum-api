@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace Continuum.Tests
 {
@@ -7,8 +8,15 @@ namespace Continuum.Tests
     public class DimensionTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void DimensionControllerMustNotReturnInactiveDimensions()
         {
+           
+        }
+
+        [TestMethod]
+        public void DimensionControllerMustNotReturnInactiveCapabilities()
+        {
+            
         }
     }
 }

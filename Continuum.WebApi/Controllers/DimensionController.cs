@@ -9,7 +9,7 @@ namespace Continuum.WebApi.Controllers
 {
     public class DimensionController : ApiController
     {
-        public IEnumerable<Repo.Models.Dimension> Get()
+        public IEnumerable<Models.Dimension> Get()
         {
             var dimensions = new string[] 
             {
@@ -22,10 +22,16 @@ namespace Continuum.WebApi.Controllers
                 "Dimension 7"
             };
 
-            return dimensions.Select(i => new Repo.Models.Dimension() 
+            return dimensions.Select(i => new Models.Dimension() 
             {
                 Name = i 
             }).ToList(); 
+        }
+
+        [Route("DimensionList")]
+        public IEnumerable<Models.Dimension> GetDimensionList()
+        {
+            return null; 
         }
     }
 }

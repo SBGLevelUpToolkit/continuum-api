@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Continuum.Repo.Models
+namespace Continuum.WebApi.Models
 {
     /// <summary>
     /// A dimension in the capabilitie model. For example 'Software Design'.
@@ -22,5 +22,7 @@ namespace Continuum.Repo.Models
         /// </summary>
         [Required]
         public string Name { get; set; }
+
+        public int DisplayOrder { get; set; }
     }
 }

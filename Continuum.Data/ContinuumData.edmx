@@ -7,6 +7,82 @@
     <Schema Namespace="ContinuumData.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="ContinuumDataStoreContainer">
     <EntitySet Name="Dimensions" EntityType="ContinuumData.Store.Dimensions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Capabilties" EntityType="ContinuumData.Store.Capabilties" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Levels" EntityType="ContinuumData.Store.Levels" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Organisations" EntityType="ContinuumData.Store.Organisations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Teams" EntityType="ContinuumData.Store.Teams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Assessments" EntityType="ContinuumData.Store.Assessments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lookups" EntityType="ContinuumData.Store.Lookups" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Goals" EntityType="ContinuumData.Store.Goals" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AssessmentItems" EntityType="ContinuumData.Store.AssessmentItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TeamMembers" EntityType="ContinuumData.Store.TeamMembers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AssessmentResults" EntityType="ContinuumData.Store.AssessmentResults" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lookups_AssessmentStatus" EntityType="ContinuumData.Store.Lookups_AssessmentStatus" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lookups_AvatarType" EntityType="ContinuumData.Store.Lookups_AvatarType" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CapabiltyLevel" Association="ContinuumData.Store.CapabiltyLevel">
+      <End Role="Capabilty" EntitySet="Capabilties" />
+      <End Role="Level" EntitySet="Levels" />
+    </AssociationSet>
+    <AssociationSet Name="DimensionCapabilty" Association="ContinuumData.Store.DimensionCapabilty">
+      <End Role="Dimension" EntitySet="Dimensions" />
+      <End Role="Capabilty" EntitySet="Capabilties" />
+    </AssociationSet>
+    <AssociationSet Name="OrganisationTeam" Association="ContinuumData.Store.OrganisationTeam">
+      <End Role="Organisation" EntitySet="Organisations" />
+      <End Role="Team" EntitySet="Teams" />
+    </AssociationSet>
+    <AssociationSet Name="AssessmentAssessmentStatus" Association="ContinuumData.Store.AssessmentAssessmentStatus">
+      <End Role="Assessment" EntitySet="Assessments" />
+      <End Role="AssessmentStatus" EntitySet="Lookups_AssessmentStatus" />
+    </AssociationSet>
+    <AssociationSet Name="TeamAssessment" Association="ContinuumData.Store.TeamAssessment">
+      <End Role="Team" EntitySet="Teams" />
+      <End Role="Assessment" EntitySet="Assessments" />
+    </AssociationSet>
+    <AssociationSet Name="TeamGoal" Association="ContinuumData.Store.TeamGoal">
+      <End Role="Team" EntitySet="Teams" />
+      <End Role="Goal" EntitySet="Goals" />
+    </AssociationSet>
+    <AssociationSet Name="AssessmentAssessmentItem" Association="ContinuumData.Store.AssessmentAssessmentItem">
+      <End Role="Assessment" EntitySet="Assessments" />
+      <End Role="AssessmentItem" EntitySet="AssessmentItems" />
+    </AssociationSet>
+    <AssociationSet Name="TeamTeamMember" Association="ContinuumData.Store.TeamTeamMember">
+      <End Role="Team" EntitySet="Teams" />
+      <End Role="TeamMember" EntitySet="TeamMembers" />
+    </AssociationSet>
+    <AssociationSet Name="AssessmentItemTeamMember" Association="ContinuumData.Store.AssessmentItemTeamMember">
+      <End Role="AssessmentItem" EntitySet="AssessmentItems" />
+      <End Role="TeamMember" EntitySet="TeamMembers" />
+    </AssociationSet>
+    <AssociationSet Name="AssessmentItemCapabilty" Association="ContinuumData.Store.AssessmentItemCapabilty">
+      <End Role="AssessmentItem" EntitySet="AssessmentItems" />
+      <End Role="Capabilty" EntitySet="Capabilties" />
+    </AssociationSet>
+    <AssociationSet Name="AssessmentAssessmentResult" Association="ContinuumData.Store.AssessmentAssessmentResult">
+      <End Role="Assessment" EntitySet="Assessments" />
+      <End Role="AssessmentResult" EntitySet="AssessmentResults" />
+    </AssociationSet>
+    <AssociationSet Name="AssessmentResultDimension" Association="ContinuumData.Store.AssessmentResultDimension">
+      <End Role="AssessmentResult" EntitySet="AssessmentResults" />
+      <End Role="Dimension" EntitySet="Dimensions" />
+    </AssociationSet>
+    <AssociationSet Name="GoalCapabilty" Association="ContinuumData.Store.GoalCapabilty">
+      <End Role="Goal" EntitySet="Goals" />
+      <End Role="Capabilty" EntitySet="Capabilties" />
+    </AssociationSet>
+    <AssociationSet Name="TeamAvatarType" Association="ContinuumData.Store.TeamAvatarType">
+      <End Role="Team" EntitySet="Teams" />
+      <End Role="AvatarType" EntitySet="Lookups_AvatarType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AssessmentStatus_inherits_Lookup" Association="ContinuumData.Store.FK_AssessmentStatus_inherits_Lookup">
+      <End Role="Lookup" EntitySet="Lookups" />
+      <End Role="AssessmentStatus" EntitySet="Lookups_AssessmentStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AvatarType_inherits_Lookup" Association="ContinuumData.Store.FK_AvatarType_inherits_Lookup">
+      <End Role="Lookup" EntitySet="Lookups" />
+      <End Role="AvatarType" EntitySet="Lookups_AvatarType" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Dimensions">
     <Key>
@@ -14,7 +90,303 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="Capabilties">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LevelId" Type="int" Nullable="false" />
+    <Property Name="DimensionId" Type="int" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Levels">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DisplayName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Organisations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Teams">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OrganisationId" Type="int" Nullable="false" />
+    <Property Name="AvatarTypeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Assessments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AssessmentStatusId" Type="int" Nullable="false" />
+    <Property Name="TeamId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Lookups">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Goals">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DueDate" Type="datetime" Nullable="false" />
+    <Property Name="Completed" Type="bit" Nullable="false" />
+    <Property Name="TeamId" Type="int" Nullable="false" />
+    <Property Name="CapabiltyId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AssessmentItems">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AssessmentId" Type="int" Nullable="false" />
+    <Property Name="TeamMemberId" Type="int" Nullable="false" />
+    <Property Name="CapabiltyId" Type="int" Nullable="false" />
+    <Property Name="CapabilityAchieved" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TeamMembers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TeamId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AssessmentResults">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AssessmentId" Type="int" Nullable="false" />
+    <Property Name="Rating" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DimensionId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Lookups_AssessmentStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Lookups_AvatarType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CapabiltyLevel">
+    <End Role="Capabilty" Type="ContinuumData.Store.Capabilties" Multiplicity="*" />
+    <End Role="Level" Type="ContinuumData.Store.Levels" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Level">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Capabilty">
+        <PropertyRef Name="LevelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DimensionCapabilty">
+    <End Role="Dimension" Type="ContinuumData.Store.Dimensions" Multiplicity="1" />
+    <End Role="Capabilty" Type="ContinuumData.Store.Capabilties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dimension">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Capabilty">
+        <PropertyRef Name="DimensionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OrganisationTeam">
+    <End Role="Organisation" Type="ContinuumData.Store.Organisations" Multiplicity="1" />
+    <End Role="Team" Type="ContinuumData.Store.Teams" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organisation">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Team">
+        <PropertyRef Name="OrganisationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AssessmentAssessmentStatus">
+    <End Role="Assessment" Type="ContinuumData.Store.Assessments" Multiplicity="*" />
+    <End Role="AssessmentStatus" Type="ContinuumData.Store.Lookups_AssessmentStatus" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="AssessmentStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assessment">
+        <PropertyRef Name="AssessmentStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TeamAssessment">
+    <End Role="Team" Type="ContinuumData.Store.Teams" Multiplicity="1" />
+    <End Role="Assessment" Type="ContinuumData.Store.Assessments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assessment">
+        <PropertyRef Name="TeamId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TeamGoal">
+    <End Role="Team" Type="ContinuumData.Store.Teams" Multiplicity="1" />
+    <End Role="Goal" Type="ContinuumData.Store.Goals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Goal">
+        <PropertyRef Name="TeamId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AssessmentAssessmentItem">
+    <End Role="Assessment" Type="ContinuumData.Store.Assessments" Multiplicity="1" />
+    <End Role="AssessmentItem" Type="ContinuumData.Store.AssessmentItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assessment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AssessmentItem">
+        <PropertyRef Name="AssessmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TeamTeamMember">
+    <End Role="Team" Type="ContinuumData.Store.Teams" Multiplicity="1" />
+    <End Role="TeamMember" Type="ContinuumData.Store.TeamMembers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TeamMember">
+        <PropertyRef Name="TeamId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AssessmentItemTeamMember">
+    <End Role="AssessmentItem" Type="ContinuumData.Store.AssessmentItems" Multiplicity="*" />
+    <End Role="TeamMember" Type="ContinuumData.Store.TeamMembers" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="TeamMember">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AssessmentItem">
+        <PropertyRef Name="TeamMemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AssessmentItemCapabilty">
+    <End Role="AssessmentItem" Type="ContinuumData.Store.AssessmentItems" Multiplicity="*" />
+    <End Role="Capabilty" Type="ContinuumData.Store.Capabilties" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Capabilty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AssessmentItem">
+        <PropertyRef Name="CapabiltyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AssessmentAssessmentResult">
+    <End Role="Assessment" Type="ContinuumData.Store.Assessments" Multiplicity="1" />
+    <End Role="AssessmentResult" Type="ContinuumData.Store.AssessmentResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assessment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AssessmentResult">
+        <PropertyRef Name="AssessmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AssessmentResultDimension">
+    <End Role="AssessmentResult" Type="ContinuumData.Store.AssessmentResults" Multiplicity="*" />
+    <End Role="Dimension" Type="ContinuumData.Store.Dimensions" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Dimension">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AssessmentResult">
+        <PropertyRef Name="DimensionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GoalCapabilty">
+    <End Role="Goal" Type="ContinuumData.Store.Goals" Multiplicity="*" />
+    <End Role="Capabilty" Type="ContinuumData.Store.Capabilties" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Capabilty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Goal">
+        <PropertyRef Name="CapabiltyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TeamAvatarType">
+    <End Role="Team" Type="ContinuumData.Store.Teams" Multiplicity="*" />
+    <End Role="AvatarType" Type="ContinuumData.Store.Lookups_AvatarType" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="AvatarType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Team">
+        <PropertyRef Name="AvatarTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AssessmentStatus_inherits_Lookup">
+    <End Role="Lookup" Type="ContinuumData.Store.Lookups" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AssessmentStatus" Type="ContinuumData.Store.Lookups_AssessmentStatus" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Lookup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AssessmentStatus">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AvatarType_inherits_Lookup">
+    <End Role="Lookup" Type="ContinuumData.Store.Lookups" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AvatarType" Type="ContinuumData.Store.Lookups_AvatarType" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Lookup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AvatarType">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -95,6 +467,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
           <NavigationProperty Name="Capabilties" Relationship="ContinuumData.DimensionCapabilty" FromRole="Dimension" ToRole="Capabilty" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Capabilty">
           <Key>
@@ -107,6 +480,7 @@
           <NavigationProperty Name="Dimension" Relationship="ContinuumData.DimensionCapabilty" FromRole="Capabilty" ToRole="Dimension" />
           <Property Name="DimensionId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Goals" Relationship="ContinuumData.GoalCapabilty" FromRole="Capabilty" ToRole="Goal" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Level">
           <Key>
@@ -382,6 +756,114 @@
         <MappingFragment StoreEntitySet="Dimensions">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Capabilties">
+      <EntityTypeMapping TypeName="IsTypeOf(ContinuumData.Capabilty)">
+        <MappingFragment StoreEntitySet="Capabilties">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LevelId" ColumnName="LevelId" />
+          <ScalarProperty Name="DimensionId" ColumnName="DimensionId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Levels">
+      <EntityTypeMapping TypeName="IsTypeOf(ContinuumData.Level)">
+        <MappingFragment StoreEntitySet="Levels">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Organisations">
+      <EntityTypeMapping TypeName="IsTypeOf(ContinuumData.Organisation)">
+        <MappingFragment StoreEntitySet="Organisations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teams">
+      <EntityTypeMapping TypeName="IsTypeOf(ContinuumData.Team)">
+        <MappingFragment StoreEntitySet="Teams">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="OrganisationId" ColumnName="OrganisationId" />
+          <ScalarProperty Name="AvatarTypeId" ColumnName="AvatarTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Assessments">
+      <EntityTypeMapping TypeName="IsTypeOf(ContinuumData.Assessment)">
+        <MappingFragment StoreEntitySet="Assessments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AssessmentStatusId" ColumnName="AssessmentStatusId" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lookups">
+      <EntityTypeMapping TypeName="IsTypeOf(ContinuumData.Lookup)">
+        <MappingFragment StoreEntitySet="Lookups">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(ContinuumData.AssessmentStatus)">
+        <MappingFragment StoreEntitySet="Lookups_AssessmentStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(ContinuumData.AvatarType)">
+        <MappingFragment StoreEntitySet="Lookups_AvatarType">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Goals">
+      <EntityTypeMapping TypeName="IsTypeOf(ContinuumData.Goal)">
+        <MappingFragment StoreEntitySet="Goals">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+          <ScalarProperty Name="Completed" ColumnName="Completed" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="CapabiltyId" ColumnName="CapabiltyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AssessmentItems">
+      <EntityTypeMapping TypeName="IsTypeOf(ContinuumData.AssessmentItem)">
+        <MappingFragment StoreEntitySet="AssessmentItems">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AssessmentId" ColumnName="AssessmentId" />
+          <ScalarProperty Name="TeamMemberId" ColumnName="TeamMemberId" />
+          <ScalarProperty Name="CapabiltyId" ColumnName="CapabiltyId" />
+          <ScalarProperty Name="CapabilityAchieved" ColumnName="CapabilityAchieved" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TeamMembers">
+      <EntityTypeMapping TypeName="IsTypeOf(ContinuumData.TeamMember)">
+        <MappingFragment StoreEntitySet="TeamMembers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AssessmentResults">
+      <EntityTypeMapping TypeName="IsTypeOf(ContinuumData.AssessmentResult)">
+        <MappingFragment StoreEntitySet="AssessmentResults">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AssessmentId" ColumnName="AssessmentId" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="DimensionId" ColumnName="DimensionId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

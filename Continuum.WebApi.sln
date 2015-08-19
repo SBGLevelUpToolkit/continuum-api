@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configura
 		PublishScripts\Configurations\ContinuumWebApi-WAWS-dev.json = PublishScripts\Configurations\ContinuumWebApi-WAWS-dev.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Continuum.Repo", "Continuum.Repo\Continuum.Repo.csproj", "{8A1EEA39-E124-4B91-8417-FE9E1BEC1DA7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Continuum.Tests", "Continuum.Tests\Continuum.Tests.csproj", "{05527FC4-060B-42DC-935C-7F0603705F19}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Continuum.Data", "Continuum.Data\Continuum.Data.csproj", "{7DC38092-F952-4A59-BBA6-471BF509F10B}"
@@ -32,10 +30,6 @@ Global
 		{4CD9FA90-6B06-4344-9132-00DC6171FFF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CD9FA90-6B06-4344-9132-00DC6171FFF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CD9FA90-6B06-4344-9132-00DC6171FFF9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A1EEA39-E124-4B91-8417-FE9E1BEC1DA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A1EEA39-E124-4B91-8417-FE9E1BEC1DA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A1EEA39-E124-4B91-8417-FE9E1BEC1DA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A1EEA39-E124-4B91-8417-FE9E1BEC1DA7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{05527FC4-060B-42DC-935C-7F0603705F19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{05527FC4-060B-42DC-935C-7F0603705F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05527FC4-060B-42DC-935C-7F0603705F19}.Release|Any CPU.ActiveCfg = Release|Any CPU

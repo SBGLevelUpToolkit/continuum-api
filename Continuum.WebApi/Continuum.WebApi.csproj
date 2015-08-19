@@ -229,12 +229,18 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DimensionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Api\Assessment.cs" />
+    <Compile Include="Models\Api\Capability.cs" />
+    <Compile Include="Models\Api\Dimension.cs" />
+    <Compile Include="Models\Api\Goal.cs" />
+    <Compile Include="Models\Api\Team.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -317,10 +323,6 @@
     <ProjectReference Include="..\Continuum.Data\Continuum.Data.csproj">
       <Project>{7dc38092-f952-4a59-bba6-471bf509f10b}</Project>
       <Name>Continuum.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Continuum.Repo\Continuum.Repo.csproj">
-      <Project>{8a1eea39-e124-4b91-8417-fe9e1bec1da7}</Project>
-      <Name>Continuum.Repo</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -54,6 +54,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DimensionTests.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Continuum.Data\Continuum.Data.csproj">
+      <Project>{7dc38092-f952-4a59-bba6-471bf509f10b}</Project>
+      <Name>Continuum.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Continuum.WebApi\Continuum.WebApi.csproj">
+      <Project>{4cd9fa90-6b06-4344-9132-00dc6171fff9}</Project>
+      <Name>Continuum.WebApi</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
