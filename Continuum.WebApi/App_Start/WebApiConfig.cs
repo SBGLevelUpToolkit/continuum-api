@@ -14,7 +14,7 @@ namespace Continuum.WebApi
         public static void Register(HttpConfiguration config)
         {
 
-            var cors = new EnableCorsAttribute("*", "*", "*");
+            var cors = new EnableCorsAttribute("*", "*", "GET, POST, PUT, DELETE, OPTIONS");
             config.EnableCors(cors);            
 
             // Web API configuration and services
