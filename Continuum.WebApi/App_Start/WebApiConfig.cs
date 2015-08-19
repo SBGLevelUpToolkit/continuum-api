@@ -30,6 +30,9 @@ namespace Continuum.WebApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            //Add ELMAH Support.
+            config.Filters.Add(new Filters.UnhandledExceptionFilter());
         }
     }
 }

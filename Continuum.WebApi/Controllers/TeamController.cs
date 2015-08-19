@@ -16,5 +16,10 @@ namespace Continuum.WebApi.Controllers
 
             //Try to get user from token.
         }
+
+        public IEnumerable<Models.Team> Get()
+        {
+            return new List<Models.Team>() { new Models.Team() { Name="Team 1" }, new Models.Team() { Name = "Team 2" } };
+        }
     }
 }
