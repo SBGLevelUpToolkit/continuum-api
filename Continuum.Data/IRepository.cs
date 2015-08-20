@@ -9,5 +9,7 @@ namespace Continuum.Data
     public interface IRepository<T> where T:class 
     {
         IEnumerable<T> All();
+
+        void Create(T item);
     }
 }

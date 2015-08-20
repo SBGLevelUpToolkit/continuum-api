@@ -19,5 +19,21 @@ namespace Continuum.Data
         {
             return _container.Teams.AsEnumerable();
         }
+
+        public void Create(Team item)
+        {
+            var organisation = _container.Organisations.Where(i => i.Name == "Standard Bank").FirstOrDefault();
+            if(organisation == null)
+            {
+                organisation = new Organisation() { Name = "Standard Bank" };
+                _container.Organisations.Add(organisation);
+            }
+
+            item.Organisation = organisation;
+            item.AvatarTypeId = 1; //Barbarian
+
+            _container.Teams.Add(item);
+            _container.SaveChanges();
+        }
     }
 }

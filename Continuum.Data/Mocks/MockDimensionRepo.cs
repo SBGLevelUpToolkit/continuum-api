@@ -20,5 +20,10 @@ namespace Continuum.Data.Mocks
             }
             yield break;
         }
+
+        public void Create(Dimension item)
+        {
+            
+        }
     }
 }

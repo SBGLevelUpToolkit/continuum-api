@@ -19,5 +19,10 @@ namespace Continuum.Data.Mocks
         {
             return TeamData;   
         }
+
+        public void Create(Team item)
+        {
+            TeamData.Add(item);
+        }
     }
 }

@@ -13,5 +13,10 @@ namespace Continuum.Data
             Continuum.Data.ContinuumDataContainer container = new Data.ContinuumDataContainer();
             return container.Dimensions.AsEnumerable();
         }
+
+        public void Create(Dimension item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -28,13 +28,22 @@ namespace Continuum.WebApi.Controllers
                 
                 throw new HttpResponseException(resp);
             }
+
+            Data.Team newTeam = new Data.Team()
+            {
+                Name = team.Name
+            };
+
+            _teamRepo.Create(newTeam);
         }
 
         public IEnumerable<Models.Team> Get()
         {
-            return new List<Models.Team>() { 
-                new Models.Team() { Name="Team 1", TeamLeadName = "Bob" }, 
-                new Models.Team() { Name = "Team 2", TeamLeadName = "Fred" } };
+            return _teamRepo.All().Select(i => new Models.Team() 
+            {
+                 Name = i.Name,
+                 TeamLeadName = "Team Lead Name"
+            }).AsEnumerable();
         }
     }
 }
