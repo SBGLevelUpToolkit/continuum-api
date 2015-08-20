@@ -40,6 +40,11 @@ namespace Continuum.Data
             return _container.Dimensions.First(i => i.Name == dimensionName);
         }
 
+        public Dimension FindById(Int32 id)
+        {
+            return _container.Dimensions.Find(id);
+        }
+
         public IEnumerable<Data.Level> CapabilityLevels()
         {
             return _container.Levels.AsEnumerable();

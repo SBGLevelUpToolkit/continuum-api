@@ -32,5 +32,7 @@ namespace Continuum.WebApi.Models
         /// Used to order the display of this capability on the assessment screen.
         /// </summary>
         public int DisplayOrder { get; set; }
+
+        public int Id { get; set; }
     }
 }

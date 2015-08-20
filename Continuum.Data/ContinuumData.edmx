@@ -468,6 +468,7 @@
           <Property Name="Name" Type="String" Nullable="false" />
           <NavigationProperty Name="Capabilties" Relationship="ContinuumData.DimensionCapabilty" FromRole="Dimension" ToRole="Capabilty" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Capabilty">
           <Key>
@@ -479,8 +480,8 @@
           <Property Name="LevelId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Dimension" Relationship="ContinuumData.DimensionCapabilty" FromRole="Capabilty" ToRole="Dimension" />
           <Property Name="DimensionId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Goals" Relationship="ContinuumData.GoalCapabilty" FromRole="Capabilty" ToRole="Goal" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Level">
           <Key>

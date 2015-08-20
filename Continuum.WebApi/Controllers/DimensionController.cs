@@ -9,29 +9,41 @@ namespace Continuum.WebApi.Controllers
 {
     public class DimensionController : ApiController
     {
+        private readonly Data.DimensionRepo _dimensionRepo;
+
+        public DimensionController(Data.DimensionRepo dimensionRepo)
+        {
+            _dimensionRepo = dimensionRepo;
+        }
+
         public IEnumerable<Models.Dimension> Get()
         {
-            var dimensions = new string[] 
+            return _dimensionRepo.All().Select(i => new Models.Dimension() 
             {
-                "Dimension 1",
-                "Dimension 2",
-                "Dimension 3",
-                "Dimension 4",
-                "Dimension 5",
-                "Dimension 6",
-                "Dimension 7"
+                Name = i.Name,
+                Id = i.Id
+            }).ToList();
+        }
+
+        public Models.Dimension Get(int id)
+        {
+            var result = _dimensionRepo.FindById(id);
+
+            if (result == null)
+            {
+                var resp = new HttpResponseMessage(HttpStatusCode.NotFound);
+                throw new HttpResponseException(resp);
+            }
+
+            var dimension = new Models.Dimension()
+            {
+                Id = id,
+                Name = result.Name,
+                Capabilities = result.Capabilties.Select(i => new Models.Capability() { Id = i.Id,  Description = i.Description }).ToList()
             };
 
-            return dimensions.Select(i => new Models.Dimension() 
-            {
-                Name = i 
-            }).ToList(); 
+            return dimension; 
         }
 
-        [Route("DimensionList")]
-        public IEnumerable<Models.Dimension> GetDimensionList()
-        {
-            return null; 
-        }
     }
 }

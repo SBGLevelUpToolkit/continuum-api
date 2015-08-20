@@ -11,5 +11,6 @@ namespace Continuum.Data
         IEnumerable<T> All();
 
         void Create(T item);
+
     }
 }

@@ -14,19 +14,14 @@ namespace Continuum.Data
     
     public partial class Capabilty
     {
-        public Capabilty()
-        {
-            this.Goals = new HashSet<Goal>();
-        }
-    
         public int Id { get; set; }
         public string Description { get; set; }
         public int LevelId { get; set; }
         public int DimensionId { get; set; }
         public bool Active { get; set; }
+        public int DisplayOrder { get; set; }
     
         public virtual Level Level { get; set; }
         public virtual Dimension Dimension { get; set; }
-        public virtual ICollection<Goal> Goals { get; set; }
     }
 }

@@ -12,6 +12,9 @@ namespace Continuum.WebApi.Models
     /// </summary>
     public class Dimension
     {
+
+        public int Id { get; set; }
+
         /// <summary>
         /// The set of Capabilities assigned to this dimension.
         /// </summary>
