@@ -95,6 +95,7 @@
     <Compile Include="Lookup.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
+    <Compile Include="LookupRepo.cs" />
     <Compile Include="Mocks\MockDimensionRepo.cs" />
     <Compile Include="Mocks\MockTeamRepo.cs" />
     <Compile Include="Organisation.cs">

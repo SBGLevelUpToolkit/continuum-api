@@ -8,15 +8,41 @@ namespace Continuum.Data
 {
     public class DimensionRepo : IRepository<Data.Dimension>
     {
+        private readonly Data.ContinuumDataContainer _container;
+
+        public DimensionRepo()
+        {
+            _container = new ContinuumDataContainer();
+        }
+
         public IEnumerable<Data.Dimension> All()
         {
-            Continuum.Data.ContinuumDataContainer container = new Data.ContinuumDataContainer();
-            return container.Dimensions.AsEnumerable();
+            return _container.Dimensions.AsEnumerable();
         }
 
         public void Create(Dimension item)
         {
-            throw new NotImplementedException();
+            _container.Dimensions.Add(item);
+        }
+
+        public bool DimensionExists(string dimensionName)
+        {
+            return _container.Dimensions.Any(i => i.Name == dimensionName);
+        }
+
+        public void SaveChanges()
+        {
+            int result = _container.SaveChanges();
+        }
+
+        public Dimension GetDimensionByName(string dimensionName)
+        {
+            return _container.Dimensions.First(i => i.Name == dimensionName);
+        }
+
+        public IEnumerable<Data.Level> CapabilityLevels()
+        {
+            return _container.Levels.AsEnumerable();
         }
     }
 }

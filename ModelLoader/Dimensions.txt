@@ -1,0 +1,12 @@
+﻿Strategy Alignment
+Planning and Requirements 
+Coding Practices
+Continuous Integration 
+Incident Management
+Risk and Issue Management 
+Software Design
+Teaming 
+Release Management
+Quality Assurance
+Environments
+Feature teams
