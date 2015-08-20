@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/18/2015 16:44:46
+-- Date Created: 08/20/2015 18:50:41
 -- Generated from EDMX file: C:\Users\nickmck\Source\Repos\continuum-api\Continuum.Data\ContinuumData.edmx
 -- --------------------------------------------------
 
@@ -18,10 +18,10 @@ GO
 -- --------------------------------------------------
 
 IF OBJECT_ID(N'[dbo].[FK_CapabiltyLevel]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Capabilties] DROP CONSTRAINT [FK_CapabiltyLevel];
+    ALTER TABLE [dbo].[Capabilities] DROP CONSTRAINT [FK_CapabiltyLevel];
 GO
 IF OBJECT_ID(N'[dbo].[FK_DimensionCapabilty]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Capabilties] DROP CONSTRAINT [FK_DimensionCapabilty];
+    ALTER TABLE [dbo].[Capabilities] DROP CONSTRAINT [FK_DimensionCapabilty];
 GO
 IF OBJECT_ID(N'[dbo].[FK_OrganisationTeam]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Teams] DROP CONSTRAINT [FK_OrganisationTeam];
@@ -59,6 +59,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_TeamAvatarType]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Teams] DROP CONSTRAINT [FK_TeamAvatarType];
 GO
+IF OBJECT_ID(N'[dbo].[FK_CapabilityCapability]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Capabilities] DROP CONSTRAINT [FK_CapabilityCapability];
+GO
 IF OBJECT_ID(N'[dbo].[FK_AssessmentStatus_inherits_Lookup]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Lookups_AssessmentStatus] DROP CONSTRAINT [FK_AssessmentStatus_inherits_Lookup];
 GO
@@ -73,8 +76,8 @@ GO
 IF OBJECT_ID(N'[dbo].[Dimensions]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Dimensions];
 GO
-IF OBJECT_ID(N'[dbo].[Capabilties]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Capabilties];
+IF OBJECT_ID(N'[dbo].[Capabilities]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Capabilities];
 GO
 IF OBJECT_ID(N'[dbo].[Levels]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Levels];
@@ -118,17 +121,20 @@ GO
 CREATE TABLE [dbo].[Dimensions] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [Active] bit  NOT NULL
+    [Active] bit  NOT NULL,
+    [DisplayOrder] int  NOT NULL
 );
 GO
 
--- Creating table 'Capabilties'
-CREATE TABLE [dbo].[Capabilties] (
+-- Creating table 'Capabilities'
+CREATE TABLE [dbo].[Capabilities] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Description] nvarchar(max)  NOT NULL,
     [LevelId] int  NOT NULL,
     [DimensionId] int  NOT NULL,
-    [Active] bit  NOT NULL
+    [Active] bit  NOT NULL,
+    [DisplayOrder] int  NOT NULL,
+    [CapabilityId] int  NOT NULL
 );
 GO
 
@@ -209,6 +215,14 @@ CREATE TABLE [dbo].[AssessmentResults] (
 );
 GO
 
+-- Creating table 'CapabilityRequirements'
+CREATE TABLE [dbo].[CapabilityRequirements] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [CapabilityId] int  NOT NULL,
+    [RequiredCapabilityId] int  NOT NULL
+);
+GO
+
 -- Creating table 'Lookups_AssessmentStatus'
 CREATE TABLE [dbo].[Lookups_AssessmentStatus] (
     [Id] int  NOT NULL
@@ -231,9 +245,9 @@ ADD CONSTRAINT [PK_Dimensions]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'Capabilties'
-ALTER TABLE [dbo].[Capabilties]
-ADD CONSTRAINT [PK_Capabilties]
+-- Creating primary key on [Id] in table 'Capabilities'
+ALTER TABLE [dbo].[Capabilities]
+ADD CONSTRAINT [PK_Capabilities]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -291,6 +305,12 @@ ADD CONSTRAINT [PK_AssessmentResults]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
+-- Creating primary key on [Id] in table 'CapabilityRequirements'
+ALTER TABLE [dbo].[CapabilityRequirements]
+ADD CONSTRAINT [PK_CapabilityRequirements]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
 -- Creating primary key on [Id] in table 'Lookups_AssessmentStatus'
 ALTER TABLE [dbo].[Lookups_AssessmentStatus]
 ADD CONSTRAINT [PK_Lookups_AssessmentStatus]
@@ -307,8 +327,8 @@ GO
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
 
--- Creating foreign key on [LevelId] in table 'Capabilties'
-ALTER TABLE [dbo].[Capabilties]
+-- Creating foreign key on [LevelId] in table 'Capabilities'
+ALTER TABLE [dbo].[Capabilities]
 ADD CONSTRAINT [FK_CapabiltyLevel]
     FOREIGN KEY ([LevelId])
     REFERENCES [dbo].[Levels]
@@ -318,12 +338,12 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CapabiltyLevel'
 CREATE INDEX [IX_FK_CapabiltyLevel]
-ON [dbo].[Capabilties]
+ON [dbo].[Capabilities]
     ([LevelId]);
 GO
 
--- Creating foreign key on [DimensionId] in table 'Capabilties'
-ALTER TABLE [dbo].[Capabilties]
+-- Creating foreign key on [DimensionId] in table 'Capabilities'
+ALTER TABLE [dbo].[Capabilities]
 ADD CONSTRAINT [FK_DimensionCapabilty]
     FOREIGN KEY ([DimensionId])
     REFERENCES [dbo].[Dimensions]
@@ -333,7 +353,7 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_DimensionCapabilty'
 CREATE INDEX [IX_FK_DimensionCapabilty]
-ON [dbo].[Capabilties]
+ON [dbo].[Capabilities]
     ([DimensionId]);
 GO
 
@@ -446,7 +466,7 @@ GO
 ALTER TABLE [dbo].[AssessmentItems]
 ADD CONSTRAINT [FK_AssessmentItemCapabilty]
     FOREIGN KEY ([CapabiltyId])
-    REFERENCES [dbo].[Capabilties]
+    REFERENCES [dbo].[Capabilities]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -491,7 +511,7 @@ GO
 ALTER TABLE [dbo].[Goals]
 ADD CONSTRAINT [FK_GoalCapabilty]
     FOREIGN KEY ([CapabiltyId])
-    REFERENCES [dbo].[Capabilties]
+    REFERENCES [dbo].[Capabilities]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -515,6 +535,36 @@ GO
 CREATE INDEX [IX_FK_TeamAvatarType]
 ON [dbo].[Teams]
     ([AvatarTypeId]);
+GO
+
+-- Creating foreign key on [CapabilityId] in table 'CapabilityRequirements'
+ALTER TABLE [dbo].[CapabilityRequirements]
+ADD CONSTRAINT [FK_CapabilityCapabilityRequirement]
+    FOREIGN KEY ([CapabilityId])
+    REFERENCES [dbo].[Capabilities]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CapabilityCapabilityRequirement'
+CREATE INDEX [IX_FK_CapabilityCapabilityRequirement]
+ON [dbo].[CapabilityRequirements]
+    ([CapabilityId]);
+GO
+
+-- Creating foreign key on [RequiredCapabilityId] in table 'CapabilityRequirements'
+ALTER TABLE [dbo].[CapabilityRequirements]
+ADD CONSTRAINT [FK_CapabilityRequirementCapability]
+    FOREIGN KEY ([RequiredCapabilityId])
+    REFERENCES [dbo].[Capabilities]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CapabilityRequirementCapability'
+CREATE INDEX [IX_FK_CapabilityRequirementCapability]
+ON [dbo].[CapabilityRequirements]
+    ([RequiredCapabilityId]);
 GO
 
 -- Creating foreign key on [Id] in table 'Lookups_AssessmentStatus'

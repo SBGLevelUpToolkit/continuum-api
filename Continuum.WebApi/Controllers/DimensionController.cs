@@ -39,7 +39,7 @@ namespace Continuum.WebApi.Controllers
             {
                 Id = id,
                 Name = result.Name,
-                Capabilities = result.Capabilties.Select(i => new Models.Capability() { Id = i.Id,  Description = i.Description }).ToList()
+                Capabilities = result.Capabilities.Select(i => new Models.Capability() { Id = i.Id,  Description = i.Description }).ToList()
             };
 
             return dimension; 

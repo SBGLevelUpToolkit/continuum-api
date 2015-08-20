@@ -12,16 +12,12 @@ namespace Continuum.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Capabilty
+    public partial class CapabilityRequirement
     {
         public int Id { get; set; }
-        public string Description { get; set; }
-        public int LevelId { get; set; }
-        public int DimensionId { get; set; }
-        public bool Active { get; set; }
-        public int DisplayOrder { get; set; }
+        public int CapabilityId { get; set; }
+        public int RequiredCapabilityId { get; set; }
     
-        public virtual Level Level { get; set; }
-        public virtual Dimension Dimension { get; set; }
+        public virtual Capability Capability { get; set; }
     }
 }

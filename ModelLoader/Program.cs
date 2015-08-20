@@ -11,10 +11,20 @@ namespace ModelLoader
     {
         private const string DIMENSIONS_FILE = "Dimensions.txt";
         private const string CAPABILITIES_FILE = "Capabilities.txt";
+        private const string LEVELS_FILE = "Levels.txt";
         private const int EXPECTED_FIELD_COUNT = 5;
 
         static void Main(string[] args)
         {
+            if (!CheckForLevelsFile())
+            {
+                Console.Write("{0} was not found.", LEVELS_FILE);
+                return;
+            }
+
+            LoadLevels();
+
+
             if (!CheckForDimensionsFile())
             {
                 Console.Write("{0} was not found.", DIMENSIONS_FILE);
@@ -34,6 +44,37 @@ namespace ModelLoader
             Console.WriteLine("Press a key to continue.");
             Console.ReadKey();
         }
+
+        private static bool CheckForLevelsFile()
+        {
+            return System.IO.File.Exists(LEVELS_FILE);
+        }
+
+        private static void LoadLevels()
+        {
+            Continuum.Data.DimensionRepo repo = new Continuum.Data.DimensionRepo();
+
+            Console.WriteLine("Creating Capabilies...");
+
+            var levels = repo.CapabilityLevels();
+
+            var reader = GetReader(LEVELS_FILE);
+
+            while (!reader.EndOfStream)
+            {
+                string level = reader.ReadLine().Trim();
+                if (!levels.Any(i => i.DisplayName == level))
+                {
+                    Console.WriteLine(string.Format("{0}", level));
+                    repo.CreateLevel(level);
+                }
+            }
+
+            repo.SaveChanges();
+
+            Console.WriteLine("...complete.");
+        }
+
 
         private static void LoadCapabilities()
         {
@@ -66,7 +107,7 @@ namespace ModelLoader
 
                                 Console.WriteLine(string.Format("{0}\t{1}", row.Dimension, row.Description));
 
-                                Continuum.Data.Capabilty capability = new Continuum.Data.Capabilty()
+                                Continuum.Data.Capability capability = new Continuum.Data.Capability()
                                 {
                                     Active = false,
                                     Description = row.Description,
@@ -74,7 +115,7 @@ namespace ModelLoader
                                     Level = level
                                 };
 
-                                dimension.Capabilties.Add(capability);
+                                dimension.Capabilities.Add(capability);
                             }
                             else
                             {

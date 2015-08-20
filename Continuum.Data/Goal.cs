@@ -23,6 +23,6 @@ namespace Continuum.Data
         public int CapabiltyId { get; set; }
     
         public virtual Team Team { get; set; }
-        public virtual Capabilty Capabilty { get; set; }
+        public virtual Capability Capabilty { get; set; }
     }
 }

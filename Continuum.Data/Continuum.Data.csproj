@@ -63,7 +63,10 @@
     <Compile Include="AvatarType.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Capabilty.cs">
+    <Compile Include="Capability.cs">
+      <DependentUpon>ContinuumData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CapabilityRequirement.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
     <Compile Include="ContinuumData.Context.cs">

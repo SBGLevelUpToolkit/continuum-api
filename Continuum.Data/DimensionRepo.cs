@@ -49,5 +49,10 @@ namespace Continuum.Data
         {
             return _container.Levels.AsEnumerable();
         }
+
+        public void CreateLevel(string level)
+        {
+            _container.Levels.Add(new Data.Level() { DisplayName = level});
+        }
     }
 }
