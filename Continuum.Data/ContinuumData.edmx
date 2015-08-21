@@ -101,6 +101,7 @@
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Active" Type="bit" Nullable="false" />
     <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="ImageName" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Capabilities">
     <Key>
@@ -120,6 +121,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DisplayName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ImageName" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Organisations">
     <Key>
@@ -181,6 +183,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
     <Property Name="TeamId" Type="int" Nullable="false" />
+    <Property Name="IsAdmin" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="AssessmentResults">
     <Key>
@@ -522,6 +525,7 @@
           <NavigationProperty Name="Capabilities" Relationship="ContinuumData.DimensionCapabilty" FromRole="Dimension" ToRole="Capabilty" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="ImageName" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Capability">
           <Key>
@@ -544,6 +548,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DisplayName" Type="String" Nullable="false" />
+          <Property Name="ImageName" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="CapabiltyLevel">
           <End Type="ContinuumData.Capability" Role="Capabilty" Multiplicity="*" />
@@ -705,6 +710,7 @@
           <NavigationProperty Name="Team" Relationship="ContinuumData.TeamTeamMember" FromRole="TeamMember" ToRole="Team" />
           <Property Name="TeamId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AssessmentItems" Relationship="ContinuumData.AssessmentItemTeamMember" FromRole="TeamMember" ToRole="AssessmentItem" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="TeamTeamMember">
           <End Type="ContinuumData.Team" Role="Team" Multiplicity="1" />
@@ -847,6 +853,7 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -868,6 +875,7 @@
         <MappingFragment StoreEntitySet="Levels">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -946,6 +954,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

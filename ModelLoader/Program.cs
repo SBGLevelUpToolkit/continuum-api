@@ -63,11 +63,12 @@ namespace ModelLoader
 
             while (!reader.EndOfStream)
             {
-                string level = reader.ReadLine().Trim();
+                string[] fields = reader.ReadLine().Trim().Split(';');
+                string level = fields[0];
                 if (!levels.Any(i => i.DisplayName == level))
                 {
                     Console.WriteLine(string.Format("{0}", level));
-                    repo.CreateLevel(level);
+                    repo.CreateLevel(level, fields[0]);
                 }
             }
 
@@ -210,13 +211,14 @@ namespace ModelLoader
             var reader = GetReader(DIMENSIONS_FILE);
             while (!reader.EndOfStream)
             {
-                string dimensionName = reader.ReadLine().Trim();
+                string[] fields = reader.ReadLine().Trim().Split(';');
+                string dimensionName = fields[0];
                 if (!String.IsNullOrEmpty(dimensionName))
                 {
                     if (!repo.DimensionExists(dimensionName))
                     {
                         Console.WriteLine(String.Format("Creating {0}", dimensionName));
-                        var dimension = new Continuum.Data.Dimension() { Name = dimensionName, Active = false };
+                        var dimension = new Continuum.Data.Dimension() { Name = dimensionName, Active = false, ImageName = fields[1] };
                         repo.Create(dimension);
                     }   
                 }

@@ -27,5 +27,7 @@ namespace Continuum.WebApi.Models
         public string Name { get; set; }
 
         public int DisplayOrder { get; set; }
+
+        public string ImageName { get; set; }
     }
 }

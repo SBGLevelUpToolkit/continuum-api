@@ -16,5 +16,6 @@ namespace Continuum.Data
     {
         public int Id { get; set; }
         public string DisplayName { get; set; }
+        public string ImageName { get; set; }
     }
 }

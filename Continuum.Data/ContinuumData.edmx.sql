@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/20/2015 18:50:41
+-- Date Created: 08/21/2015 11:30:31
 -- Generated from EDMX file: C:\Users\nickmck\Source\Repos\continuum-api\Continuum.Data\ContinuumData.edmx
 -- --------------------------------------------------
 
@@ -59,8 +59,11 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_TeamAvatarType]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Teams] DROP CONSTRAINT [FK_TeamAvatarType];
 GO
-IF OBJECT_ID(N'[dbo].[FK_CapabilityCapability]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Capabilities] DROP CONSTRAINT [FK_CapabilityCapability];
+IF OBJECT_ID(N'[dbo].[FK_CapabilityCapabilityRequirement]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CapabilityRequirements] DROP CONSTRAINT [FK_CapabilityCapabilityRequirement];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CapabilityRequirementCapability]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CapabilityRequirements] DROP CONSTRAINT [FK_CapabilityRequirementCapability];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AssessmentStatus_inherits_Lookup]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Lookups_AssessmentStatus] DROP CONSTRAINT [FK_AssessmentStatus_inherits_Lookup];
@@ -106,6 +109,9 @@ GO
 IF OBJECT_ID(N'[dbo].[AssessmentResults]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AssessmentResults];
 GO
+IF OBJECT_ID(N'[dbo].[CapabilityRequirements]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CapabilityRequirements];
+GO
 IF OBJECT_ID(N'[dbo].[Lookups_AssessmentStatus]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Lookups_AssessmentStatus];
 GO
@@ -122,7 +128,8 @@ CREATE TABLE [dbo].[Dimensions] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Active] bit  NOT NULL,
-    [DisplayOrder] int  NOT NULL
+    [DisplayOrder] int  NOT NULL,
+    [ImageName] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -141,7 +148,8 @@ GO
 -- Creating table 'Levels'
 CREATE TABLE [dbo].[Levels] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [DisplayName] nvarchar(max)  NOT NULL
+    [DisplayName] nvarchar(max)  NOT NULL,
+    [ImageName] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -202,7 +210,8 @@ GO
 CREATE TABLE [dbo].[TeamMembers] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [UserId] nvarchar(max)  NOT NULL,
-    [TeamId] int  NOT NULL
+    [TeamId] int  NOT NULL,
+    [IsAdmin] bit  NOT NULL
 );
 GO
 

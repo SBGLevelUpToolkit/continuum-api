@@ -1,12 +1,12 @@
-﻿Strategy Alignment
-Planning and Requirements 
-Coding Practices
-Continuous Integration 
-Incident Management
-Risk and Issue Management 
-Software Design
-Teaming 
-Release Management
-Quality Assurance
-Environments
-Feature teams
+﻿Strategy Alignment;icon_strategy_alignment_small.png
+Planning and Requirements;icon_planning_requirements_small.png
+Coding Practices;icon_coding_practices_small.png
+Continuous Integration;icon_continuous_integration_small.png
+Incident Management;icon_incident_management_small.png
+Risk and Issue Management;icon_risk_issue_management_small.png
+Software Design;icon_software_design_small.png
+Teaming;icon_teaming_small.png 
+Release Management;icon_release_management_small.png
+Quality Assurance;icon_quality_assurance_small.png
+Environments;icon_environments_small.png
+Feature teaming;icon_feature_teams_small.png

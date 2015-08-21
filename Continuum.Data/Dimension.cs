@@ -23,6 +23,7 @@ namespace Continuum.Data
         public string Name { get; set; }
         public bool Active { get; set; }
         public int DisplayOrder { get; set; }
+        public string ImageName { get; set; }
     
         public virtual ICollection<Capability> Capabilities { get; set; }
     }

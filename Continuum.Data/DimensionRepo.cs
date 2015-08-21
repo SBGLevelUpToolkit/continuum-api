@@ -50,9 +50,9 @@ namespace Continuum.Data
             return _container.Levels.AsEnumerable();
         }
 
-        public void CreateLevel(string level)
+        public void CreateLevel(string level, string imageName)
         {
-            _container.Levels.Add(new Data.Level() { DisplayName = level});
+            _container.Levels.Add(new Data.Level() { DisplayName = level, ImageName = imageName});
         }
 
         public Capability FindCapabilityById(int id)

@@ -22,6 +22,7 @@ namespace Continuum.Data
         public int Id { get; set; }
         public string UserId { get; set; }
         public int TeamId { get; set; }
+        public bool IsAdmin { get; set; }
     
         public virtual Team Team { get; set; }
         public virtual ICollection<AssessmentItem> AssessmentItems { get; set; }

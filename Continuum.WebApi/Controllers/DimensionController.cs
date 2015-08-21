@@ -21,7 +21,8 @@ namespace Continuum.WebApi.Controllers
             return _dimensionRepo.All().Select(i => new Models.Dimension() 
             {
                 Name = i.Name,
-                Id = i.Id
+                Id = i.Id,
+                ImageName = i.ImageName
             }).ToList();
         }
 
@@ -39,6 +40,7 @@ namespace Continuum.WebApi.Controllers
             {
                 Id = id,
                 Name = result.Name,
+                ImageName = result.ImageName,
                 Capabilities = result.Capabilities.Select(i => new Models.Capability() 
                 { 
                     Id = i.Id,  
