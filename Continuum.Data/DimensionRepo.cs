@@ -54,5 +54,10 @@ namespace Continuum.Data
         {
             _container.Levels.Add(new Data.Level() { DisplayName = level});
         }
+
+        public Capability FindCapabilityById(int id)
+        {
+            return _container.Capabilities.Find(id);
+        }
     }
 }

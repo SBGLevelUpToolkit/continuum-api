@@ -12,7 +12,7 @@ namespace ModelLoader
 
         public string Level { get; set; }
 
-        public string TempId { get; set; }
+        public int TempId { get; set; }
 
         public string Description { get; set; }
 
@@ -22,8 +22,10 @@ namespace ModelLoader
         {
             return String.IsNullOrEmpty(Dimension) == false
                 && String.IsNullOrEmpty(Level) == false
-                && String.IsNullOrEmpty(TempId) == false
+                && TempId > 0
                 && String.IsNullOrEmpty(Description) == false; 
         }
+
+        public Continuum.Data.Capability Capability { get; set; }
     }
 }

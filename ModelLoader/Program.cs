@@ -45,6 +45,7 @@ namespace ModelLoader
             Console.ReadKey();
         }
 
+        #region Levels
         private static bool CheckForLevelsFile()
         {
             return System.IO.File.Exists(LEVELS_FILE);
@@ -54,7 +55,7 @@ namespace ModelLoader
         {
             Continuum.Data.DimensionRepo repo = new Continuum.Data.DimensionRepo();
 
-            Console.WriteLine("Creating Capabilies...");
+            Console.WriteLine("Creating Levels...");
 
             var levels = repo.CapabilityLevels();
 
@@ -74,13 +75,15 @@ namespace ModelLoader
 
             Console.WriteLine("...complete.");
         }
-
+        #endregion
 
         private static void LoadCapabilities()
         {
+            List<ImportRow> rows = new List<ImportRow>();
+
             Continuum.Data.DimensionRepo dimensionRepo = new Continuum.Data.DimensionRepo();
           
-            Console.WriteLine("Creating Capabilies...");
+            Console.WriteLine("Creating Capabilites...");
 
             int linecount = 0;
 
@@ -104,18 +107,31 @@ namespace ModelLoader
                             var level = dimensionRepo.CapabilityLevels().Where(i => i.DisplayName == row.Level).FirstOrDefault();
                             if (level != null)
                             {
+                                rows.Add(row);
 
-                                Console.WriteLine(string.Format("{0}\t{1}", row.Dimension, row.Description));
+                                Continuum.Data.Capability capability = null;
 
-                                Continuum.Data.Capability capability = new Continuum.Data.Capability()
+                                capability = dimensionRepo.FindCapabilityById(row.TempId);
+
+                                if (capability == null)
                                 {
-                                    Active = false,
-                                    Description = row.Description,
-                                    Dimension = dimension,
-                                    Level = level
-                                };
+                                    Console.WriteLine(string.Format("Creating {0}\t{1}", row.Dimension, row.Description));
+                                    capability = new Continuum.Data.Capability()
+                                    {
+                                        Active = false,
+                                        Description = row.Description,
+                                        Dimension = dimension,
+                                        Level = level
+                                    };
+                                    dimension.Capabilities.Add(capability);
+                                }
+                                else
+                                {
+                                    Console.WriteLine(string.Format("Loading {0}\t{1}", row.Dimension, row.Description));
+                                }
 
-                                dimension.Capabilities.Add(capability);
+                                row.Capability = capability;
+                               
                             }
                             else
                             {
@@ -148,6 +164,25 @@ namespace ModelLoader
 
             Console.WriteLine("...complete.");
 
+            LinkCapabilities(dimensionRepo, rows);
+        }
+
+        private static void LinkCapabilities(Continuum.Data.DimensionRepo dimensionRepo, List<ImportRow> rows)
+        {
+            foreach (var row in rows)
+            {
+                if (row.Predecessors.First() != "0")
+                {
+                    var requiredRows = rows.Where(i => row.Predecessors.Contains(i.TempId.ToString()));
+                    foreach (var capability in requiredRows.Select(i => i.Capability))
+                    {
+                        Continuum.Data.CapabilityRequirement requirement = new Continuum.Data.CapabilityRequirement();
+                        requirement.Capability = capability;
+                        row.Capability.CapabilityRequirements.Add(requirement);
+                    }
+                }
+            }
+            dimensionRepo.SaveChanges();
         }
 
         private static ImportRow ExtractFields(string[] fields)
@@ -155,7 +190,7 @@ namespace ModelLoader
             ImportRow row = new ImportRow();
             row.Dimension = fields[0].Trim();
             row.Level = fields[1].Trim();
-            row.TempId = fields[2].Trim();
+            row.TempId = Int32.Parse(fields[2].Trim());
             row.Description = fields[3].Trim();
             row.Predecessors = fields[4].Split(',');
             return row;

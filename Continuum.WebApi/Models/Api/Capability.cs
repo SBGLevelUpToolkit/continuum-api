@@ -34,5 +34,7 @@ namespace Continuum.WebApi.Models
         public int DisplayOrder { get; set; }
 
         public int Id { get; set; }
+
+        public int[] RequiredCapabilities { get; set; }
     }
 }
