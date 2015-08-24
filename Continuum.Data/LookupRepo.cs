@@ -24,5 +24,17 @@ namespace Continuum.Data
         {
            
         }
+
+
+        public Lookup FindById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

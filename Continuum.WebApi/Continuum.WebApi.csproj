@@ -243,6 +243,7 @@
     <Compile Include="Controllers\DimensionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="ExceptionBuilder.cs" />
     <Compile Include="Filters\UnhandledExceptionFilter.cs" />
@@ -256,6 +257,7 @@
     <Compile Include="Models\Api\Dimension.cs" />
     <Compile Include="Models\Api\Goal.cs" />
     <Compile Include="Models\Api\Team.cs" />
+    <Compile Include="Models\Api\User.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />

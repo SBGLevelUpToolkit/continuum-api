@@ -35,5 +35,16 @@ namespace Continuum.Data
             _container.Teams.Add(item);
             _container.SaveChanges();
         }
+
+        public Team FindById(int id)
+        {
+            return _container.Teams.Find(id);
+        }
+
+
+        public void SaveChanges()
+        {
+            _container.SaveChanges();
+        }
     }
 }

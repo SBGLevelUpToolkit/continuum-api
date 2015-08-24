@@ -24,5 +24,17 @@ namespace Continuum.Data.Mocks
         {
             TeamData.Add(item);
         }
+
+
+        public Team FindById(int id)
+        {
+            return TeamData.Where(i => i.Id == id).FirstOrDefault();
+        }
+
+
+        public void SaveChanges()
+        {
+            return; 
+        }
     }
 }

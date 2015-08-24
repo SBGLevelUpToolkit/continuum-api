@@ -12,5 +12,8 @@ namespace Continuum.Data
 
         void Create(T item);
 
+        T FindById(int id);
+
+        void SaveChanges();
     }
 }

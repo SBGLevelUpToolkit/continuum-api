@@ -25,5 +25,17 @@ namespace Continuum.Data.Mocks
         {
             
         }
+
+
+        public Dimension FindById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
