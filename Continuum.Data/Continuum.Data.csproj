@@ -54,6 +54,7 @@
     <Compile Include="AssessmentItem.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
+    <Compile Include="AssessmentRepo.cs" />
     <Compile Include="AssessmentResult.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
@@ -88,10 +89,14 @@
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
     <Compile Include="DimensionRepo.cs" />
+    <Compile Include="Extensions\Lookup.cs" />
     <Compile Include="Goal.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
+    <Compile Include="IAssessmentRepo.cs" />
+    <Compile Include="ILookupRepo.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="ITeamRepo.cs" />
     <Compile Include="Level.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
@@ -99,7 +104,9 @@
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
     <Compile Include="LookupRepo.cs" />
+    <Compile Include="Mocks\MockAssessmentRepo.cs" />
     <Compile Include="Mocks\MockDimensionRepo.cs" />
+    <Compile Include="Mocks\MockLookupRepo.cs" />
     <Compile Include="Mocks\MockTeamRepo.cs" />
     <Compile Include="Organisation.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>

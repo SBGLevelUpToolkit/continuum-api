@@ -38,8 +38,8 @@ namespace Continuum.WebApi.Controllers
             var response = new HttpResponseMessage(HttpStatusCode.Created);
             response.Content = new ObjectContent(typeof(Data.Team), newTeam, new JsonMediaTypeFormatter());
 
-            string uri = Url.Route("Default",  new { controller = "Team", id = newTeam.Id });
-            response.Headers.Location = new Uri(uri);   
+            //string uri = Url.Route("Default",  new { controller = "Team", id = newTeam.Id });
+            //response.Headers.Location = new Uri(uri);   
          
             return response;
         }

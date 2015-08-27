@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Continuum.Data.Mocks
 {
-    public class MockTeamRepo :  IRepository<Data.Team>
+    public class MockTeamRepo :  Data.ITeamRepo
     {
         public List<Data.Team> TeamData { get; private set; }
 
@@ -35,6 +35,16 @@ namespace Continuum.Data.Mocks
         public void SaveChanges()
         {
             return; 
+        }
+
+        public IEnumerable<Team> GetTeamForUser(string userId)
+        {
+            Func<string, IEnumerable<Data.TeamMember>, bool> userInTeam = (user, teams) => 
+            {
+                return teams.Any(i=>i.UserId == userId);
+            };
+
+            return TeamData.Where(i => userInTeam(userId, i.TeamMembers)).AsEnumerable();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Continuum.Data
 {
-    public class TeamRepository : IRepository<Data.Team>
+    public class TeamRepository : ITeamRepo
     {
         private readonly Data.ContinuumDataContainer _container;
 
@@ -45,6 +45,11 @@ namespace Continuum.Data
         public void SaveChanges()
         {
             _container.SaveChanges();
+        }
+
+        public IEnumerable<Team> GetTeamForUser(string userId)
+        {
+            return _container.TeamMembers.Where(i => i.UserId == userId).Select(j => j.Team).AsEnumerable();
         }
     }
 }
