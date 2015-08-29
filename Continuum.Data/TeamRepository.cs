@@ -51,5 +51,10 @@ namespace Continuum.Data
         {
             return _container.TeamMembers.Where(i => i.UserId == userId).Select(j => j.Team).AsEnumerable();
         }
+
+        public bool IsUserTeamAdmin(Team team, string userId)
+        {
+            return _container.TeamMembers.Any(i => i.TeamId == team.Id && i.IsAdmin);
+        }
     }
 }

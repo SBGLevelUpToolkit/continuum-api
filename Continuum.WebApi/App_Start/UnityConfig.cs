@@ -18,7 +18,10 @@ namespace Continuum.WebApi
 
             container.RegisterType<Data.IRepository<Data.Team>, Data.TeamRepository>();
             container.RegisterType<Data.DimensionRepo, Data.DimensionRepo>();
-            
+            container.RegisterType<Data.IAssessmentRepo, Data.AssessmentRepo>();
+            container.RegisterType<Data.ITeamRepo, Data.TeamRepository>();
+            container.RegisterType< Data.ILookupRepo, Data.LookupRepo>();
+
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }

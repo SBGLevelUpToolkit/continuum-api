@@ -46,5 +46,11 @@ namespace Continuum.Data.Mocks
 
             return TeamData.Where(i => userInTeam(userId, i.TeamMembers)).AsEnumerable();
         }
+
+
+        public bool IsUserTeamAdmin(Team team, string userId)
+        {
+            return team.TeamMembers.Any(i => i.UserId == userId && i.IsAdmin);
+        }
     }
 }

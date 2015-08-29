@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Continuum.Data
 {
-    public interface ILookupRepo
+    public interface ILookupRepo : IRepository<Data.Lookup>
     {
         T GetLookupForValue<T>(string value) where T : Lookup, new();
     }

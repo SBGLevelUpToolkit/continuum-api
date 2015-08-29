@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Continuum.Data
 {
-    public class LookupRepo : IRepository<Data.Lookup>
+    public class LookupRepo : ILookupRepo
     {
         private readonly ContinuumDataContainer _container;
 
@@ -35,6 +35,14 @@ namespace Continuum.Data
         public void SaveChanges()
         {
             throw new NotImplementedException();
+        }
+
+        public T GetLookupForValue<T>(string value) where T : Lookup, new()
+        {
+            return _container.Lookups
+                .OfType<T>()
+                .Where(i => i.Value == value)
+                .FirstOrDefault(); 
         }
     }
 }
