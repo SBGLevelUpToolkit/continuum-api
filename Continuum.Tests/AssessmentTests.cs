@@ -29,7 +29,7 @@ namespace Continuum.Tests
             _mockAssessmentRepo = new Continuum.Data.Mocks.MockAssessmentRepo();
             _mockTeamRepo = new Continuum.Data.Mocks.MockTeamRepo();
             _mockLookups = new Continuum.Data.Mocks.MockLookupRepo(); 
-            _assessmentController = new Continuum.WebApi.Controllers.AssessmentController(_mockAssessmentRepo, _mockTeamRepo, _mockLookups);
+            _assessmentController = new Continuum.WebApi.Controllers.AssessmentController(_mockAssessmentRepo, _mockTeamRepo);
         }
 
         [TestMethod]
@@ -80,12 +80,12 @@ namespace Continuum.Tests
                 Team = team 
             });
 
-            Data.AssessmentResult result = new Data.AssessmentResult();
+            var result = new Continuum.WebApi.Models.AssessmentResult();
             result.AssessmentId = 1;
 
             try
             {
-                _assessmentController.Put(new List<Data.AssessmentResult>() { result });
+                _assessmentController.Put(new List<Continuum.WebApi.Models.AssessmentResult>() { result });
             }
             catch (HttpResponseException ex)
             {
@@ -101,11 +101,11 @@ namespace Continuum.Tests
             team.TeamMembers.Add(new Data.TeamMember() { UserId = TestUser });
             _mockTeamRepo.TeamData.Add(team);
 
-            Data.AssessmentResult result = new Data.AssessmentResult();
+            var result = new Continuum.WebApi.Models.AssessmentResult();
 
             try
             {
-                _assessmentController.Put(new List<Data.AssessmentResult>() { result });
+                _assessmentController.Put(new List<Continuum.WebApi.Models.AssessmentResult>() { result });
                 Assert.Fail();
             }
             catch (HttpResponseException ex)
@@ -198,7 +198,7 @@ namespace Continuum.Tests
 
             Assert.IsTrue(_mockAssessmentRepo.Assessments.Count == 1);
             Assert.IsTrue(_mockAssessmentRepo.Assessments.First().Status.Equals(_mockLookups.GetLookupForValue<Data.AssessmentStatus>("Open")));
-            Assert.IsTrue(_mockAssessmentRepo.Assessments.First().Team.Id == team.Id);
+            Assert.IsTrue(_mockAssessmentRepo.Assessments.First().TeamId == team.Id);
         }
 
         [TestMethod]
@@ -206,9 +206,9 @@ namespace Continuum.Tests
         {
             var assessmentItem = CreateOpenAssessment();
 
-            Data.AssessmentItem item = new Data.AssessmentItem();
+            var item = new Continuum.WebApi.Models.AssessmentItem();
 
-            _assessmentController.Post(new List<Data.AssessmentItem>() { assessmentItem });
+            _assessmentController.Post(new List<Continuum.WebApi.Models.AssessmentItem>() { assessmentItem });
 
             Assert.IsTrue(_mockAssessmentRepo.Assessments.Count == 1);
             Assert.IsTrue(_mockAssessmentRepo.Assessments.First().AssessmentItems.Count() == 1);
@@ -216,7 +216,7 @@ namespace Continuum.Tests
 
         }
 
-        private Data.AssessmentItem CreateOpenAssessment()
+        private Continuum.WebApi.Models.AssessmentItem CreateOpenAssessment()
         {
             var team = new Data.Team() { Id = 1 };
             var teamMember = new Data.TeamMember() { UserId = TestUser, Id = 1 };
@@ -244,7 +244,12 @@ namespace Continuum.Tests
             assessment.AssessmentItems.Add(assessmentItem);
 
             _mockAssessmentRepo.Assessments.Add(assessment);
-            return assessmentItem;
+            return new WebApi.Models.AssessmentItem()
+            {
+                AssesmentId = assessmentItem.Id,
+                CapabilityAchieved = assessmentItem.CapabilityAchieved,
+                CapabilityId = assessmentItem.CapabiltyId
+            };
         }
 
 
@@ -289,14 +294,14 @@ namespace Continuum.Tests
 
             _mockAssessmentRepo.Assessments.First().Status = _mockLookups.GetLookupForValue<Data.AssessmentStatus>("Moderating");
 
-            Data.AssessmentResult result = new Data.AssessmentResult();
+            var result = new Continuum.WebApi.Models.AssessmentResult();
             result.AssessmentId = _mockAssessmentRepo.Assessments.First().Id;
-            result.Rating = "3";
+            result.Rating = 3;
 
-            _assessmentController.Put(new List<Data.AssessmentResult>() { result });
+            _assessmentController.Put(new List<Continuum.WebApi.Models.AssessmentResult>() { result });
 
             Assert.IsTrue(_mockAssessmentRepo.Assessments.First().AssessmentResults.Count == 1);
-            Assert.IsTrue(_mockAssessmentRepo.Assessments.First().AssessmentResults.First().Rating == result.Rating);
+            Assert.IsTrue(_mockAssessmentRepo.Assessments.First().AssessmentResults.First().Rating == result.Rating.ToString());
         }
 
         [TestMethod]

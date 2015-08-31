@@ -4,16 +4,30 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Continuum.Data;
 
 namespace Continuum.WebApi.Controllers
 {
     public class UserController : ApiController
     {
-        private readonly Data.IRepository<Data.Team> _teamRepo; 
+        private readonly ITeamRepo _teamRepo; 
 
-        public UserController(Data.IRepository<Data.Team> teamRepository)
+        public UserController(ITeamRepo teamRepository)
         {
             _teamRepo = teamRepository;
+        }
+
+        public Models.Team Get()
+        {
+            var team = _teamRepo.GetTeamForUser(User.Identity.Name).FirstOrDefault();
+            if (team == null)
+            {
+                team = new Team() { Name = string.Format("{0} is not a member of any team.", User.Identity.Name) };
+            }
+
+            string adminName = team.TeamMembers.Where(i => i.IsAdmin).FirstOrDefault().UserId;
+
+            return new Models.Team { Name = team.Name, Id = team.Id, AvatarId = team.AvatarTypeId, TeamLeadName = adminName };
         }
 
         public void Put(Models.User user)

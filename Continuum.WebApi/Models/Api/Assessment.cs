@@ -8,8 +8,7 @@ namespace Continuum.WebApi.Models
 {
     public class Assessment
     {
-        //state 
-        // number completed
-        //Date created?
+        public int Id { get; set; }
+        public string Status { get; set; }
     }
 }

@@ -1,6 +1,9 @@
 using Microsoft.Practices.Unity;
 using System.Web.Http;
 using Unity.WebApi;
+using Microsoft.AspNet.Identity;
+using Continuum.WebApi.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Continuum.WebApi
 {
@@ -14,6 +17,11 @@ namespace Continuum.WebApi
             // it is NOT necessary to register your controllers
             
             // e.g. container.RegisterType<ITestService, TestService>();
+
+
+           // var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+
+            container.RegisterType<Continuum.WebApi.Controllers.AccountController, Continuum.WebApi.Controllers.AccountController>(); 
 
 
             container.RegisterType<Data.IRepository<Data.Team>, Data.TeamRepository>();
