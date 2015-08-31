@@ -52,5 +52,16 @@ namespace Continuum.Data.Mocks
         {
             return team.TeamMembers.Any(i => i.UserId == userId && i.IsAdmin);
         }
+
+
+        public AvatarType GetAvatar(int p)
+        {
+            return new AvatarType() { Id = p };
+        }
+
+        public AvatarType GetDefaultAvatar()
+        {
+            return new AvatarType() { Id = 1 };
+        }
     }
 }

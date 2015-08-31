@@ -232,22 +232,22 @@ Environments;Master ;231;All environments are managed effectively;222,225
 Environments;Master ;232;Provisioning is fully automated;218
 Environments;Master ;233;Main dependencies are simulated across the board;207
 Environments;Master ;234;Virtualization is used if applicable.;225
-Feature teams;Traveler;235;The team doesnÕt have all cross-functional and cross-component knowledge and skills to complete end-to-end customer feature.;0
-Feature teams;Traveler;236;The team members are not dedicated.;0
-Feature teams;Traveler;237;The is a low level of collaboration between team members.;0
-Feature teams;Traveler;238;There are multiple handoffs and dependencies on the external teams and stakeholders.;0
-Feature teams;Artisan;239;The key skills are part of the team. This includes cross-functional and cross-component skills.;235,236,237
-Feature teams;Artisan;240;Handoffs are identified.;238
-Feature teams;Artisan;241;Triad is established across three functions, quality, product and technical. Triad is committed to execute a strategy together that gets specific, intended results.;0
-Feature teams;Expert;242;The team members are dedicated to the team.;239
-Feature teams;Expert;243;Cross-functional and cross-component skills are within the team, the team works on a complete feature, across all components and disciplines (analysis, programming, testing, É);239
-Feature teams;Expert;244;New members are efficiently integrated into feature team.;239
-Feature teams;Expert;245;Triad is fully-functioning and not dependent on external validation and external authority.;241
-Feature teams;Expert;246;Goals are clearly prioritized and timeously achieved;0
-Feature teams;Professional;247;T-shaped skills emerge (team members can perform more than one function);242,243,244
-Feature teams;Professional;248;The team is self-organizing. The team is self-managed and has necessary autonomy to modify the design of their team and/or aspects of the organisational context in which the operate.;242,243,245
-Feature teams;Professional;249;Metrics are in place to ensure constant improvement.;246
-Feature teams;Master ;250;All decision-making is internal to the team, who can make decisions on how to deliver artefacts, and as to quality measures applied to artefacts.;247,248
-Feature teams;Master ;251;T-shaped skill profile is a majority.;247,249
-Feature teams;Master ;252;Team is responsible for all aspects of feature delivery, from equipment requisition to production.;247,250
-Feature teams;Master ;253;Continuous improvement is in place, driven by retrospectives within the team and across the teams;249
+Feature teaming;Traveler;235;The team doesnÕt have all cross-functional and cross-component knowledge and skills to complete end-to-end customer feature.;0
+Feature teaming;Traveler;236;The team members are not dedicated.;0
+Feature teaming;Traveler;237;The is a low level of collaboration between team members.;0
+Feature teaming;Traveler;238;There are multiple handoffs and dependencies on the external teams and stakeholders.;0
+Feature teaming;Artisan;239;The key skills are part of the team. This includes cross-functional and cross-component skills.;235,236,237
+Feature teaming;Artisan;240;Handoffs are identified.;238
+Feature teaming;Artisan;241;Triad is established across three functions, quality, product and technical. Triad is committed to execute a strategy together that gets specific, intended results.;0
+Feature teaming;Expert;242;The team members are dedicated to the team.;239
+Feature teaming;Expert;243;Cross-functional and cross-component skills are within the team, the team works on a complete feature, across all components and disciplines (analysis, programming, testing, É);239
+Feature teaming;Expert;244;New members are efficiently integrated into feature team.;239
+Feature teaming;Expert;245;Triad is fully-functioning and not dependent on external validation and external authority.;241
+Feature teaming;Expert;246;Goals are clearly prioritized and timeously achieved;0
+Feature teaming;Professional;247;T-shaped skills emerge (team members can perform more than one function);242,243,244
+Feature teaming;Professional;248;The team is self-organizing. The team is self-managed and has necessary autonomy to modify the design of their team and/or aspects of the organisational context in which the operate.;242,243,245
+Feature teaming;Professional;249;Metrics are in place to ensure constant improvement.;246
+Feature teaming;Master ;250;All decision-making is internal to the team, who can make decisions on how to deliver artefacts, and as to quality measures applied to artefacts.;247,248
+Feature teaming;Master ;251;T-shaped skill profile is a majority.;247,249
+Feature teaming;Master ;252;Team is responsible for all aspects of feature delivery, from equipment requisition to production.;247,250
+Feature teaming;Master ;253;Continuous improvement is in place, driven by retrospectives within the team and across the teams;249

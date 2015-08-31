@@ -103,6 +103,17 @@ namespace Continuum.Tests
 
         }
 
+        [TestMethod]
+        public void TestThatTeamCreatedWithDefaultAvatar()
+        {
+            
+        }
+
+        [TestMethod]
+        public void TestThatAddedNewUserIsAddedAndNotAdmin()
+        {
+            
+        }
        
     }
 }

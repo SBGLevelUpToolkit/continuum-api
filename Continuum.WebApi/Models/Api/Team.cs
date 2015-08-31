@@ -12,7 +12,7 @@ namespace Continuum.WebApi.Models
 
         public string TeamLeadName { get; set; }
 
-        public string AvatarUrl { get; set; }
+        public int AvatarId { get; set; }
 
         public int Id { get; set; }
     }

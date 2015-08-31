@@ -33,7 +33,6 @@ namespace Continuum.Data
             item.AvatarTypeId = 1; //Barbarian
 
             _container.Teams.Add(item);
-            _container.SaveChanges();
         }
 
         public Team FindById(int id)
@@ -55,6 +54,17 @@ namespace Continuum.Data
         public bool IsUserTeamAdmin(Team team, string userId)
         {
             return _container.TeamMembers.Any(i => i.TeamId == team.Id && i.IsAdmin);
+        }
+
+        public AvatarType GetAvatar(int id)
+        {
+            var avatar = _container.Lookups.OfType<Data.AvatarType>().Where(i => i.Id == id).FirstOrDefault();
+            return avatar;
+        }
+
+        public AvatarType GetDefaultAvatar()
+        {
+            return _container.Lookups.OfType<Data.AvatarType>().FirstOrDefault();
         }
     }
 }
