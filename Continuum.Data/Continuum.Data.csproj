@@ -111,7 +111,9 @@
     <Compile Include="Mocks\MockContainer.cs" />
     <Compile Include="Mocks\MockDimensionRepo.cs" />
     <Compile Include="Mocks\MockLookupDBSet.cs" />
-    <Compile Include="Mocks\MockTeamRepo.cs" />
+    <Compile Include="Mocks\MockOrganisationDBSet.cs" />
+    <Compile Include="Mocks\MockTeamDBSet.cs" />
+    <Compile Include="Mocks\MockTeamMembersDBSet.cs" />
     <Compile Include="Organisation.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>

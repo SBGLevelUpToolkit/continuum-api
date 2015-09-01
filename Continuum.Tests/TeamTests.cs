@@ -12,7 +12,11 @@ namespace Continuum.Tests
     [TestClass]
     public class TeamTests
     {
-        HttpRequestMessage _request; 
+        HttpRequestMessage _request;
+
+        Data.Mocks.MockContainer _mockContainer;
+        Data.TeamRepository _teamRepository;
+
 
         [TestInitialize]
         public void SetUp()
@@ -27,21 +31,23 @@ namespace Continuum.Tests
             _request = new HttpRequestMessage(HttpMethod.Get, "http://localhost");
             _request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
             _request.Properties[HttpPropertyKeys.HttpRouteDataKey] = new HttpRouteData(new HttpRoute());
-           
+
+            _mockContainer = new Data.Mocks.MockContainer();
+            _teamRepository = new Data.TeamRepository(_mockContainer);
         }
 
         [TestMethod]
         public void TestThatCreatingADuplicateTeamThrowsException()
         {
-            var teamRepo = new Data.Mocks.MockTeamRepo();
 
-            teamRepo.TeamData.Add(new Data.Team() { Name = "Test Team"});
+        
+            _mockContainer.Teams.Add(new Data.Team() { Name = "Test Team"});
 
-            TeamController teamController = new TeamController(teamRepo);
+            TeamController teamController = new TeamController(_teamRepository);
         
             WebApi.Models.Team newTeam = new WebApi.Models.Team() 
             {
-                Name = teamRepo.All().First().Name
+                Name = _mockContainer.Teams.First().Name
             };
 
             try
@@ -59,9 +65,9 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatCreatingANewTeamIsAllowed()
         {
-            var teamRepo = new Data.Mocks.MockTeamRepo();
+  
 
-            TeamController teamController = new TeamController(teamRepo);
+            TeamController teamController = new TeamController(_teamRepository);
             teamController.Request = _request;
 
             WebApi.Models.Team newTeam = new WebApi.Models.Team() 
@@ -72,7 +78,7 @@ namespace Continuum.Tests
             var result = teamController.Put(newTeam);
 
             Assert.IsTrue(result.StatusCode == System.Net.HttpStatusCode.Created);
-            Assert.IsTrue(teamRepo.All().Where(i => i.Name == newTeam.Name).Count() == 1);
+            Assert.IsTrue(_mockContainer.Teams.Where(i => i.Name == newTeam.Name).Count() == 1);
         }
 
         [TestMethod]
@@ -80,9 +86,8 @@ namespace Continuum.Tests
         {
             var user = System.Security.Principal.WindowsIdentity.GetCurrent();
 
-            var teamRepo = new Data.Mocks.MockTeamRepo();
-
-            TeamController teamController = new TeamController(teamRepo);
+    
+            TeamController teamController = new TeamController(_teamRepository);
             teamController.Request = _request;
 
             WebApi.Models.Team newTeam = new WebApi.Models.Team() 
@@ -92,7 +97,7 @@ namespace Continuum.Tests
 
             teamController.Put(newTeam);
 
-            var team = teamRepo.All().Where(i => i.Name == newTeam.Name).FirstOrDefault();
+            var team = _mockContainer.Teams.Where(i => i.Name == newTeam.Name).FirstOrDefault();
             Assert.IsNotNull(team, "Could not find new team");
 
             var teamMember = team.TeamMembers.Where(i => i.UserId == user.Name).FirstOrDefault();

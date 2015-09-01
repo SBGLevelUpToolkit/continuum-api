@@ -9,12 +9,22 @@ namespace Continuum.Tests
     [TestClass]
     public class UserTests
     {
+
+        private Continuum.Data.Mocks.MockContainer _mockContainer;
+        private Continuum.Data.TeamRepository _teamRepo;
+
+        [TestInitializeAttribute]
+        public void Setup()
+        {
+            _mockContainer = new Data.Mocks.MockContainer();
+            _teamRepo = new Continuum.Data.TeamRepository(_mockContainer);
+        }
+
         [TestMethod]
         public void TestThatUserCannotUpdateAnotherUserDetails()
         {
-            var mockTeamRepo = new Data.Mocks.MockTeamRepo();
-
-            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(mockTeamRepo);
+ 
+            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
 
             Continuum.WebApi.Models.User user = new WebApi.Models.User() { UserId = "test@test.com" };
 
@@ -32,10 +42,9 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatNewTeamsForUserAreAdded()
         {
-            var mockTeamRepo = new Data.Mocks.MockTeamRepo();
-            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(mockTeamRepo);
+            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
 
-            mockTeamRepo.TeamData.Add(new Data.Team()
+            _mockContainer.Teams.Add(new Data.Team()
             {
                  Name = "Test Team",
                   Id = 100
@@ -54,7 +63,7 @@ namespace Continuum.Tests
 
             controller.Put(user);
 
-            var team = mockTeamRepo.TeamData.Where(i=>i.Id == 100).First();
+            var team = _mockContainer.Teams.Where(i => i.Id == 100).First();
             Assert.IsNotNull(team, "Could not retrieve team.");
             Assert.IsTrue(team.TeamMembers.Any(i => i.UserId == currentUser.Name), "User was not added to the team.");
         }
@@ -62,10 +71,9 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatInvalidTeamIdThrowsException()
         {
-            var mockTeamRepo = new Data.Mocks.MockTeamRepo();
-            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(mockTeamRepo);
+            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
 
-            mockTeamRepo.TeamData.Add(new Data.Team()
+            _mockContainer.Teams.Add(new Data.Team()
             {
                 Name = "Test Team",
                 Id = 100
@@ -96,10 +104,9 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatSystemDoesNotCreateDuplicateTeamMemberships()
         {
-            var mockTeamRepo = new Data.Mocks.MockTeamRepo();
-            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(mockTeamRepo);
+            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
 
-            mockTeamRepo.TeamData.Add(new Data.Team()
+            _mockContainer.Teams.Add(new Data.Team()
             {
                 Name = "Test Team",
                 Id = 100
@@ -119,7 +126,7 @@ namespace Continuum.Tests
 
             controller.Put(user);
 
-            var team = mockTeamRepo.TeamData.Where(i => i.Id == 100).First();
+            var team = _mockContainer.Teams.Where(i => i.Id == 100).First();
             Assert.IsNotNull(team, "Could not retrieve team.");
             Assert.IsTrue(team.TeamMembers.Count(i => i.UserId == currentUser.Name) == 1 , "Duplicate team entries created.");
         }
@@ -127,8 +134,7 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatEmptyTeamCollectionThrowsException()
         {
-            var mockTeamRepo = new Data.Mocks.MockTeamRepo();
-            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(mockTeamRepo);
+            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
 
             var currentUser = System.Security.Principal.WindowsIdentity.GetCurrent();
 

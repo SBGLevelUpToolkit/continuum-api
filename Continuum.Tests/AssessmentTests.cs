@@ -11,7 +11,7 @@ namespace Continuum.Tests
     {
         private Continuum.Data.Mocks.MockContainer _mockContainer; 
         private Continuum.Data.AssessmentRepo _assessmentRepo;
-        private Continuum.Data.Mocks.MockTeamRepo _mockTeamRepo;
+        private Continuum.Data.TeamRepository _teamRepo;
         private Continuum.WebApi.Controllers.AssessmentController _assessmentController;
  
         public string TestUser
@@ -28,8 +28,8 @@ namespace Continuum.Tests
         {
             _mockContainer = new Data.Mocks.MockContainer(); 
             _assessmentRepo = new Continuum.Data.AssessmentRepo(_mockContainer);
-            _mockTeamRepo = new Continuum.Data.Mocks.MockTeamRepo();
-            _assessmentController = new Continuum.WebApi.Controllers.AssessmentController(_assessmentRepo, _mockTeamRepo);
+            _teamRepo = new Continuum.Data.TeamRepository(_mockContainer);
+            _assessmentController = new Continuum.WebApi.Controllers.AssessmentController(_assessmentRepo, _teamRepo);
         }
 
         [TestMethod]
@@ -37,9 +37,9 @@ namespace Continuum.Tests
         {
             string user = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
 
-            var team = new Data.Team();
-            team.TeamMembers.Add(new Data.TeamMember() { UserId = user });
-            _mockTeamRepo.TeamData.Add(team);
+            Data.Team team;
+            Data.TeamMember teamMember;
+            CreateTeamAndTeamMember(out team, out teamMember);
 
             try
             {
@@ -71,7 +71,7 @@ namespace Continuum.Tests
 
             var team = new Data.Team();
             team.TeamMembers.Add(new Data.TeamMember() { UserId = TestUser });
-            _mockTeamRepo.TeamData.Add(team);
+            _mockContainer.Teams.Add(team);
 
             _mockContainer.Assessments.Add(new Data.Assessment() 
             {
@@ -97,9 +97,9 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatModeratingWithoutCreatingAssessmentThrowsException()
         {
-            var team = new Data.Team();
-            team.TeamMembers.Add(new Data.TeamMember() { UserId = TestUser });
-            _mockTeamRepo.TeamData.Add(team);
+            Data.Team team;
+            Data.TeamMember teamMember;
+            CreateTeamAndTeamMember(out team, out teamMember);
 
             var result = new Continuum.WebApi.Models.AssessmentResult();
 
@@ -120,7 +120,7 @@ namespace Continuum.Tests
         {
             var assessmentItem = CreateOpenAssessment();
 
-            _mockTeamRepo.TeamData.First().TeamMembers.First().IsAdmin = false;
+            _mockContainer.Teams.First().TeamMembers.First().IsAdmin = false;
 
             try
             {
@@ -139,7 +139,7 @@ namespace Continuum.Tests
         {
             var assessmentItem = CreateOpenAssessment();
 
-            _mockTeamRepo.TeamData.First().TeamMembers.First().IsAdmin = true;
+            _mockContainer.Teams.First().TeamMembers.First().IsAdmin = true;
 
             try
             {
@@ -157,7 +157,7 @@ namespace Continuum.Tests
         {
             var assessmentItem = CreateOpenAssessment();
 
-            _mockTeamRepo.TeamData.First().TeamMembers.First().IsAdmin = false;
+            _mockContainer.Teams.First().TeamMembers.First().IsAdmin = false;
             _mockContainer.Assessments.First().Status.Value = "Moderating";
 
             try
@@ -189,10 +189,9 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatNewAssessmentIsCreatedWithOpenStatus()
         {
-             var team = new Data.Team() { Id = 1 };
-            var teamMember = new Data.TeamMember() { UserId = TestUser, Id = 1 };
-            team.TeamMembers.Add(teamMember);
-            _mockTeamRepo.TeamData.Add(team);
+            Data.Team team;
+            Data.TeamMember teamMember;
+            CreateTeamAndTeamMember(out team, out teamMember);
 
             _assessmentController.Create();
 
@@ -218,11 +217,9 @@ namespace Continuum.Tests
 
         private Continuum.WebApi.Models.AssessmentItem CreateOpenAssessment()
         {
-            var team = new Data.Team() { Id = 1 };
-            var teamMember = new Data.TeamMember() { UserId = TestUser, Id = 1 };
-            team.TeamMembers.Add(teamMember);
-            _mockTeamRepo.TeamData.Add(team);
-
+            Data.Team team;
+            Data.TeamMember teamMember;
+            CreateTeamAndTeamMember(out team, out teamMember);
 
             var assessment = new Data.Assessment()
             {
@@ -250,6 +247,17 @@ namespace Continuum.Tests
                 CapabilityAchieved = assessmentItem.CapabilityAchieved,
                 CapabilityId = assessmentItem.CapabiltyId
             };
+        }
+
+        private void CreateTeamAndTeamMember(out Data.Team team, out Data.TeamMember teamMember)
+        {
+            team = new Data.Team() { Id = 1 };
+            teamMember = new Data.TeamMember() { UserId = TestUser, Id = 1 };
+            teamMember.Team = team;
+            teamMember.TeamId = team.Id;
+            team.TeamMembers.Add(teamMember);
+            _mockContainer.Teams.Add(team);
+            _mockContainer.TeamMembers.Add(teamMember);
         }
 
 
@@ -309,7 +317,7 @@ namespace Continuum.Tests
         {
             var assessmentItem = CreateOpenAssessment();
 
-            _mockTeamRepo.TeamData.First().TeamMembers.First().IsAdmin = true;
+            _mockContainer.Teams.First().TeamMembers.First().IsAdmin = true;
 
             _assessmentController.Moderate();
 
@@ -323,7 +331,7 @@ namespace Continuum.Tests
         {
             var assessmentItem = CreateOpenAssessment();
 
-            _mockTeamRepo.TeamData.First().TeamMembers.First().IsAdmin = true;
+            _mockContainer.Teams.First().TeamMembers.First().IsAdmin = true;
             _mockContainer.Assessments.First().Status.Value = "Moderating";
 
             _assessmentController.Close();

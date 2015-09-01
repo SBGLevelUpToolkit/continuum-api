@@ -8,11 +8,16 @@ namespace Continuum.Data
 {
     public class TeamRepository : ITeamRepo
     {
-        private readonly Data.ContinuumDataContainer _container;
+        private readonly Data.IContinuumDataContainer _container;
 
         public TeamRepository()
         {
             _container = new ContinuumDataContainer();
+        }
+
+        public TeamRepository(IContinuumDataContainer container)
+        {
+            _container = container;
         }
 
         public IEnumerable<Team> All()
