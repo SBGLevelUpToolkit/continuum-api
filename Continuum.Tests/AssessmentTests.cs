@@ -9,11 +9,11 @@ namespace Continuum.Tests
     [TestClass]
     public class AssessmentTests
     {
-        private Continuum.Data.Mocks.MockAssessmentRepo _mockAssessmentRepo;
+        private Continuum.Data.Mocks.MockContainer _mockContainer; 
+        private Continuum.Data.AssessmentRepo _assessmentRepo;
         private Continuum.Data.Mocks.MockTeamRepo _mockTeamRepo;
         private Continuum.WebApi.Controllers.AssessmentController _assessmentController;
-        private Continuum.Data.Mocks.MockLookupRepo _mockLookups;
-
+ 
         public string TestUser
         {
             get
@@ -26,10 +26,10 @@ namespace Continuum.Tests
         [TestInitializeAttribute]
         public void Setup()
         {
-            _mockAssessmentRepo = new Continuum.Data.Mocks.MockAssessmentRepo();
+            _mockContainer = new Data.Mocks.MockContainer(); 
+            _assessmentRepo = new Continuum.Data.AssessmentRepo(_mockContainer);
             _mockTeamRepo = new Continuum.Data.Mocks.MockTeamRepo();
-            _mockLookups = new Continuum.Data.Mocks.MockLookupRepo(); 
-            _assessmentController = new Continuum.WebApi.Controllers.AssessmentController(_mockAssessmentRepo, _mockTeamRepo);
+            _assessmentController = new Continuum.WebApi.Controllers.AssessmentController(_assessmentRepo, _mockTeamRepo);
         }
 
         [TestMethod]
@@ -73,7 +73,7 @@ namespace Continuum.Tests
             team.TeamMembers.Add(new Data.TeamMember() { UserId = TestUser });
             _mockTeamRepo.TeamData.Add(team);
 
-            _mockAssessmentRepo.Assessments.Add(new Data.Assessment() 
+            _mockContainer.Assessments.Add(new Data.Assessment() 
             {
                 Id = 1,
                 Status = new Data.AssessmentStatus() { Value = "Closed" },
@@ -158,7 +158,7 @@ namespace Continuum.Tests
             var assessmentItem = CreateOpenAssessment();
 
             _mockTeamRepo.TeamData.First().TeamMembers.First().IsAdmin = false;
-            _mockAssessmentRepo.Assessments.First().Status = _mockLookups.GetLookupForValue<Data.AssessmentStatus>("Moderating");
+            _mockContainer.Assessments.First().Status.Value = "Moderating";
 
             try
             {
@@ -196,9 +196,9 @@ namespace Continuum.Tests
 
             _assessmentController.Create();
 
-            Assert.IsTrue(_mockAssessmentRepo.Assessments.Count == 1);
-            Assert.IsTrue(_mockAssessmentRepo.Assessments.First().Status.Equals(_mockLookups.GetLookupForValue<Data.AssessmentStatus>("Open")));
-            Assert.IsTrue(_mockAssessmentRepo.Assessments.First().TeamId == team.Id);
+            Assert.IsTrue(_mockContainer.Assessments.Count() == 1);
+            Assert.IsTrue(_mockContainer.Assessments.First().Status.Value == "Open");
+            Assert.IsTrue(_mockContainer.Assessments.First().TeamId == team.Id);
         }
 
         [TestMethod]
@@ -210,9 +210,9 @@ namespace Continuum.Tests
 
             _assessmentController.Post(new List<Continuum.WebApi.Models.AssessmentItem>() { assessmentItem });
 
-            Assert.IsTrue(_mockAssessmentRepo.Assessments.Count == 1);
-            Assert.IsTrue(_mockAssessmentRepo.Assessments.First().AssessmentItems.Count() == 1);
-            Assert.IsTrue(_mockAssessmentRepo.Assessments.First().AssessmentItems.First().CapabilityAchieved == false);
+            Assert.IsTrue(_mockContainer.Assessments.Count() == 1);
+            Assert.IsTrue(_mockContainer.Assessments.First().AssessmentItems.Count() == 1);
+            Assert.IsTrue(_mockContainer.Assessments.First().AssessmentItems.First().CapabilityAchieved == false);
 
         }
 
@@ -227,7 +227,7 @@ namespace Continuum.Tests
             var assessment = new Data.Assessment()
             {
                 Team = team,
-                Status = _mockLookups.GetLookupForValue<Data.AssessmentStatus>("Open"),
+                Status = new Data.AssessmentStatus(){ Value = "Open"},
                 Id = 1,
                 TeamId = team.Id
             };
@@ -243,7 +243,7 @@ namespace Continuum.Tests
 
             assessment.AssessmentItems.Add(assessmentItem);
 
-            _mockAssessmentRepo.Assessments.Add(assessment);
+            _mockContainer.Assessments.Add(assessment);
             return new WebApi.Models.AssessmentItem()
             {
                 AssesmentId = assessmentItem.Id,
@@ -274,7 +274,7 @@ namespace Continuum.Tests
         {
             var assessmentItem = CreateOpenAssessment();
 
-            _mockAssessmentRepo.Assessments.First().Status = _mockLookups.GetLookupForValue<Data.AssessmentStatus>("Moderating");
+            _mockContainer.Assessments.First().Status.Value = "Moderating";
 
             try
             {
@@ -292,16 +292,16 @@ namespace Continuum.Tests
         {
             CreateOpenAssessment();
 
-            _mockAssessmentRepo.Assessments.First().Status = _mockLookups.GetLookupForValue<Data.AssessmentStatus>("Moderating");
+            _mockContainer.Assessments.First().Status.Value = "Moderating";
 
             var result = new Continuum.WebApi.Models.AssessmentResult();
-            result.AssessmentId = _mockAssessmentRepo.Assessments.First().Id;
+            result.AssessmentId = _mockContainer.Assessments.First().Id;
             result.Rating = 3;
 
             _assessmentController.Put(new List<Continuum.WebApi.Models.AssessmentResult>() { result });
 
-            Assert.IsTrue(_mockAssessmentRepo.Assessments.First().AssessmentResults.Count == 1);
-            Assert.IsTrue(_mockAssessmentRepo.Assessments.First().AssessmentResults.First().Rating == result.Rating.ToString());
+            Assert.IsTrue(_mockContainer.Assessments.First().AssessmentResults.Count == 1);
+            Assert.IsTrue(_mockContainer.Assessments.First().AssessmentResults.First().Rating == result.Rating.ToString());
         }
 
         [TestMethod]
@@ -313,7 +313,7 @@ namespace Continuum.Tests
 
             _assessmentController.Moderate();
 
-            Assert.IsTrue(_mockAssessmentRepo.Assessments.First().Status.Equals(_mockLookups.GetLookupForValue<Data.AssessmentStatus>("Moderating")));
+            Assert.IsTrue(_mockContainer.Assessments.First().Status.Value == "Moderating");
         }
             
 
@@ -324,11 +324,11 @@ namespace Continuum.Tests
             var assessmentItem = CreateOpenAssessment();
 
             _mockTeamRepo.TeamData.First().TeamMembers.First().IsAdmin = true;
-            _mockAssessmentRepo.Assessments.First().Status = _mockLookups.GetLookupForValue<Data.AssessmentStatus>("Moderating");
+            _mockContainer.Assessments.First().Status.Value = "Moderating";
 
             _assessmentController.Close();
 
-            Assert.IsTrue(_mockAssessmentRepo.Assessments.First().Status.Equals(_mockLookups.GetLookupForValue<Data.AssessmentStatus>("Closed")));
+            Assert.IsTrue(_mockContainer.Assessments.First().Status.Value  == "Closed");
         }
     }
 }
