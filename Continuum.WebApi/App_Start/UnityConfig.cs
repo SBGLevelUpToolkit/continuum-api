@@ -23,8 +23,8 @@ namespace Continuum.WebApi
 
             container.RegisterType<Continuum.WebApi.Controllers.AccountController, Continuum.WebApi.Controllers.AccountController>();
 
-            //container.RegisterInstance<Data.IContinuumDataContainer>(new Data.ContinuumDataContainer());
-            container.RegisterInstance<Data.IContinuumDataContainer>(new Data.Mocks.MockContainer());
+            container.RegisterInstance<Data.IContinuumDataContainer>(new Data.ContinuumDataContainer());
+            //container.RegisterInstance<Data.IContinuumDataContainer>(new Data.Mocks.MockContainer());
 
             container.RegisterType<Data.IRepository<Data.Team>, Data.TeamRepository>();
             container.RegisterType<Data.DimensionRepo, Data.DimensionRepo>();
