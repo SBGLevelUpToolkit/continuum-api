@@ -110,7 +110,7 @@ namespace Continuum.Tests
             }
             catch (HttpResponseException ex)
             {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound);
+                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
             }
 
         }

@@ -12,6 +12,8 @@ namespace Continuum.Data
 
         void UpdateCapabilityForAssessment(Assessment assessment, IEnumerable<AssessmentItem> assessmentItems);
 
+        void UpdateModerationResultForAssessment(Assessment assessment, IEnumerable<Data.AssessmentResult> assessmentResults);
+
         void StartModeration(Assessment assessment);
 
         void CloseAssessment(Assessment assessment);
