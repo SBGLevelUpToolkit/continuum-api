@@ -247,6 +247,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="ExceptionBuilder.cs" />
+    <Compile Include="Filters\TeamAdminFilter.cs" />
     <Compile Include="Filters\UnhandledExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

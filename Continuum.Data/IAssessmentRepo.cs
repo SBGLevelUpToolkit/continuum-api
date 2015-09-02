@@ -15,5 +15,7 @@ namespace Continuum.Data
         void StartModeration(Assessment assessment);
 
         void CloseAssessment(Assessment assessment);
+
+        void CreateAssessmentForTeam(Team team);
     }
 }

@@ -25,5 +25,10 @@ namespace Continuum.WebApi
         {
             return CreateException(message, reason, HttpStatusCode.InternalServerError);
         }
+
+        public static HttpResponseException FromException(ApplicationException ex)
+        {
+            return CreateInternalServerError(ex.Message, "Application Error");
+        }
     }
 }

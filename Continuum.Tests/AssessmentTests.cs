@@ -116,25 +116,6 @@ namespace Continuum.Tests
         }
 
         [TestMethod]
-        public void TestThatOnlyTeamAdminCanModerateAssessment()
-        {
-            var assessmentItem = CreateOpenAssessment();
-
-            _mockContainer.Teams.First().TeamMembers.First().IsAdmin = false;
-
-            try
-            {
-                _assessmentController.Moderate();
-                Assert.Fail();
-            }
-            catch (HttpResponseException ex)
-            {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.Forbidden);
-            }
-
-        }
-
-        [TestMethod]
         public void TestThatCannotSetClosedOnOpenAssessment()
         {
             var assessmentItem = CreateOpenAssessment();
@@ -150,26 +131,6 @@ namespace Continuum.Tests
             {
                 Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
             }
-        }
-
-        [TestMethod]
-        public void TestThatOnlyTeamAdminCanCloseAssessment()
-        {
-            var assessmentItem = CreateOpenAssessment();
-
-            _mockContainer.Teams.First().TeamMembers.First().IsAdmin = false;
-            _mockContainer.Assessments.First().Status.Value = "Moderating";
-
-            try
-            {
-                _assessmentController.Moderate();
-                Assert.Fail();
-            }
-            catch (HttpResponseException ex)
-            {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.Forbidden);
-            }
-
         }
 
         [TestMethod]
