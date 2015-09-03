@@ -19,6 +19,8 @@ namespace Continuum.Data.Mocks
 
             var teamMember = new TeamMember() { UserId = "alice@example.com", IsAdmin = true, Team = team, TeamId = team.Id };
 
+            team.TeamMembers.Add(teamMember);
+
             Add(teamMember);
         }
 

@@ -13,10 +13,11 @@ namespace Continuum.Data.Mocks
 
             var team = new Data.Team()
             {
-             Name = "Test Team" 
+                Id = 1,
+                Name = "Test Team"
             };
 
-            team.TeamMembers.Add(new TeamMember(){ UserId = "alice@example.com", IsAdmin = true});
+            team.TeamMembers.Add(new TeamMember(){ UserId = "alice@example.com", IsAdmin = true, Team = team});
 
             this.Add(team);
         }
