@@ -9,12 +9,12 @@ using Continuum.Data;
 namespace Continuum.WebApi.Controllers
 {
     [Authorize]
-    public class AssessmentController : ApiController
+    public class AssessmentController : ControllerBase
     {
         private readonly Data.IAssessmentRepo _assessmentRepo;
         private readonly Data.ITeamRepo _teamRepo;
 
-        public AssessmentController(Data.IAssessmentRepo assessmentRepo, Data.ITeamRepo teamRepo)
+        public AssessmentController(Data.IAssessmentRepo assessmentRepo, Data.ITeamRepo teamRepo) : base(teamRepo)
         {
             _assessmentRepo = assessmentRepo;
             _teamRepo = teamRepo;
@@ -45,15 +45,7 @@ namespace Continuum.WebApi.Controllers
             return result;
         }
 
-        private Data.Team GetTeamForUser()
-        {
-            var team = _teamRepo.GetTeamForUser(User.Identity.Name).FirstOrDefault();
-            if (team == null)
-            {
-                throw ExceptionBuilder.CreateInternalServerError(String.Format("{0} is not a member of a team.", User.Identity.Name), "No Team.");
-            }
-            return team;
-        }
+  
 
         public void Put(IEnumerable<Models.AssessmentResult> assessmentResults)
         {
@@ -114,6 +106,7 @@ namespace Continuum.WebApi.Controllers
         }
 
         [Route("api/assessment/create")]
+        [Filters.TeamAdminFilter]
         public void Create()
         {
             try

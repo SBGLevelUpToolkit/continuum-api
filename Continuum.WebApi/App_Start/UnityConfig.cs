@@ -13,15 +13,7 @@ namespace Continuum.WebApi
         public static void RegisterComponents()
         {
 			var container = new UnityContainer();
-            
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
-            
-            // e.g. container.RegisterType<ITestService, TestService>();
-
-
-           // var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
-
+    
             container.RegisterType<Continuum.WebApi.Controllers.AccountController, Continuum.WebApi.Controllers.AccountController>();
 
             if (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME")))
@@ -39,6 +31,7 @@ namespace Continuum.WebApi
             container.RegisterType<Data.IAssessmentRepo, Data.AssessmentRepo>();
             container.RegisterType<Data.ITeamRepo, Data.TeamRepository>();
             container.RegisterType< Data.ILookupRepo, Data.LookupRepo>();
+            container.RegisterType<Data.GoalRepository, Data.GoalRepository>(); 
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

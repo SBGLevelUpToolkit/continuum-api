@@ -72,7 +72,7 @@ namespace Continuum.Tests
 
             WebApi.Models.Team newTeam = new WebApi.Models.Team() 
             {
-                Name = "Test Team"
+                Name = Guid.NewGuid().ToString()
             };
 
             var result = teamController.Put(newTeam);
@@ -92,7 +92,7 @@ namespace Continuum.Tests
 
             WebApi.Models.Team newTeam = new WebApi.Models.Team() 
             {
-                Name = "Test Team"
+                Name = Guid.NewGuid().ToString()
             };
 
             teamController.Put(newTeam);

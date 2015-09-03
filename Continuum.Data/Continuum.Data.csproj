@@ -94,6 +94,7 @@
     <Compile Include="Goal.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
+    <Compile Include="GoalRepository.cs" />
     <Compile Include="IAssessmentRepo.cs" />
     <Compile Include="IContinuumDataContainer.cs" />
     <Compile Include="ILookupRepo.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Mocks\MockAssessmentDBSet.cs" />
     <Compile Include="Mocks\MockContainer.cs" />
     <Compile Include="Mocks\MockDimensionRepo.cs" />
+    <Compile Include="Mocks\MockGoalsDBSet.cs" />
     <Compile Include="Mocks\MockLookupDBSet.cs" />
     <Compile Include="Mocks\MockOrganisationDBSet.cs" />
     <Compile Include="Mocks\MockTeamDBSet.cs" />

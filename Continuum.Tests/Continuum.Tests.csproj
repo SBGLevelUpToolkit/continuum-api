@@ -76,6 +76,7 @@
     <Compile Include="DimensionTests.cs" />
     <Compile Include="TeamTests.cs" />
     <Compile Include="AssessmentTests.cs" />
+    <Compile Include="GoalTests.cs" />
     <Compile Include="UserTests.cs" />
   </ItemGroup>
   <ItemGroup>
