@@ -102,7 +102,10 @@ namespace Continuum.Tests
 
             var teamMember = team.TeamMembers.Where(i => i.UserId == user.Name).FirstOrDefault();
 
-            Assert.IsNotNull(teamMember, "User was not assigned to team. The current user is " + user.Name);
+            string allUsers = String.Join(",",team.TeamMembers.Select(i => i.UserId).ToArray());
+
+
+            Assert.IsNotNull(teamMember, "User was not assigned to team. The current user is " + user.Name + " Current Users:" + allUsers);
 
             Assert.IsTrue(teamMember.IsAdmin, "User was not created as administrator.");
 
