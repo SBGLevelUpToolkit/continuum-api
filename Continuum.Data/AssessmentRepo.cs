@@ -128,5 +128,13 @@ namespace Continuum.Data
                 }                
             } 
         }
+
+
+        public IEnumerable<AssessmentItem> GetCurrentAssessmentItemsForUser(string userId)
+        {
+            var teamMember = _container.TeamMembers.Where(i => i.UserId == userId).FirstOrDefault();
+            var assessment = GetCurrentAssessmentForTeam(teamMember.TeamId);
+            return assessment.AssessmentItems.Where(i => i.TeamMemberId == teamMember.Id).AsEnumerable();
+        }
     }
 }

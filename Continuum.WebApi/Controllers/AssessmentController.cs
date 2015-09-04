@@ -13,39 +13,26 @@ namespace Continuum.WebApi.Controllers
     {
         private readonly Data.IAssessmentRepo _assessmentRepo;
         private readonly Data.ITeamRepo _teamRepo;
+        private readonly Logic.AssessmentLogic _assessmentLogic; 
 
         public AssessmentController(Data.IAssessmentRepo assessmentRepo, Data.ITeamRepo teamRepo) : base(teamRepo)
         {
             _assessmentRepo = assessmentRepo;
             _teamRepo = teamRepo;
+            _assessmentLogic = new Logic.AssessmentLogic(_assessmentRepo, _teamRepo, CurrentUser == null ?  this.User : CurrentUser);
         }
 
         public Models.Assessment Get()
         {
-            var team = GetTeamForUser();
-            var teamMember = team.TeamMembers.Where(i => i.UserId == User.Identity.Name).First();
-            var assessment = _assessmentRepo.GetCurrentAssessmentForTeam(team.Id);
-
-            if (assessment == null)
+            try
             {
-                throw ExceptionBuilder.CreateException("No assessment data is available for this team.", "Not Found.", HttpStatusCode.NotFound);
+                return _assessmentLogic.GetAssessment();
             }
-
-            var assessmentItems = assessment.AssessmentItems.Where(i=>i.TeamMemberId == teamMember.Id);
-            var assessmentResults = assessment.AssessmentResults.Select(i => new Models.AssessmentResult() { AssessmentId = assessment.Id, DimensionId = i.DimensionId, Rating = Int32.Parse(i.Rating) });
-
-            var result = new Models.Assessment()
+            catch (ApplicationException ex)
             {
-                Id = assessment.Id,
-                Status = assessment.Status.Value,
-                AssessmentItems = assessmentItems.Select(i => new Models.AssessmentItem() { AssesmentId = assessment.Id, CapabilityAchieved = i.CapabilityAchieved, CapabilityId = i.CapabiltyId }),
-                AssessmentResults = assessmentResults
-            };
-
-            return result;
+                throw ExceptionBuilder.FromException(ex);
+            }            
         }
-
-  
 
         public void Put(IEnumerable<Models.AssessmentResult> assessmentResults)
         {

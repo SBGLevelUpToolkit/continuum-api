@@ -19,5 +19,8 @@ namespace Continuum.Data
         void CloseAssessment(Assessment assessment);
 
         void CreateAssessmentForTeam(Team team);
+
+        IEnumerable<Data.AssessmentItem> GetCurrentAssessmentItemsForUser(string userId);
+
     }
 }

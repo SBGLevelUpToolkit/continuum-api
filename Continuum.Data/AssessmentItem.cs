@@ -21,5 +21,6 @@ namespace Continuum.Data
         public bool CapabilityAchieved { get; set; }
     
         public virtual Capability Capabilty { get; set; }
+        
     }
 }

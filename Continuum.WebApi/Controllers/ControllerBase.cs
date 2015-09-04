@@ -7,6 +7,8 @@ namespace Continuum.WebApi.Controllers
 {
     public class ControllerBase : System.Web.Http.ApiController
     {
+        public static System.Security.Principal.IPrincipal CurrentUser; 
+
         private readonly Data.ITeamRepo _teamRepo; 
         public ControllerBase(Data.ITeamRepo teamRepo)
         {

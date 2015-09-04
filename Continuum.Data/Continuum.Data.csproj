@@ -120,6 +120,7 @@
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries.cs" />
     <Compile Include="Team.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>

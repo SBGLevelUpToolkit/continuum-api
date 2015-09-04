@@ -41,7 +41,7 @@ namespace Continuum.Tests
         }
 
         [TestMethod]
-        public void TestThatGetWhenNoResultsReturnsNotFound()
+        public void TestThatGetWhenNoResultsThrowsException()
         {
             string user = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
 
@@ -55,7 +55,7 @@ namespace Continuum.Tests
             }
             catch (HttpResponseException ex)
             {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound);
+                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
             }
            
         }
@@ -67,6 +67,8 @@ namespace Continuum.Tests
             {
                  var identity = new System.Security.Principal.GenericIdentity("noteam@example.com");
                  var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
+
+                 Continuum.WebApi.Controllers.AssessmentController.CurrentUser = princpal; 
 
                 _assessmentController.User = princpal;
 
