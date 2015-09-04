@@ -12,12 +12,17 @@ namespace Continuum.Tests
 
         private Continuum.Data.Mocks.MockContainer _mockContainer;
         private Continuum.Data.TeamRepository _teamRepo;
+        private System.Security.Principal.IPrincipal _currentUser;
 
         [TestInitializeAttribute]
         public void Setup()
         {
             _mockContainer = new Data.Mocks.MockContainer();
             _teamRepo = new Continuum.Data.TeamRepository(_mockContainer);
+
+            var identity = new System.Security.Principal.GenericIdentity("alice@example.com");
+            _currentUser = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
+
         }
 
         [TestMethod]
@@ -43,6 +48,7 @@ namespace Continuum.Tests
         public void TestThatNewTeamsForUserAreAdded()
         {
             Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
+            controller.User = _currentUser;
 
             _mockContainer.Teams.Add(new Data.Team()
             {
@@ -50,14 +56,12 @@ namespace Continuum.Tests
                   Id = 100
             });
 
-            var currentUser = System.Security.Principal.WindowsIdentity.GetCurrent();
-
             var teams = new List<Continuum.WebApi.Models.Team>();
             teams.Add(new WebApi.Models.Team() { Id = 100 });
 
             Continuum.WebApi.Models.User user = new WebApi.Models.User()
             {
-                UserId = currentUser.Name, 
+                UserId = _currentUser.Identity.Name, 
                 Teams = teams
             };
 
@@ -65,13 +69,14 @@ namespace Continuum.Tests
 
             var team = _mockContainer.Teams.Where(i => i.Id == 100).First();
             Assert.IsNotNull(team, "Could not retrieve team.");
-            Assert.IsTrue(team.TeamMembers.Any(i => i.UserId == currentUser.Name), "User was not added to the team.");
+            Assert.IsTrue(team.TeamMembers.Any(i => i.UserId == _currentUser.Identity.Name), "User was not added to the team.");
         }
 
         [TestMethod]
         public void TestThatInvalidTeamIdThrowsException()
         {
             Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
+            controller.User = _currentUser;
 
             _mockContainer.Teams.Add(new Data.Team()
             {
@@ -79,14 +84,12 @@ namespace Continuum.Tests
                 Id = 100
             });
 
-            var currentUser = System.Security.Principal.WindowsIdentity.GetCurrent();
-
             var teams = new List<Continuum.WebApi.Models.Team>();
             teams.Add(new WebApi.Models.Team() { Id = 999 });
 
             Continuum.WebApi.Models.User user = new WebApi.Models.User()
             {
-                UserId = currentUser.Name,
+                UserId = _currentUser.Identity.Name,
                 Teams = teams
             };
 
@@ -105,6 +108,8 @@ namespace Continuum.Tests
         public void TestThatSystemDoesNotCreateDuplicateTeamMemberships()
         {
             Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
+            controller.User = _currentUser; 
+
 
             _mockContainer.Teams.Add(new Data.Team()
             {
@@ -112,15 +117,13 @@ namespace Continuum.Tests
                 Id = 100
             });
 
-            var currentUser = System.Security.Principal.WindowsIdentity.GetCurrent();
-
             var teams = new List<Continuum.WebApi.Models.Team>();
             teams.Add(new WebApi.Models.Team() { Id = 100 });
             teams.Add(new WebApi.Models.Team() { Id = 100 });
 
             Continuum.WebApi.Models.User user = new WebApi.Models.User()
             {
-                UserId = currentUser.Name,
+                UserId = _currentUser.Identity.Name,
                 Teams = teams
             };
 
@@ -128,21 +131,20 @@ namespace Continuum.Tests
 
             var team = _mockContainer.Teams.Where(i => i.Id == 100).First();
             Assert.IsNotNull(team, "Could not retrieve team.");
-            Assert.IsTrue(team.TeamMembers.Count(i => i.UserId == currentUser.Name) == 1 , "Duplicate team entries created.");
+            Assert.IsTrue(team.TeamMembers.Count(i => i.UserId == _currentUser.Identity.Name) == 1 , "Duplicate team entries created.");
         }
 
         [TestMethod]
         public void TestThatEmptyTeamCollectionThrowsException()
         {
             Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
-
-            var currentUser = System.Security.Principal.WindowsIdentity.GetCurrent();
-
+            controller.User = _currentUser;
+        
             var teams = new List<Continuum.WebApi.Models.Team>();
 
             Continuum.WebApi.Models.User user = new WebApi.Models.User()
             {
-                UserId = currentUser.Name,
+                UserId = _currentUser.Identity.Name,
                 Teams = teams
             };
 
