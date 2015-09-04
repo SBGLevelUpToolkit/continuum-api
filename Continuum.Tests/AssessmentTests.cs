@@ -29,7 +29,15 @@ namespace Continuum.Tests
             _mockContainer = new Data.Mocks.MockContainer(); 
             _assessmentRepo = new Continuum.Data.AssessmentRepo(_mockContainer);
             _teamRepo = new Continuum.Data.TeamRepository(_mockContainer);
+
+
+            var identity = new System.Security.Principal.GenericIdentity("alice@example.com");
+            var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
+
+
             _assessmentController = new Continuum.WebApi.Controllers.AssessmentController(_assessmentRepo, _teamRepo);
+            _assessmentController.User = princpal;
+
         }
 
         [TestMethod]
@@ -57,6 +65,11 @@ namespace Continuum.Tests
         {
             try
             {
+                 var identity = new System.Security.Principal.GenericIdentity("noteam@example.com");
+                 var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
+
+                _assessmentController.User = princpal;
+
                 _assessmentController.Get();
             }
             catch (HttpResponseException ex)
