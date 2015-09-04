@@ -17,7 +17,7 @@ namespace Continuum.Tests
         Data.Mocks.MockContainer _mockContainer;
         Data.TeamRepository _teamRepository;
 
-
+        
         [TestInitialize]
         public void SetUp()
         {
@@ -95,14 +95,14 @@ namespace Continuum.Tests
                 Name = Guid.NewGuid().ToString()
             };
 
-            teamController.Put(newTeam);
+            var result = teamController.Put(newTeam);
 
             var team = _mockContainer.Teams.Where(i => i.Name == newTeam.Name).FirstOrDefault();
             Assert.IsNotNull(team, "Could not find new team");
 
             var teamMember = team.TeamMembers.Where(i => i.UserId == user.Name).FirstOrDefault();
 
-            string allUsers = String.Join(",",team.TeamMembers.Select(i => i.UserId).ToArray());
+            string allUsers = String.Join(",",team.TeamMembers.Select(i => i.UserId + i.IsAdmin.ToString()).ToArray());
 
 
             Assert.IsNotNull(teamMember, "User was not assigned to team. The current user is " + user.Name + " Current Users:" + allUsers);
