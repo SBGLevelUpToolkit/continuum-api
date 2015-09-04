@@ -13,6 +13,7 @@ namespace Continuum.Tests
         private Continuum.Data.Mocks.MockContainer _mockContainer;
         private Continuum.Data.TeamRepository _teamRepo;
         private System.Security.Principal.IPrincipal _currentUser;
+        private Continuum.WebApi.Controllers.UserController _controller;
 
         [TestInitializeAttribute]
         public void Setup()
@@ -20,22 +21,23 @@ namespace Continuum.Tests
             _mockContainer = new Data.Mocks.MockContainer();
             _teamRepo = new Continuum.Data.TeamRepository(_mockContainer);
 
+           
             var identity = new System.Security.Principal.GenericIdentity("alice@example.com");
             _currentUser = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
+
+            _controller = new WebApi.Controllers.UserController(_teamRepo);
+            _controller.User = _currentUser; 
 
         }
 
         [TestMethod]
         public void TestThatUserCannotUpdateAnotherUserDetails()
         {
- 
-            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
-
             Continuum.WebApi.Models.User user = new WebApi.Models.User() { UserId = "test@test.com" };
 
             try
             {
-                controller.Put(user);
+                _controller.Put(user);
                 Assert.Fail("Cannot update another user's details.");
             }
             catch(HttpResponseException ex)
@@ -47,9 +49,6 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatNewTeamsForUserAreAdded()
         {
-            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
-            controller.User = _currentUser;
-
             _mockContainer.Teams.Add(new Data.Team()
             {
                  Name = "Test Team",
@@ -65,7 +64,7 @@ namespace Continuum.Tests
                 Teams = teams
             };
 
-            controller.Put(user);
+            _controller.Put(user);
 
             var team = _mockContainer.Teams.Where(i => i.Id == 100).First();
             Assert.IsNotNull(team, "Could not retrieve team.");
@@ -75,9 +74,7 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatInvalidTeamIdThrowsException()
         {
-            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
-            controller.User = _currentUser;
-
+     
             _mockContainer.Teams.Add(new Data.Team()
             {
                 Name = "Test Team",
@@ -95,7 +92,7 @@ namespace Continuum.Tests
 
             try
             {
-                controller.Put(user);
+                _controller.Put(user);
                 Assert.Fail(); 
             }
             catch (HttpResponseException ex)
@@ -107,10 +104,7 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatSystemDoesNotCreateDuplicateTeamMemberships()
         {
-            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
-            controller.User = _currentUser; 
-
-
+     
             _mockContainer.Teams.Add(new Data.Team()
             {
                 Name = "Test Team",
@@ -127,7 +121,7 @@ namespace Continuum.Tests
                 Teams = teams
             };
 
-            controller.Put(user);
+            _controller.Put(user);
 
             var team = _mockContainer.Teams.Where(i => i.Id == 100).First();
             Assert.IsNotNull(team, "Could not retrieve team.");
@@ -137,9 +131,6 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatEmptyTeamCollectionThrowsException()
         {
-            Continuum.WebApi.Controllers.UserController controller = new WebApi.Controllers.UserController(_teamRepo);
-            controller.User = _currentUser;
-        
             var teams = new List<Continuum.WebApi.Models.Team>();
 
             Continuum.WebApi.Models.User user = new WebApi.Models.User()
@@ -150,7 +141,7 @@ namespace Continuum.Tests
 
             try
             {
-                controller.Put(user);
+                _controller.Put(user);
             }
             catch (HttpResponseException ex)
             {
