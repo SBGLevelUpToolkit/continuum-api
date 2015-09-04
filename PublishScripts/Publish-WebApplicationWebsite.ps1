@@ -52,7 +52,7 @@ function Test-WebApplication
     #Edit this function to run unit tests on your web application
 
     #Write a function to run unit tests on your web application, use VSTest.Console.exe. For help, see VSTest.Console Command-Line Reference at http://go.microsoft.com/fwlink/?LinkId=391340
-	& "vstest.console.exe  Continuum.Tests.dll"
+
 }
 
 function New-AzureWebApplicationWebsiteEnvironment

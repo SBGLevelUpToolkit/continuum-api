@@ -22,6 +22,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Continuum.Data", "Continuum
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelLoader", "ModelLoader\ModelLoader.csproj", "{1B3480CA-D8D9-4BF4-891C-D59515E59ABD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AAC55ECF-2202-4B62-9C11-B6C7568EF334}"
+	ProjectSection(SolutionItems) = preProject
+		.deployment = .deployment
+		deploy.cmd = deploy.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
