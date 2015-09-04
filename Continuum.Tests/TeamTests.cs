@@ -84,11 +84,16 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatUserWhoCreatesTeamIsSetAsTeamAdmin()
         {
-            var user = System.Security.Principal.WindowsIdentity.GetCurrent();
+           /// var user = System.Security.Principal.WindowsIdentity.GetCurrent();
+
+
+           var identity = new System.Security.Principal.GenericIdentity("TestUser");
+           var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
 
     
             TeamController teamController = new TeamController(_teamRepository);
             teamController.Request = _request;
+            teamController.User = princpal; 
 
             WebApi.Models.Team newTeam = new WebApi.Models.Team() 
             {
@@ -100,12 +105,12 @@ namespace Continuum.Tests
             var team = _mockContainer.Teams.Where(i => i.Name == newTeam.Name).FirstOrDefault();
             Assert.IsNotNull(team, "Could not find new team");
 
-            var teamMember = team.TeamMembers.Where(i => i.UserId == user.Name).FirstOrDefault();
+            var teamMember = team.TeamMembers.Where(i => i.UserId == identity.Name).FirstOrDefault();
 
             string allUsers = String.Join(",",team.TeamMembers.Select(i => i.UserId + i.IsAdmin.ToString()).ToArray());
 
 
-            Assert.IsNotNull(teamMember, "User was not assigned to team. The current user is " + user.Name + " Current Users:" + allUsers);
+            Assert.IsNotNull(teamMember, "User was not assigned to team. The current user is " + identity.Name + " Current Users:" + allUsers);
 
             Assert.IsTrue(teamMember.IsAdmin, "User was not created as administrator.");
 
