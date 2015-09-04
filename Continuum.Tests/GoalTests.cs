@@ -13,7 +13,7 @@ namespace Continuum.Tests
         Data.IContinuumDataContainer _mockContainer;
         Data.TeamRepository _teamRepo;
         Data.GoalRepository _goalRepo;
-
+        GoalController _controller;
 
         [TestInitialize]
         public void Setup() 
@@ -21,6 +21,12 @@ namespace Continuum.Tests
             _mockContainer = new Data.Mocks.MockContainer();
             _teamRepo = new Data.TeamRepository(_mockContainer);
             _goalRepo = new Data.GoalRepository(_mockContainer);
+
+            var identity = new System.Security.Principal.GenericIdentity("alice@example.com");
+            var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
+
+            _controller = new GoalController(_goalRepo, _teamRepo);
+            _controller.User = princpal;
         }
 
         [TestMethod]
@@ -32,10 +38,8 @@ namespace Continuum.Tests
 
             _mockContainer.Goals.Add(new Data.Goal() { Completed = true, TeamId = team.Id });
             _mockContainer.Goals.Add(new Data.Goal() { Completed = false, TeamId = team.Id });
-
-            var controller = new GoalController(_goalRepo, _teamRepo);
-
-            var result = controller.Get();
+           
+            var result = _controller.Get();
 
             Assert.IsTrue(result.Count() == 1);
         }
@@ -43,8 +47,6 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatCreateGoalCreates()
         {
-            var controller = new GoalController(_goalRepo, _teamRepo);
-
             WebApi.Models.Goal goal = new WebApi.Models.Goal()
             {
                 CapabilityId = 1,
@@ -52,7 +54,7 @@ namespace Continuum.Tests
                 Notes = "Some Notes"
             };
 
-            controller.Post(goal);
+            _controller.Post(goal);
 
             Assert.IsTrue(_mockContainer.Goals.Count() == 1);
         }
@@ -60,8 +62,6 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatCreateGoalInPastThrowsException()
         {
-            var controller = new GoalController(_goalRepo, _teamRepo);
-
             WebApi.Models.Goal goal = new WebApi.Models.Goal()
             {
                 CapabilityId = 1,
@@ -71,7 +71,7 @@ namespace Continuum.Tests
 
             try
             {
-                controller.Post(goal);
+                _controller.Post(goal);
                 Assert.Fail();
             }
             catch(HttpResponseException ex)
@@ -89,8 +89,6 @@ namespace Continuum.Tests
 
             _mockContainer.Goals.Add(new Data.Goal() { Completed = false, TeamId = team.Id, Id = 1 });
 
-            var controller = new GoalController(_goalRepo, _teamRepo);
-
             WebApi.Models.Goal goal = new WebApi.Models.Goal()
             {
                 CapabilityId = 1,
@@ -99,7 +97,7 @@ namespace Continuum.Tests
                 Completed = true 
             };
 
-            controller.Put(1,goal);
+            _controller.Put(1,goal);
 
             var updatedGoal = _mockContainer.Goals.Where(i => i.Id == 1).FirstOrDefault();
             Assert.IsNotNull(updatedGoal);
@@ -117,9 +115,7 @@ namespace Continuum.Tests
 
             _mockContainer.Goals.Add(new Data.Goal() { Completed = false, TeamId = team.Id, Id = 1 });
 
-            var controller = new GoalController(_goalRepo, _teamRepo);
-
-            controller.Delete(1);
+            _controller.Delete(1);
 
             Assert.IsTrue(_mockContainer.Goals.Count() == 0);
         }
