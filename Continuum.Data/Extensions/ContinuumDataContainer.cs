@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 namespace Continuum.Data
 {
     public partial class ContinuumDataContainer : IContinuumDataContainer
-    {   
+    {
+        public void SetStateForEntity<T>(T entity, System.Data.Entity.EntityState state) where T : class
+        {
+            this.Entry(entity).State = state;        
+        }
     }
 }

@@ -38,5 +38,26 @@ namespace Continuum.Data.Mocks
             ChangesSaved = true;
             return 0; 
         }
+
+        public virtual void SetStateForEntity<T>(T entity, System.Data.Entity.EntityState state) where T : class
+        {
+            if (state == System.Data.Entity.EntityState.Modified)
+            {
+                if (entity is Data.Goal)
+                {
+                    var goal = entity as Data.Goal;
+                    if (this.Goals.Any(i => i.Id == goal.Id))
+                    {
+                        var currentGoal = this.Goals.First(i => i.Id == goal.Id);
+                        this.Goals.Remove(currentGoal);
+                        this.Goals.Add(goal);
+                    }
+                    else
+                    {
+                        throw new ApplicationException("Entity not found.");
+                    }
+                }
+            }
+        }
     }
 }

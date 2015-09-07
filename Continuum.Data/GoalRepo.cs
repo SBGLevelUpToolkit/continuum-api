@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace Continuum.Data
 
         public IEnumerable<Data.Goal> GetActiveGoalsForTeam(Team team)
         {
-            return _container.Goals.Where(i => i.TeamId == team.Id && i.Completed == false);
+            return GetActiveGoalsForTeam(team.Id);
         }
 
         public IEnumerable<Data.Goal> GetActiveGoalsForTeam(int teamId)
@@ -42,6 +43,7 @@ namespace Continuum.Data
 
         public void UpdateGoal(Goal goal)
         {
+            /*
             var goalToUpdate = _container.Goals.Find(goal.Id);
             if (goalToUpdate == null)
             {
@@ -52,7 +54,9 @@ namespace Continuum.Data
             goalToUpdate.Completed = goal.Completed;
             goalToUpdate.Description = goal.Description;
             goalToUpdate.DueDate = goal.DueDate;
-           
+           */
+            _container.SetStateForEntity(goal, System.Data.Entity.EntityState.Modified);
+            
         }
 
         public void DeleteGoalById(int id)

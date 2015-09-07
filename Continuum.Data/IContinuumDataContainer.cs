@@ -23,5 +23,7 @@ namespace Continuum.Data
         IDbSet<CapabilityRequirement> CapabilityRequirements { get; set; }
 
         int SaveChanges();
+
+        void SetStateForEntity<T>(T entity, System.Data.Entity.EntityState state) where T : class;
     }
 }

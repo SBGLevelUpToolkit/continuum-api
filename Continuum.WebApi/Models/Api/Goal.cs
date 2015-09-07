@@ -9,7 +9,7 @@ namespace Continuum.WebApi.Models
     public class Goal
     {
         public int DimensionId { get; set; }
-        
+
         public int CapabilityId { get; set; }
 
         public string Notes { get; set; }
