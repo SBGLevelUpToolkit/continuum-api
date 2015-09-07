@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Continuum.Data;
+using Continuum.WebApi.Filters;
 
 namespace Continuum.WebApi.Controllers
 {
@@ -12,43 +13,39 @@ namespace Continuum.WebApi.Controllers
     {
         private readonly GoalRepository _goalRepository;
         private readonly ITeamRepo _teamRepo;
-
+        private readonly Logic.GoalLogic _goalLogic;
+        private readonly Logic.TeamLogic _teamLogic;
         
-        public GoalController(Data.GoalRepository goalRepository, Data.ITeamRepo teamRepo) : base(teamRepo)
+        public GoalController(Data.GoalRepository goalRepository, Data.ITeamRepo teamRepo)
         {
             _goalRepository = goalRepository;
-            _teamRepo = teamRepo; 
+            _teamRepo = teamRepo;
+
+            var user = CurrentUser == null ? this.User : CurrentUser;
+            _teamLogic = new Logic.TeamLogic(_teamRepo, user);
+            _goalLogic = new Logic.GoalLogic(_goalRepository, user);
         }
 
         public IEnumerable<Models.Goal> Get()
         {
-            var team = GetTeamForUser();
-            return _goalRepository.GetActiveGoalsForTeam(team).Select(i => new Models.Goal() { CapabilityId = i.CapabiltyId, DueDate =i.DueDate, Notes = i.Title });
+            var team = _teamLogic.GetTeamForUser();
+            return _goalLogic.ListGoalsForTeam(team); 
         }
 
+        [ApplicationExceptionFilter]
         public void Post(Models.Goal goal)
         {
-            try
-            {
-                _goalRepository.CreateGoal(new Data.Goal() { CapabiltyId = goal.CapabilityId, DueDate = goal.DueDate, Description = goal.Notes });
-                _goalRepository.SaveChanges();
-            }
-            catch (ApplicationException ex)
-            {
-                throw ExceptionBuilder.FromException(ex);
-            }
+            _goalLogic.CreateGoal(goal);
         }
 
         public void Put(int id, Models.Goal goal)
         {
-            _goalRepository.UpdateGoal(new Data.Goal() { Id = id, CapabiltyId = goal.CapabilityId, DueDate = goal.DueDate, Description = goal.Notes, Completed = goal.Completed });
-            _goalRepository.SaveChanges();
+            _goalLogic.UpdateGoalById(id, goal);       
         }
 
         public void Delete(int id)
         {
-            _goalRepository.DeleteGoalById(id);
-            _goalRepository.SaveChanges(); 
+            _goalLogic.DeleteGoal(id); 
         }
     }
 }

@@ -60,6 +60,7 @@ namespace Continuum.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
         public void TestThatCreateGoalInPastThrowsException()
         {
             WebApi.Models.Goal goal = new WebApi.Models.Goal()
@@ -69,15 +70,8 @@ namespace Continuum.Tests
                 Notes = "Some Notes"
             };
 
-            try
-            {
-                _controller.Post(goal);
-                Assert.Fail();
-            }
-            catch(HttpResponseException ex)
-            {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
-            }
+            _controller.Post(goal);
+            Assert.Fail();
         }
 
         [TestMethod]

@@ -20,6 +20,11 @@ namespace Continuum.Data
             return _container.Goals.Where(i => i.TeamId == team.Id && i.Completed == false);
         }
 
+        public IEnumerable<Data.Goal> GetActiveGoalsForTeam(int teamId)
+        {
+            return _container.Goals.Where(i => i.TeamId == teamId && i.Completed == false);
+        }
+
         public void CreateGoal(Goal goal)
         {
             if (goal.DueDate < DateTime.Now)

@@ -16,7 +16,7 @@ namespace Continuum.WebApi.Controllers
         private readonly Data.ITeamRepo _teamRepo;
         private readonly Logic.TeamLogic _teamLogic;
 
-        public TeamController(Data.ITeamRepo teamRepo) : base(teamRepo)
+        public TeamController(Data.ITeamRepo teamRepo)
         {
             _teamRepo = teamRepo;
             _teamLogic = new Logic.TeamLogic(_teamRepo, CurrentUser == null ? this.User : CurrentUser);

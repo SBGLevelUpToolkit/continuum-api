@@ -256,6 +256,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Logic\AssessmentLogic.cs" />
+    <Compile Include="Logic\GoalLogic.cs" />
     <Compile Include="Logic\LogicBase.cs" />
     <Compile Include="Logic\TeamLogic.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />

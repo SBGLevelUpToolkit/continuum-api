@@ -16,7 +16,7 @@ namespace Continuum.WebApi.Controllers
         private readonly Data.ITeamRepo _teamRepo;
         private readonly Logic.AssessmentLogic _assessmentLogic; 
 
-        public AssessmentController(Data.IAssessmentRepo assessmentRepo, Data.ITeamRepo teamRepo) : base(teamRepo)
+        public AssessmentController(Data.IAssessmentRepo assessmentRepo, Data.ITeamRepo teamRepo)
         {
             _assessmentRepo = assessmentRepo;
             _teamRepo = teamRepo;
