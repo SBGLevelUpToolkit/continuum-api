@@ -40,6 +40,7 @@ namespace Continuum.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
         public void TestThatGetWhenNoResultsThrowsException()
         {
             string user = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
@@ -48,38 +49,25 @@ namespace Continuum.Tests
             Data.TeamMember teamMember;
             CreateTeamAndTeamMember(out team, out teamMember);
 
-            try
-            {
-                _assessmentController.Get();
-            }
-            catch (HttpResponseException ex)
-            {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
-            }
-           
+            _assessmentController.Get();
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
         public void TestThatAttemptingToAccessAssessmentWithoutTeamThrowsException()
         {
-            try
-            {
-                 var identity = new System.Security.Principal.GenericIdentity("noteam@example.com");
-                 var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
+            var identity = new System.Security.Principal.GenericIdentity("noteam@example.com");
+            var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
 
-                 Continuum.WebApi.Controllers.AssessmentController.CurrentUser = princpal; 
+            Continuum.WebApi.Controllers.AssessmentController.CurrentUser = princpal;
 
-                _assessmentController.User = princpal;
+            _assessmentController.User = princpal;
 
-                _assessmentController.Get();
-            }
-            catch (HttpResponseException ex)
-            {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
-            }
+            _assessmentController.Get();
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
         public void TestThatUpdateToClosedAssessmentThrowsException()
         {
 
@@ -87,28 +75,21 @@ namespace Continuum.Tests
             team.TeamMembers.Add(new Data.TeamMember() { UserId = TestUser });
             _mockContainer.Teams.Add(team);
 
-            _mockContainer.Assessments.Add(new Data.Assessment() 
+            _mockContainer.Assessments.Add(new Data.Assessment()
             {
                 Id = 1,
                 Status = new Data.AssessmentStatus() { Value = "Closed" },
-                Team = team 
+                Team = team
             });
 
             var result = new Continuum.WebApi.Models.AssessmentResult();
             result.AssessmentId = 1;
 
-            try
-            {
-                _assessmentController.Put(new List<Continuum.WebApi.Models.AssessmentResult>() { result });
-            }
-            catch (HttpResponseException ex)
-            {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
-            }
-
+            _assessmentController.Put(new List<Continuum.WebApi.Models.AssessmentResult>() { result });
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
         public void TestThatModeratingWithoutCreatingAssessmentThrowsException()
         {
             Data.Team team;
@@ -117,48 +98,28 @@ namespace Continuum.Tests
 
             var result = new Continuum.WebApi.Models.AssessmentResult();
 
-            try
-            {
-                _assessmentController.Put(new List<Continuum.WebApi.Models.AssessmentResult>() { result });
-                Assert.Fail();
-            }
-            catch (HttpResponseException ex)
-            {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
-            }
-
+            _assessmentController.Put(new List<Continuum.WebApi.Models.AssessmentResult>() { result });
+            Assert.Fail();
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
         public void TestThatCannotSetClosedOnOpenAssessment()
         {
             var assessmentItem = CreateOpenAssessment();
 
             _mockContainer.Teams.First().TeamMembers.First().IsAdmin = true;
 
-            try
-            {
-                _assessmentController.Close();
-                Assert.Fail(); 
-            }
-            catch (HttpResponseException ex)
-            {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
-            }
+            _assessmentController.Close();
+            Assert.Fail();
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
         public void TestThatModerationThrowsExceptionIfNoAssessment()
         {
-            try
-            {
-                _assessmentController.Moderate();
-                Assert.Fail();
-            }
-            catch (HttpResponseException ex)
-            {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
-            }
+            _assessmentController.Moderate();
+            Assert.Fail();
         }
         
         [TestMethod]
@@ -237,37 +198,25 @@ namespace Continuum.Tests
 
 
         [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
         public void TestThatCreateWhenOpenAssessmentThrowsException()
         {
             var assessmentItem = CreateOpenAssessment();
 
-            try
-            {
-                _assessmentController.Create();
-                Assert.Fail();
-            }
-            catch (HttpResponseException ex)
-            {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
-            }
+            _assessmentController.Create();
+            Assert.Fail();
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
         public void TestThatCreateWhenModeratedAssessmentThrowsException()
         {
             var assessmentItem = CreateOpenAssessment();
 
             _mockContainer.Assessments.First().Status.Value = "Moderating";
 
-            try
-            {
-                _assessmentController.Create();
-                Assert.Fail();
-            }
-            catch (HttpResponseException ex)
-            {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
-            }
+            _assessmentController.Create();
+            Assert.Fail();
         }
 
         [TestMethod]

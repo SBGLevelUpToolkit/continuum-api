@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Continuum.Data;
+using Continuum.WebApi.Filters; 
 
 namespace Continuum.WebApi.Controllers
 {
@@ -22,82 +23,46 @@ namespace Continuum.WebApi.Controllers
             _assessmentLogic = new Logic.AssessmentLogic(_assessmentRepo, _teamRepo, CurrentUser == null ?  this.User : CurrentUser);
         }
 
+        [ApplicationExceptionFilter]
         public Models.Assessment Get()
         {
-            try
-            {
-                return _assessmentLogic.GetAssessment();
-            }
-            catch (ApplicationException ex)
-            {
-                throw ExceptionBuilder.FromException(ex);
-            }            
+            return _assessmentLogic.GetAssessment();
         }
 
+        [ApplicationExceptionFilter]
         public void Put(IEnumerable<Models.AssessmentResult> assessmentResults)
         {
-            try
-            {
-                _assessmentLogic.UpdateAssessmentResults(assessmentResults);
-            }
-            catch (ApplicationException ex)
-            {
-                throw ExceptionBuilder.FromException(ex);
-            }
+            _assessmentLogic.UpdateAssessmentResults(assessmentResults);
         }
 
+        [ApplicationExceptionFilter]
         public void Post(IEnumerable<Models.AssessmentItem> assessmentItems)
         {
-            try
-            {
-                _assessmentLogic.UpdateAssessmentItems(assessmentItems);
-            }
-            catch (ApplicationException ex)
-            {
-                throw ExceptionBuilder.FromException(ex);
-            } 
+            _assessmentLogic.UpdateAssessmentItems(assessmentItems);
         }
 
         [Route("api/assessment/create")]
         [Filters.TeamAdminFilter]
+        [ApplicationExceptionFilter]
         public void Create()
         {
-            try
-            {
-                _assessmentLogic.CreateAssessment();
-            }
-            catch (ApplicationException ex)
-            {
-                throw ExceptionBuilder.FromException(ex);
-            }   
+            _assessmentLogic.CreateAssessment();
         }
 
         [Route("api/assessment/moderate")]
         [Filters.TeamAdminFilter]
+        [ApplicationExceptionFilter]
         public void Moderate()
         {
-            try
-            {
-                _assessmentLogic.ModerateAssessment();
-            }
-            catch (ApplicationException ex)
-            {
-                throw ExceptionBuilder.FromException(ex);
-            } 
+            _assessmentLogic.ModerateAssessment();
         }
 
         [Route("api/assessment/close")]
         [Filters.TeamAdminFilter]
+        [ApplicationExceptionFilter]
         public void Close()
         {
-            try
-            {
-                _assessmentLogic.CloseAssessment();
-            }
-            catch (ApplicationException ex)
-            {
-                throw ExceptionBuilder.FromException(ex);
-            } 
+            _assessmentLogic.CloseAssessment();
         }
     }
 }
