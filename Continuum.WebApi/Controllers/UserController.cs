@@ -3,56 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security;
 using System.Web.Http;
 using Continuum.Data;
+using Continuum.WebApi.Filters;
 
 namespace Continuum.WebApi.Controllers
 {
-    public class UserController : ApiController
+    public class UserController : ControllerBase
     {
-        private readonly ITeamRepo _teamRepo; 
+        private readonly ITeamRepo _teamRepo;
+        private readonly Logic.TeamLogic _teamLogic;
 
-        public UserController(ITeamRepo teamRepository)
+        public UserController(ITeamRepo teamRepository) : base(teamRepository)
         {
             _teamRepo = teamRepository;
+            _teamLogic = new Logic.TeamLogic(_teamRepo, CurrentUser == null ? this.User : CurrentUser);
         }
 
         public Models.Team Get()
         {
-            var team = _teamRepo.GetTeamForUser(User.Identity.Name).FirstOrDefault();
-            if (team == null)
-            {
-                team = new Team() { Name = string.Format("{0} is not a member of any team.", User.Identity.Name) };
-            }
-
-            string adminName = team.TeamMembers.Where(i => i.IsAdmin).FirstOrDefault().UserId;
-
-            return new Models.Team { Name = team.Name, Id = team.Id, AvatarId = team.AvatarTypeId, TeamLeadName = adminName };
+            return _teamLogic.GetTeamForUser();
         }
 
+        [ApplicationExceptionFilter]
         public void Put(Models.User user)
         {
-            if(user.UserId != User.Identity.Name){
-                throw ExceptionBuilder.CreateException("You may not update another user's details", "Permission Denied", HttpStatusCode.Forbidden);
-            }
-
-            foreach(var userTeam in user.Teams)
+            try
             {
-                var team = _teamRepo.FindById(userTeam.Id);
-                if (team != null)
-                {
-                    if (team.TeamMembers.Any(i => i.UserId == user.UserId) == false)
-                    {
-                        team.TeamMembers.Add(new Data.TeamMember() { UserId = user.UserId });
-                    }
-                }
-                else
-                {
-                    throw ExceptionBuilder.CreateInternalServerError(string.Format("{0} is not a valid team id.", userTeam.Id), "Team not found.");
-                }
+                _teamLogic.UpdateUser(user);
             }
-
-            _teamRepo.SaveChanges();
+            catch (SecurityException ex)
+            {
+                throw ExceptionBuilder.CreateException(ex.Message, "Security", HttpStatusCode.Forbidden);
+            }
         }
     }
 }

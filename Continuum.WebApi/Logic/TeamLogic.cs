@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Web;
 
 namespace Continuum.WebApi.Logic
@@ -80,6 +81,46 @@ namespace Continuum.WebApi.Logic
                 Name = i.Name,
                 TeamLeadName = i.TeamMembers.Where(j => j.IsAdmin).FirstOrDefault().UserId
             }).AsEnumerable();
+        }
+
+        internal Models.Team GetTeamForUser()
+        {
+            var team = _teamRepo.GetTeamForUser(CurrentUserName).FirstOrDefault();
+            if (team == null)
+            {
+                return new Models.Team() { Name = string.Format("{0} is not a member of any team.", CurrentUserName) };
+            }
+
+            string adminName = team.TeamMembers.Where(i => i.IsAdmin).FirstOrDefault().UserId;
+
+            return new Models.Team { Name = team.Name, Id = team.Id, AvatarId = team.AvatarTypeId, TeamLeadName = adminName };
+             
+        }
+
+        internal void UpdateUser(Models.User user)
+        {
+            
+            if(user.UserId != CurrentUserName){
+                throw new SecurityException("You may not update another user's details.");
+            }
+
+            foreach(var userTeam in user.Teams)
+            {
+                var team = _teamRepo.FindById(userTeam.Id);
+                if (team != null)
+                {
+                    if (team.TeamMembers.Any(i => i.UserId == user.UserId) == false)
+                    {
+                        team.TeamMembers.Add(new Data.TeamMember() { UserId = user.UserId });
+                    }
+                }
+                else
+                {
+                    throw new ApplicationException(string.Format("{0} is not a valid team id.", userTeam.Id));
+                }
+            }
+
+            _teamRepo.SaveChanges();
         }
     }
 }

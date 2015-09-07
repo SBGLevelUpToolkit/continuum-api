@@ -25,6 +25,8 @@ namespace Continuum.Tests
             var identity = new System.Security.Principal.GenericIdentity("alice@example.com");
             _currentUser = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
 
+            WebApi.Controllers.UserController.CurrentUser = _currentUser;
+
             _controller = new WebApi.Controllers.UserController(_teamRepo);
             _controller.User = _currentUser; 
 
@@ -72,6 +74,7 @@ namespace Continuum.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
         public void TestThatInvalidTeamIdThrowsException()
         {
      
@@ -90,15 +93,8 @@ namespace Continuum.Tests
                 Teams = teams
             };
 
-            try
-            {
                 _controller.Put(user);
                 Assert.Fail(); 
-            }
-            catch (HttpResponseException ex)
-            {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
-            }
         }
 
         [TestMethod]

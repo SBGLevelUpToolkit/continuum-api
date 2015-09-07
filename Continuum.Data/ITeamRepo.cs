@@ -15,5 +15,7 @@ namespace Continuum.Data
         AvatarType GetAvatar(int p);
 
         AvatarType GetDefaultAvatar();
+
+      
     }
 }
