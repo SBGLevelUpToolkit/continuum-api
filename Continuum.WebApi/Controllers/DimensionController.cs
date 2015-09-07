@@ -4,53 +4,39 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Continuum.WebApi.Filters;
 
 namespace Continuum.WebApi.Controllers
 {
-    public class DimensionController : ApiController
+    public class DimensionController : ControllerBase
     {
         private readonly Data.DimensionRepo _dimensionRepo;
+        private readonly Logic.DimensionLogic _dimensionLogic;
 
         public DimensionController(Data.DimensionRepo dimensionRepo)
         {
             _dimensionRepo = dimensionRepo;
+            _dimensionLogic = new Logic.DimensionLogic(_dimensionRepo, CurrentUser == null ? this.User : CurrentUser);
+    
         }
 
         public IEnumerable<Models.Dimension> Get()
         {
-            return _dimensionRepo.All().Select(i => new Models.Dimension() 
-            {
-                Name = i.Name,
-                Id = i.Id,
-                ImageName = i.ImageName
-            }).ToList();
+            return _dimensionLogic.ListDimensions();
         }
 
+        [ApplicationExceptionFilter]
         public Models.Dimension Get(int id)
         {
-            var result = _dimensionRepo.FindById(id);
-
-            if (result == null)
+            if (_dimensionLogic.DimensionExists(id))
             {
-                var resp = new HttpResponseMessage(HttpStatusCode.NotFound);
-                throw new HttpResponseException(resp);
+                return _dimensionLogic.GetDimensionById(id);
             }
-
-            var dimension = new Models.Dimension()
+            else
             {
-                Id = id,
-                Name = result.Name,
-                ImageName = result.ImageName,
-                Capabilities = result.Capabilities.Select(i => new Models.Capability() 
-                { 
-                    Id = i.Id,  
-                    Description = i.Description,
-                    Level = i.LevelId,
-                    RequiredCapabilities = i.CapabilityRequirements.Select(j=>j.RequiredCapabilityId).ToArray()
-                }).ToList()
-            };
-
-            return dimension; 
+                throw ExceptionBuilder.CreateException("Dimension does not exist.", "Dimension not found.", HttpStatusCode.NotFound);
+            }
+            
         }
 
     }
