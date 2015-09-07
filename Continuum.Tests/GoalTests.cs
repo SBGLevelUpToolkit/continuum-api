@@ -13,6 +13,7 @@ namespace Continuum.Tests
         Data.IContinuumDataContainer _mockContainer;
         Data.TeamRepo _teamRepo;
         Data.GoalRepo _goalRepo;
+        Data.DimensionRepo _dimensionRepo;
         GoalController _controller;
 
         [TestInitialize]
@@ -21,11 +22,13 @@ namespace Continuum.Tests
             _mockContainer = new Data.Mocks.MockContainer();
             _teamRepo = new Data.TeamRepo(_mockContainer);
             _goalRepo = new Data.GoalRepo(_mockContainer);
+            _dimensionRepo = new Data.DimensionRepo(_mockContainer);
+            
 
             var identity = new System.Security.Principal.GenericIdentity("alice@example.com");
             var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
 
-            _controller = new GoalController(_goalRepo, _teamRepo);
+            _controller = new GoalController(_goalRepo, _teamRepo, _dimensionRepo);
             _controller.User = princpal;
         }
 
@@ -47,6 +50,8 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatCreateGoalCreates()
         {
+            _mockContainer.Capabilities.Add(new Data.Capability() { Id = 1 });
+
             WebApi.Models.Goal goal = new WebApi.Models.Goal()
             {
                 CapabilityId = 1,
@@ -63,6 +68,8 @@ namespace Continuum.Tests
         [ExpectedException(typeof(ApplicationException))]
         public void TestThatCreateGoalInPastThrowsException()
         {
+            _mockContainer.Capabilities.Add(new Data.Capability() { Id = 1 });
+
             WebApi.Models.Goal goal = new WebApi.Models.Goal()
             {
                 CapabilityId = 1,

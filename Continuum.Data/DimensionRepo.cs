@@ -8,11 +8,16 @@ namespace Continuum.Data
 {
     public class DimensionRepo : IRepository
     {
-        private readonly Data.ContinuumDataContainer _container;
+        private readonly Data.IContinuumDataContainer _container;
 
         public DimensionRepo()
         {
             _container = new ContinuumDataContainer();
+        }
+
+        public DimensionRepo(Data.IContinuumDataContainer container)
+        {
+            _container = container;
         }
 
         public IEnumerable<Data.Dimension> All()

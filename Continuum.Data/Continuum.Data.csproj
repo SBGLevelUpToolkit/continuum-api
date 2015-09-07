@@ -105,6 +105,7 @@
     </Compile>
     <Compile Include="MockDbSet.cs" />
     <Compile Include="Mocks\MockAssessmentDBSet.cs" />
+    <Compile Include="Mocks\MockCapabilityDBSet.cs" />
     <Compile Include="Mocks\MockContainer.cs" />
     <Compile Include="Mocks\MockGoalsDBSet.cs" />
     <Compile Include="Mocks\MockLookupDBSet.cs" />

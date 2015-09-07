@@ -13,11 +13,13 @@ namespace Continuum.WebApi.Controllers
     {
         private readonly GoalRepo _goalRepository;
         private readonly TeamRepo _teamRepo;
+        private readonly DimensionRepo _dimensionRepo;
 
-        public GoalController(Data.GoalRepo goalRepository, Data.TeamRepo teamRepo)
+        public GoalController(Data.GoalRepo goalRepository, Data.TeamRepo teamRepo, Data.DimensionRepo dimensionRepo)
         {
             _goalRepository = goalRepository;
             _teamRepo = teamRepo;
+            _dimensionRepo = dimensionRepo;
         }
 
         private Logic.TeamLogic TeamLogic
@@ -35,7 +37,7 @@ namespace Continuum.WebApi.Controllers
             {
                 var user = CurrentUser == null ? this.User : CurrentUser;
                 var teamLogic = new Logic.TeamLogic(_teamRepo, user);
-                return new Logic.GoalLogic(_goalRepository, teamLogic, user);
+                return new Logic.GoalLogic(_goalRepository, _dimensionRepo, teamLogic, user);
             }
         }
 
