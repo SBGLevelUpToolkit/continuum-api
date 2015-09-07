@@ -15,7 +15,7 @@ namespace Continuum.Tests
         HttpRequestMessage _request;
 
         Data.Mocks.MockContainer _mockContainer;
-        Data.TeamRepository _teamRepository;
+        Data.TeamRepo _teamRepository;
 
         
         [TestInitialize]
@@ -33,7 +33,7 @@ namespace Continuum.Tests
             _request.Properties[HttpPropertyKeys.HttpRouteDataKey] = new HttpRouteData(new HttpRoute());
 
             _mockContainer = new Data.Mocks.MockContainer();
-            _teamRepository = new Data.TeamRepository(_mockContainer);
+            _teamRepository = new Data.TeamRepo(_mockContainer);
         }
 
         [TestMethod]

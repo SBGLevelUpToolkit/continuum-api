@@ -7,11 +7,11 @@ namespace Continuum.WebApi.Logic
 {
     public class AssessmentLogic : LogicBase
     {
-        private readonly Data.IAssessmentRepo _assessmentRepo;
-        private readonly Data.ITeamRepo _teamRepo;
-       
+        private readonly Data.AssessmentRepo _assessmentRepo;
+        private readonly Data.TeamRepo _teamRepo;
 
-        public AssessmentLogic(Data.IAssessmentRepo assessmentRepo, Data.ITeamRepo teamRepo, System.Security.Principal.IPrincipal principal) : base(principal)
+        public AssessmentLogic(Data.AssessmentRepo assessmentRepo, Data.TeamRepo teamRepo, System.Security.Principal.IPrincipal principal)
+            : base(principal)
         {
             if (assessmentRepo == null) throw new ArgumentException("Value cannot be null", "assessmentRepo");
             if (teamRepo == null) throw new ArgumentException("Value cannot be null", "teamRepo");

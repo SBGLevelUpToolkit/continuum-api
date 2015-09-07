@@ -12,11 +12,11 @@ namespace Continuum.WebApi.Controllers
     [Authorize]
     public class AssessmentController : ControllerBase
     {
-        private readonly Data.IAssessmentRepo _assessmentRepo;
-        private readonly Data.ITeamRepo _teamRepo;
-        private readonly Logic.AssessmentLogic _assessmentLogic; 
+        private readonly Data.AssessmentRepo _assessmentRepo;
+        private readonly Data.TeamRepo _teamRepo;
+        private readonly Logic.AssessmentLogic _assessmentLogic;
 
-        public AssessmentController(Data.IAssessmentRepo assessmentRepo, Data.ITeamRepo teamRepo)
+        public AssessmentController(Data.AssessmentRepo assessmentRepo, Data.TeamRepo teamRepo)
         {
             _assessmentRepo = assessmentRepo;
             _teamRepo = teamRepo;

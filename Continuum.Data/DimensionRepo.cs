@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Continuum.Data
 {
-    public class DimensionRepo : IRepository<Data.Dimension>
+    public class DimensionRepo : IRepository
     {
         private readonly Data.ContinuumDataContainer _container;
 

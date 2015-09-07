@@ -7,9 +7,10 @@ namespace Continuum.WebApi.Logic
 {
     public class GoalLogic : LogicBase
     {
-        private readonly Data.GoalRepository _goalRepository;
+        private readonly Data.GoalRepo _goalRepository;
 
-        public GoalLogic(Data.GoalRepository goalRepository, System.Security.Principal.IPrincipal principal) : base(principal)
+        public GoalLogic(Data.GoalRepo goalRepository, System.Security.Principal.IPrincipal principal)
+            : base(principal)
         {
             _goalRepository = goalRepository;
         }

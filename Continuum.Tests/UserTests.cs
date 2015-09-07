@@ -11,7 +11,7 @@ namespace Continuum.Tests
     {
 
         private Continuum.Data.Mocks.MockContainer _mockContainer;
-        private Continuum.Data.TeamRepository _teamRepo;
+        private Continuum.Data.TeamRepo _teamRepo;
         private System.Security.Principal.IPrincipal _currentUser;
         private Continuum.WebApi.Controllers.UserController _controller;
 
@@ -19,7 +19,7 @@ namespace Continuum.Tests
         public void Setup()
         {
             _mockContainer = new Data.Mocks.MockContainer();
-            _teamRepo = new Continuum.Data.TeamRepository(_mockContainer);
+            _teamRepo = new Continuum.Data.TeamRepo(_mockContainer);
 
            
             var identity = new System.Security.Principal.GenericIdentity("alice@example.com");

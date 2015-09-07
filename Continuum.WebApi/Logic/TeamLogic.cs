@@ -8,9 +8,10 @@ namespace Continuum.WebApi.Logic
 {
     public class TeamLogic : LogicBase
     {
-        private readonly Data.ITeamRepo _teamRepo;
-    
-        public TeamLogic(Data.ITeamRepo teamRepo, System.Security.Principal.IPrincipal principal) : base(principal)
+        private readonly Data.TeamRepo _teamRepo;
+
+        public TeamLogic(Data.TeamRepo teamRepo, System.Security.Principal.IPrincipal principal)
+            : base(principal)
         {
             if (teamRepo == null) throw new ArgumentException("Value cannot be null", "teamRepo");
 

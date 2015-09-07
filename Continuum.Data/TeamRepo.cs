@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Continuum.Data
 {
-    public class TeamRepository : ITeamRepo
+    public class TeamRepo : IRepository
     {
         private readonly Data.IContinuumDataContainer _container;
 
-        public TeamRepository()
+        public TeamRepo()
         {
             _container = new ContinuumDataContainer();
         }
 
-        public TeamRepository(IContinuumDataContainer container)
+        public TeamRepo(IContinuumDataContainer container)
         {
             _container = container;
         }

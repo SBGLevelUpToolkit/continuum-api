@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Continuum.Data
 {
-    public class AssessmentRepo : IAssessmentRepo
+    public class AssessmentRepo : IRepository
     {
         protected readonly IContinuumDataContainer _container;
         public AssessmentRepo()
@@ -19,22 +19,12 @@ namespace Continuum.Data
             _container = container;
         }
 
-        IEnumerable<Assessment> IRepository<Assessment>.All()
-        {
-            return _container.Assessments.AsEnumerable(); 
-        }
-
         public virtual void Create(Assessment item)
         {
             var openStatus = _container.Lookups.OfType<Data.AssessmentStatus>().Where(i=>i.Value == "Open").First();
             item.Status = openStatus;
 
             _container.Assessments.Add(item);
-        }
-
-        Assessment IRepository<Assessment>.FindById(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public virtual Assessment GetCurrentAssessmentForTeam(int teamId)

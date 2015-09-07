@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Continuum.Data
 {
-    public class GoalRepository
+    public class GoalRepo : IRepository
     {
         private readonly Data.IContinuumDataContainer _container;
 
-        public GoalRepository(Data.IContinuumDataContainer container)
+        public GoalRepo(Data.IContinuumDataContainer container)
         {
             _container = container;
         }
@@ -35,9 +35,9 @@ namespace Continuum.Data
             _container.Goals.Add(goal);
         }
 
-        public int SaveChanges()
+        public void SaveChanges()
         {
-            return _container.SaveChanges();
+            _container.SaveChanges();
         }
 
         public void UpdateGoal(Goal goal)

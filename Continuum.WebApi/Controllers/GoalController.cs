@@ -11,12 +11,12 @@ namespace Continuum.WebApi.Controllers
 {
     public class GoalController : ControllerBase
     {
-        private readonly GoalRepository _goalRepository;
-        private readonly ITeamRepo _teamRepo;
+        private readonly GoalRepo _goalRepository;
+        private readonly TeamRepo _teamRepo;
         private readonly Logic.GoalLogic _goalLogic;
         private readonly Logic.TeamLogic _teamLogic;
-        
-        public GoalController(Data.GoalRepository goalRepository, Data.ITeamRepo teamRepo)
+
+        public GoalController(Data.GoalRepo goalRepository, Data.TeamRepo teamRepo)
         {
             _goalRepository = goalRepository;
             _teamRepo = teamRepo;

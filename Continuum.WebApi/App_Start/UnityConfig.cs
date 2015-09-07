@@ -25,13 +25,11 @@ namespace Continuum.WebApi
                 container.RegisterInstance<Data.IContinuumDataContainer>(new Data.Mocks.MockContainer());
 
             }
-            
-            container.RegisterType<Data.IRepository<Data.Team>, Data.TeamRepository>();
+
+            container.RegisterType<Data.TeamRepo, Data.TeamRepo>();
             container.RegisterType<Data.DimensionRepo, Data.DimensionRepo>();
-            container.RegisterType<Data.IAssessmentRepo, Data.AssessmentRepo>();
-            container.RegisterType<Data.ITeamRepo, Data.TeamRepository>();
-            container.RegisterType< Data.ILookupRepo, Data.LookupRepo>();
-            container.RegisterType<Data.GoalRepository, Data.GoalRepository>(); 
+            container.RegisterType<Data.AssessmentRepo, Data.AssessmentRepo>();
+            container.RegisterType<Data.GoalRepo, Data.GoalRepo>(); 
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

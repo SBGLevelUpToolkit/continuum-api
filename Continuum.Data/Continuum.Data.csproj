@@ -94,23 +94,18 @@
     <Compile Include="Goal.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
-    <Compile Include="GoalRepository.cs" />
-    <Compile Include="IAssessmentRepo.cs" />
+    <Compile Include="GoalRepo.cs" />
     <Compile Include="IContinuumDataContainer.cs" />
-    <Compile Include="ILookupRepo.cs" />
     <Compile Include="IRepository.cs" />
-    <Compile Include="ITeamRepo.cs" />
     <Compile Include="Level.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
     <Compile Include="Lookup.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
-    <Compile Include="LookupRepo.cs" />
     <Compile Include="MockDbSet.cs" />
     <Compile Include="Mocks\MockAssessmentDBSet.cs" />
     <Compile Include="Mocks\MockContainer.cs" />
-    <Compile Include="Mocks\MockDimensionRepo.cs" />
     <Compile Include="Mocks\MockGoalsDBSet.cs" />
     <Compile Include="Mocks\MockLookupDBSet.cs" />
     <Compile Include="Mocks\MockOrganisationDBSet.cs" />
@@ -127,7 +122,7 @@
     <Compile Include="TeamMember.cs">
       <DependentUpon>ContinuumData.tt</DependentUpon>
     </Compile>
-    <Compile Include="TeamRepository.cs" />
+    <Compile Include="TeamRepo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ContinuumData.edmx">

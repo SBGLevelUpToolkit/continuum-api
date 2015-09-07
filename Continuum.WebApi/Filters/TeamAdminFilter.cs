@@ -19,7 +19,7 @@ namespace Continuum.WebApi.Filters
                 IPrincipal client = Thread.CurrentPrincipal;
 
 
-                Data.ITeamRepo teamRepo = (Data.ITeamRepo)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(Data.ITeamRepo));
+                Data.TeamRepo teamRepo = (Data.TeamRepo)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(Data.TeamRepo));
                 var team = teamRepo.GetTeamForUser(client.Identity.Name).FirstOrDefault();
                 if (team != null)
                 {

@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace Continuum.Data
 {
-    public interface IRepository<T> where T:class 
+    public interface IRepository
     {
-        IEnumerable<T> All();
-
-        void Create(T item);
-
-        T FindById(int id);
-
         void SaveChanges();
     }
 }

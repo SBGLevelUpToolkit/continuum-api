@@ -11,16 +11,16 @@ namespace Continuum.Tests
     {
 
         Data.IContinuumDataContainer _mockContainer;
-        Data.TeamRepository _teamRepo;
-        Data.GoalRepository _goalRepo;
+        Data.TeamRepo _teamRepo;
+        Data.GoalRepo _goalRepo;
         GoalController _controller;
 
         [TestInitialize]
         public void Setup() 
         {
             _mockContainer = new Data.Mocks.MockContainer();
-            _teamRepo = new Data.TeamRepository(_mockContainer);
-            _goalRepo = new Data.GoalRepository(_mockContainer);
+            _teamRepo = new Data.TeamRepo(_mockContainer);
+            _goalRepo = new Data.GoalRepo(_mockContainer);
 
             var identity = new System.Security.Principal.GenericIdentity("alice@example.com");
             var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });

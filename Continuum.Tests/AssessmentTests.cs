@@ -11,7 +11,7 @@ namespace Continuum.Tests
     {
         private Continuum.Data.Mocks.MockContainer _mockContainer; 
         private Continuum.Data.AssessmentRepo _assessmentRepo;
-        private Continuum.Data.TeamRepository _teamRepo;
+        private Continuum.Data.TeamRepo _teamRepo;
         private Continuum.WebApi.Controllers.AssessmentController _assessmentController;
  
         public string TestUser
@@ -28,7 +28,7 @@ namespace Continuum.Tests
         {
             _mockContainer = new Data.Mocks.MockContainer(); 
             _assessmentRepo = new Continuum.Data.AssessmentRepo(_mockContainer);
-            _teamRepo = new Continuum.Data.TeamRepository(_mockContainer);
+            _teamRepo = new Continuum.Data.TeamRepo(_mockContainer);
 
             var identity = new System.Security.Principal.GenericIdentity("alice@example.com");
             var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });

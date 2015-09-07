@@ -12,10 +12,10 @@ namespace Continuum.WebApi.Controllers
 {
     public class UserController : ControllerBase
     {
-        private readonly ITeamRepo _teamRepo;
+        private readonly TeamRepo _teamRepo;
         private readonly Logic.TeamLogic _teamLogic;
 
-        public UserController(ITeamRepo teamRepository)
+        public UserController(TeamRepo teamRepository)
         {
             _teamRepo = teamRepository;
             _teamLogic = new Logic.TeamLogic(_teamRepo, CurrentUser == null ? this.User : CurrentUser);
