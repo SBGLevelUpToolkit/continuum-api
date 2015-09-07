@@ -6,88 +6,42 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using Continuum.WebApi.Filters;
 
 namespace Continuum.WebApi.Controllers
 {
     [Authorize]
-    public class TeamController : ApiController
+    public class TeamController : ControllerBase
     {
         private readonly Data.ITeamRepo _teamRepo;
+        private readonly Logic.TeamLogic _teamLogic;
 
-        public TeamController(Data.ITeamRepo teamRepo)
+        public TeamController(Data.ITeamRepo teamRepo) : base(teamRepo)
         {
             _teamRepo = teamRepo;
+            _teamLogic = new Logic.TeamLogic(_teamRepo, CurrentUser == null ? this.User : CurrentUser);
         }
 
+        [ApplicationExceptionFilter]
         public HttpResponseMessage Put(Models.Team team)
         {
-            if (_teamRepo.All().Any(i => i.Name == team.Name.Trim()))
-            {
-                throw ExceptionBuilder.CreateInternalServerError(string.Format("A Team called {0} already exists.", team.Name), "Duplicate Team");
-            }
+            Models.Team result =_teamLogic.CreateTeam(team);
 
+           var response = new HttpResponseMessage(HttpStatusCode.Created);
+           response.Content = new ObjectContent(typeof(Models.Team), result, new JsonMediaTypeFormatter());
 
-            Data.AvatarType avatar = null;
-            if(team.AvatarId > 0)
-            {
-                avatar = _teamRepo.GetAvatar(team.AvatarId);
-            }
-            else
-            {
-                avatar = _teamRepo.GetDefaultAvatar();
-            }
-
-            Data.Team newTeam = new Data.Team()
-            {
-                Name = team.Name,
-                AvatarType = avatar
-            };
-
-            newTeam.TeamMembers.Add(new Data.TeamMember() { UserId = this.User.Identity.Name, IsAdmin = true });
-
-            _teamRepo.Create(newTeam);
-            _teamRepo.SaveChanges();
-
-
-            var resultObject = new Models.Team()
-            {
-                AvatarId = newTeam.AvatarTypeId,
-                Id = newTeam.Id,
-                Name = newTeam.Name,
-                TeamLeadName = newTeam.TeamMembers.Where(i => i.IsAdmin).First().UserId
-            };
-
-            var response = new HttpResponseMessage(HttpStatusCode.Created);
-            response.Content = new ObjectContent(typeof(Models.Team), resultObject, new JsonMediaTypeFormatter());
-
-            return response;
+           return response;
         }
 
+        [ApplicationExceptionFilter]
         public void Post(Models.Team team)
         {
-            var teamEntry = _teamRepo.FindById(team.Id);
-            if (teamEntry == null)
-            {
-                throw ExceptionBuilder.CreateException("Team not found.", "Not Found", HttpStatusCode.NotFound);
-            }
-
-            string user = this.User.Identity.Name;
-
-            if(!teamEntry.TeamMembers.Any(i=>i.UserId == user))
-            {
-                teamEntry.TeamMembers.Add(new Data.TeamMember() { UserId = this.User.Identity.Name, IsAdmin = false });
-                _teamRepo.SaveChanges();
-            }
-
+            _teamLogic.JoinTeam(team);
         }
 
         public IEnumerable<Models.Team> Get()
         {
-            return _teamRepo.All().Select(i => new Models.Team() 
-            {
-                 Name = i.Name,
-                 TeamLeadName = i.TeamMembers.Where(j=>j.IsAdmin).FirstOrDefault().UserId
-            }).AsEnumerable();
+            return _teamLogic.ListTeams();
         }
        
     }

@@ -37,9 +37,9 @@ namespace Continuum.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
         public void TestThatCreatingADuplicateTeamThrowsException()
         {
-
         
             _mockContainer.Teams.Add(new Data.Team() { Name = "Test Team"});
 
@@ -50,16 +50,8 @@ namespace Continuum.Tests
                 Name = _mockContainer.Teams.First().Name
             };
 
-            try
-            {
                 teamController.Put(newTeam);
                 Assert.Fail("Must not create duplicate teams");
-            }
-            catch (HttpResponseException ex)
-            {
-                Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
-            }
-
         }
 
         [TestMethod]
@@ -86,15 +78,14 @@ namespace Continuum.Tests
         {
            /// var user = System.Security.Principal.WindowsIdentity.GetCurrent();
 
-
            var identity = new System.Security.Principal.GenericIdentity("TestUser");
            var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
 
-    
-            TeamController teamController = new TeamController(_teamRepository);
-            teamController.Request = _request;
-            teamController.User = princpal; 
-
+           TeamController.CurrentUser = princpal;
+           TeamController teamController = new TeamController(_teamRepository);
+           teamController.Request = _request;
+           teamController.User = princpal;
+           
             WebApi.Models.Team newTeam = new WebApi.Models.Team() 
             {
                 Name = Guid.NewGuid().ToString()

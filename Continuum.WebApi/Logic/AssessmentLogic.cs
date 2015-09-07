@@ -5,29 +5,19 @@ using System.Web;
 
 namespace Continuum.WebApi.Logic
 {
-    public class AssessmentLogic
+    public class AssessmentLogic : LogicBase
     {
         private readonly Data.IAssessmentRepo _assessmentRepo;
         private readonly Data.ITeamRepo _teamRepo;
-        private readonly System.Security.Principal.IPrincipal _principal;
+       
 
-        public AssessmentLogic(Data.IAssessmentRepo assessmentRepo, Data.ITeamRepo teamRepo, System.Security.Principal.IPrincipal principal)
+        public AssessmentLogic(Data.IAssessmentRepo assessmentRepo, Data.ITeamRepo teamRepo, System.Security.Principal.IPrincipal principal) : base(principal)
         {
-            if (principal == null) throw new ArgumentException("Value cannot be null", "principal");
             if (assessmentRepo == null) throw new ArgumentException("Value cannot be null", "assessmentRepo");
             if (teamRepo == null) throw new ArgumentException("Value cannot be null", "teamRepo");
 
             _assessmentRepo = assessmentRepo;
             _teamRepo = teamRepo;
-            _principal = principal;
-        }
-
-        private string CurrentUserName
-        {
-            get
-            {
-                return _principal.Identity.Name; 
-            }
         }
 
         internal Models.Assessment GetAssessment()
