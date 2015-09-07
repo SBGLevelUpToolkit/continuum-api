@@ -43,19 +43,23 @@ namespace Continuum.Data
 
         public void UpdateGoal(Goal goal)
         {
-            /*
+            
             var goalToUpdate = _container.Goals.Find(goal.Id);
             if (goalToUpdate == null)
             {
                 throw new ApplicationException(string.Format("No goal with id {0}"));
             }
 
+            _container.Goals.Attach(goal);
+            _container.SetStateForEntity(goal, System.Data.Entity.EntityState.Modified);
+      
+            /*
             goalToUpdate.CapabiltyId = goal.CapabiltyId;
             goalToUpdate.Completed = goal.Completed;
             goalToUpdate.Description = goal.Description;
             goalToUpdate.DueDate = goal.DueDate;
            */
-            _container.SetStateForEntity(goal, System.Data.Entity.EntityState.Modified);
+            
             
         }
 
@@ -66,6 +70,11 @@ namespace Continuum.Data
             {
                 _container.Goals.Remove(goalToDelete);
             }
+        }
+
+        public Goal GetGoalById(int id)
+        {
+            return _container.Goals.Find(id);
         }
     }
 }
