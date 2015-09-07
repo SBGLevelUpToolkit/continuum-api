@@ -8,6 +8,8 @@ namespace Continuum.WebApi.Models
 {
     public class Goal
     {
+        public int Id { get; set; }
+
         public int DimensionId { get; set; }
 
         public int CapabilityId { get; set; }

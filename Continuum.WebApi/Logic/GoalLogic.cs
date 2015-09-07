@@ -23,7 +23,7 @@ namespace Continuum.WebApi.Logic
         internal IEnumerable<Models.Goal> ListGoalsForTeam(Models.Team team)
         {
             return _goalRepository.GetActiveGoalsForTeam(team.Id)
-                .Select(i => new Models.Goal() { CapabilityId = i.CapabiltyId, DueDate = i.DueDate, Notes = i.Title });
+                .Select(i => new Models.Goal() { Id = i.Id, CapabilityId = i.CapabiltyId, DueDate = i.DueDate, Notes = i.Description });
         }
 
         internal void CreateGoal(Models.Goal goal)
@@ -51,7 +51,7 @@ namespace Continuum.WebApi.Logic
 
         internal void UpdateGoalById(int id, Models.Goal goal)
         {
-            _goalRepository.UpdateGoal(new Data.Goal() { Id = id, CapabiltyId = goal.CapabilityId, DueDate = goal.DueDate, Description = goal.Notes, Completed = goal.Completed });
+            _goalRepository.UpdateGoal(new Data.Goal() { Id = id, CapabiltyId = goal.CapabilityId, DueDate = goal.DueDate, Title= "Goal", Description = goal.Notes, Completed = goal.Completed });
             _goalRepository.SaveChanges();
         }
 
