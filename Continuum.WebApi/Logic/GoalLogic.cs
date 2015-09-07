@@ -8,11 +8,13 @@ namespace Continuum.WebApi.Logic
     public class GoalLogic : LogicBase
     {
         private readonly Data.GoalRepo _goalRepository;
+        private readonly Logic.TeamLogic _teamLogic; 
 
-        public GoalLogic(Data.GoalRepo goalRepository, System.Security.Principal.IPrincipal principal)
+        public GoalLogic(Data.GoalRepo goalRepository, Logic.TeamLogic teamLogic, System.Security.Principal.IPrincipal principal)
             : base(principal)
         {
             _goalRepository = goalRepository;
+            _teamLogic = teamLogic;
         }
 
         internal IEnumerable<Models.Goal> ListGoalsForTeam(Models.Team team)
@@ -23,7 +25,9 @@ namespace Continuum.WebApi.Logic
 
         internal void CreateGoal(Models.Goal goal)
         {
-            _goalRepository.CreateGoal(new Data.Goal() { CapabiltyId = goal.CapabilityId, DueDate = goal.DueDate, Description = goal.Notes });
+            var team = _teamLogic.GetTeamForUser();
+
+            _goalRepository.CreateGoal(new Data.Goal() { CapabiltyId = goal.CapabilityId, DueDate = goal.DueDate, Description = goal.Notes, TeamId = team.Id });
             _goalRepository.SaveChanges();
         }
 

@@ -23,7 +23,7 @@ namespace Continuum.WebApi.Controllers
 
             var user = CurrentUser == null ? this.User : CurrentUser;
             _teamLogic = new Logic.TeamLogic(_teamRepo, user);
-            _goalLogic = new Logic.GoalLogic(_goalRepository, user);
+            _goalLogic = new Logic.GoalLogic(_goalRepository, _teamLogic, user);
         }
 
         public IEnumerable<Models.Goal> Get()
