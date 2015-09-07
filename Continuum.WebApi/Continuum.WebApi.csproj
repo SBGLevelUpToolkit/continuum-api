@@ -252,6 +252,7 @@
     <Compile Include="Filters\ApplicationExceptionFilter.cs" />
     <Compile Include="Filters\TeamAdminFilter.cs" />
     <Compile Include="Filters\UnhandledExceptionFilter.cs" />
+    <Compile Include="Filters\ValidationResultFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

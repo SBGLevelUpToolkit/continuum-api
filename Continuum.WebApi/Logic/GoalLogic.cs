@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 
@@ -27,7 +28,7 @@ namespace Continuum.WebApi.Logic
         {
             var team = _teamLogic.GetTeamForUser();
 
-            _goalRepository.CreateGoal(new Data.Goal() { CapabiltyId = goal.CapabilityId, DueDate = goal.DueDate, Description = goal.Notes, TeamId = team.Id });
+            _goalRepository.CreateGoal(new Data.Goal() { CapabiltyId = goal.CapabilityId, DueDate = goal.DueDate, Title = "New Goal", Description = goal.Notes, TeamId = team.Id });
             _goalRepository.SaveChanges();
         }
 

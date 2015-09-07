@@ -14,18 +14,25 @@ namespace Continuum.WebApi.Controllers
     public class TeamController : ControllerBase
     {
         private readonly Data.TeamRepo _teamRepo;
-        private readonly Logic.TeamLogic _teamLogic;
-
+   
         public TeamController(Data.TeamRepo teamRepo)
         {
             _teamRepo = teamRepo;
-            _teamLogic = new Logic.TeamLogic(_teamRepo, CurrentUser == null ? this.User : CurrentUser);
+        }
+
+        private Logic.TeamLogic TeamLogic
+        {
+            get
+            {
+                var user = CurrentUser == null ? this.User : CurrentUser;
+                return new Logic.TeamLogic(_teamRepo, user);
+            }
         }
 
         [ApplicationExceptionFilter]
         public HttpResponseMessage Put(Models.Team team)
         {
-            Models.Team result =_teamLogic.CreateTeam(team);
+            Models.Team result = TeamLogic.CreateTeam(team);
 
            var response = new HttpResponseMessage(HttpStatusCode.Created);
            response.Content = new ObjectContent(typeof(Models.Team), result, new JsonMediaTypeFormatter());
@@ -36,12 +43,12 @@ namespace Continuum.WebApi.Controllers
         [ApplicationExceptionFilter]
         public void Post(Models.Team team)
         {
-            _teamLogic.JoinTeam(team);
+            TeamLogic.JoinTeam(team);
         }
 
         public IEnumerable<Models.Team> Get()
         {
-            return _teamLogic.ListTeams();
+            return TeamLogic.ListTeams();
         }
        
     }

@@ -13,39 +13,54 @@ namespace Continuum.WebApi.Controllers
     {
         private readonly GoalRepo _goalRepository;
         private readonly TeamRepo _teamRepo;
-        private readonly Logic.GoalLogic _goalLogic;
-        private readonly Logic.TeamLogic _teamLogic;
 
         public GoalController(Data.GoalRepo goalRepository, Data.TeamRepo teamRepo)
         {
             _goalRepository = goalRepository;
             _teamRepo = teamRepo;
+        }
 
-            var user = CurrentUser == null ? this.User : CurrentUser;
-            _teamLogic = new Logic.TeamLogic(_teamRepo, user);
-            _goalLogic = new Logic.GoalLogic(_goalRepository, _teamLogic, user);
+        private Logic.TeamLogic TeamLogic
+        {
+            get
+            {
+                var user = CurrentUser == null ? this.User : CurrentUser;
+                return new Logic.TeamLogic(_teamRepo, user);
+            }
+        }
+
+        private Logic.GoalLogic GoalLogic
+        {
+            get
+            {
+                var user = CurrentUser == null ? this.User : CurrentUser;
+                var teamLogic = new Logic.TeamLogic(_teamRepo, user);
+                return new Logic.GoalLogic(_goalRepository, teamLogic, user);
+            }
         }
 
         public IEnumerable<Models.Goal> Get()
         {
-            var team = _teamLogic.GetTeamForUser();
-            return _goalLogic.ListGoalsForTeam(team); 
+            var team = TeamLogic.GetTeamForUser();
+            return GoalLogic.ListGoalsForTeam(team); 
         }
 
         [ApplicationExceptionFilter]
+        [ValidationResultFilter]
         public void Post(Models.Goal goal)
         {
-            _goalLogic.CreateGoal(goal);
+            GoalLogic.CreateGoal(goal);
         }
 
+        [ValidationResultFilter]
         public void Put(int id, Models.Goal goal)
         {
-            _goalLogic.UpdateGoalById(id, goal);       
+            GoalLogic.UpdateGoalById(id, goal);       
         }
 
         public void Delete(int id)
         {
-            _goalLogic.DeleteGoal(id); 
+            GoalLogic.DeleteGoal(id); 
         }
     }
 }

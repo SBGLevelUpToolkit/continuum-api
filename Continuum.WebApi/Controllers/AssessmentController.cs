@@ -14,31 +14,37 @@ namespace Continuum.WebApi.Controllers
     {
         private readonly Data.AssessmentRepo _assessmentRepo;
         private readonly Data.TeamRepo _teamRepo;
-        private readonly Logic.AssessmentLogic _assessmentLogic;
-
+  
         public AssessmentController(Data.AssessmentRepo assessmentRepo, Data.TeamRepo teamRepo)
         {
             _assessmentRepo = assessmentRepo;
             _teamRepo = teamRepo;
-            _assessmentLogic = new Logic.AssessmentLogic(_assessmentRepo, _teamRepo, CurrentUser == null ?  this.User : CurrentUser);
+        }
+
+        private Logic.AssessmentLogic AssessmentLogic
+        {
+            get
+            {
+                return new Logic.AssessmentLogic(_assessmentRepo, _teamRepo, CurrentUser == null ? this.User : CurrentUser);
+            }
         }
 
         [ApplicationExceptionFilter]
         public Models.Assessment Get()
         {
-            return _assessmentLogic.GetAssessment();
+            return AssessmentLogic.GetAssessment();
         }
 
         [ApplicationExceptionFilter]
         public void Put(IEnumerable<Models.AssessmentResult> assessmentResults)
         {
-            _assessmentLogic.UpdateAssessmentResults(assessmentResults);
+            AssessmentLogic.UpdateAssessmentResults(assessmentResults);
         }
 
         [ApplicationExceptionFilter]
         public void Post(IEnumerable<Models.AssessmentItem> assessmentItems)
         {
-            _assessmentLogic.UpdateAssessmentItems(assessmentItems);
+            AssessmentLogic.UpdateAssessmentItems(assessmentItems);
         }
 
         [Route("api/assessment/create")]
@@ -46,7 +52,7 @@ namespace Continuum.WebApi.Controllers
         [ApplicationExceptionFilter]
         public void Create()
         {
-            _assessmentLogic.CreateAssessment();
+            AssessmentLogic.CreateAssessment();
         }
 
         [Route("api/assessment/moderate")]
@@ -54,7 +60,7 @@ namespace Continuum.WebApi.Controllers
         [ApplicationExceptionFilter]
         public void Moderate()
         {
-            _assessmentLogic.ModerateAssessment();
+            AssessmentLogic.ModerateAssessment();
         }
 
         [Route("api/assessment/close")]
@@ -62,7 +68,7 @@ namespace Continuum.WebApi.Controllers
         [ApplicationExceptionFilter]
         public void Close()
         {
-            _assessmentLogic.CloseAssessment();
+            AssessmentLogic.CloseAssessment();
         }
     }
 }

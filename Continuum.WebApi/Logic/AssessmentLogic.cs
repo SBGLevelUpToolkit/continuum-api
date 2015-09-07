@@ -57,7 +57,7 @@ namespace Continuum.WebApi.Logic
 
             if (team == null)
             {
-                throw new ApplicationException(String.Format("{0} is not a member of a team.", CurrentUserName));
+                throw new ApplicationException(String.Format("'{0}' is not a member of a team.", CurrentUserName));
             }
             return team;
         }
