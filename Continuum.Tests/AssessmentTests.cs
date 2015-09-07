@@ -30,10 +30,9 @@ namespace Continuum.Tests
             _assessmentRepo = new Continuum.Data.AssessmentRepo(_mockContainer);
             _teamRepo = new Continuum.Data.TeamRepository(_mockContainer);
 
-
             var identity = new System.Security.Principal.GenericIdentity("alice@example.com");
             var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
-
+            Continuum.WebApi.Controllers.AssessmentController.CurrentUser = princpal;
 
             _assessmentController = new Continuum.WebApi.Controllers.AssessmentController(_assessmentRepo, _teamRepo);
             _assessmentController.User = princpal;
@@ -215,8 +214,8 @@ namespace Continuum.Tests
             };
 
             assessment.AssessmentItems.Add(assessmentItem);
-
             _mockContainer.Assessments.Add(assessment);
+
             return new WebApi.Models.AssessmentItem()
             {
                 AssesmentId = assessmentItem.Id,
@@ -309,6 +308,7 @@ namespace Continuum.Tests
 
             _mockContainer.Teams.First().TeamMembers.First().IsAdmin = true;
             _mockContainer.Assessments.First().Status.Value = "Moderating";
+            _mockContainer.Assessments.First().Team.TeamMembers.First().IsAdmin = true;
 
             _assessmentController.Close();
 
