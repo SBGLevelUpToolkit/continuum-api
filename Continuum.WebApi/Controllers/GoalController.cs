@@ -44,7 +44,7 @@ namespace Continuum.WebApi.Controllers
         public IEnumerable<Models.Goal> Get()
         {
             var team = TeamLogic.GetTeamForUser();
-            return GoalLogic.ListGoalsForTeam(team); 
+            return GoalLogic.ListGoalsForTeam(team).ToList(); 
         }
 
         [ApplicationExceptionFilter]
