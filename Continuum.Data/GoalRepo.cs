@@ -43,25 +43,8 @@ namespace Continuum.Data
 
         public void UpdateGoal(Goal goal)
         {
-            /*
-            var goalToUpdate = _container.Goals.Find(goal.Id);
-            if (goalToUpdate == null)
-            {
-                throw new ApplicationException(string.Format("No goal with id {0}"));
-            }
-            */
-
             _container.Goals.Attach(goal);
             _container.SetStateForEntity(goal, System.Data.Entity.EntityState.Modified);
-      
-            /*
-            goalToUpdate.CapabiltyId = goal.CapabiltyId;
-            goalToUpdate.Completed = goal.Completed;
-            goalToUpdate.Description = goal.Description;
-            goalToUpdate.DueDate = goal.DueDate;
-           */
-            
-            
         }
 
         public void DeleteGoalById(int id)
