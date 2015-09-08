@@ -39,8 +39,8 @@ namespace Continuum.Tests
             Data.TeamMember teamMember;
             CreateTeamAndTeamMember(out team, out teamMember);
 
-            _mockContainer.Goals.Add(new Data.Goal() { Completed = true, TeamId = team.Id, Capabilty = new Data.Capability() });
-            _mockContainer.Goals.Add(new Data.Goal() { Completed = false, TeamId = team.Id, Capabilty = new Data.Capability() });
+            _mockContainer.Goals.Add(new Data.Goal() { Completed = true, TeamId = team.Id, Capabilty = new Data.Capability() {Dimension = new Data.Dimension() } });
+            _mockContainer.Goals.Add(new Data.Goal() { Completed = false, TeamId = team.Id, Capabilty = new Data.Capability() { Dimension = new Data.Dimension()} });
            
             var result = _controller.Get();
 

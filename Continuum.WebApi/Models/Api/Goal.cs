@@ -12,7 +12,11 @@ namespace Continuum.WebApi.Models
 
         public int DimensionId { get; set; }
 
+        public string DimensionText { get; set; }
+
         public int CapabilityId { get; set; }
+
+        public string CapabilityText { get; set; }
 
         public string Notes { get; set; }
 
