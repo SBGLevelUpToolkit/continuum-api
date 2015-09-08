@@ -32,12 +32,17 @@ namespace Continuum.WebApi.Controllers
         [ApplicationExceptionFilter]
         public HttpResponseMessage Put(Models.Team team)
         {
-            Models.Team result = TeamLogic.CreateTeam(team);
-
-           var response = new HttpResponseMessage(HttpStatusCode.Created);
-           response.Content = new ObjectContent(typeof(Models.Team), result, new JsonMediaTypeFormatter());
-
-           return response;
+            if (ModelState.IsValid)
+            {
+                Models.Team result = TeamLogic.CreateTeam(team);
+                var response = new HttpResponseMessage(HttpStatusCode.Created);
+                response.Content = new ObjectContent(typeof(Models.Team), result, new JsonMediaTypeFormatter());
+                return response;
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
         }
 
         [ApplicationExceptionFilter]
