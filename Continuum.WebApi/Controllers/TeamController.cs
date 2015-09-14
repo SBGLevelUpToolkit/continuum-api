@@ -55,6 +55,12 @@ namespace Continuum.WebApi.Controllers
         {
             return TeamLogic.ListTeams();
         }
+
+        [Route("api/team/avatars")]
+        public IEnumerable<Models.Avatar> GetAvatars()
+        {
+            return TeamLogic.GetAvatars(); 
+        }
        
     }
 }

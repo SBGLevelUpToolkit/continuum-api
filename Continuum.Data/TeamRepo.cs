@@ -67,9 +67,20 @@ namespace Continuum.Data
             return avatar;
         }
 
+        public AvatarType GetAvatar(string name)
+        {
+            var avatar = _container.Lookups.OfType<Data.AvatarType>().Where(i => i.Value == name).FirstOrDefault();
+            return avatar;
+        }
+
         public AvatarType GetDefaultAvatar()
         {
             return _container.Lookups.OfType<Data.AvatarType>().FirstOrDefault();
+        }
+
+        public IEnumerable<Data.AvatarType> ListAvatars()
+        {
+            return _container.Lookups.OfType<Data.AvatarType>().AsEnumerable();
         }
     }
 }

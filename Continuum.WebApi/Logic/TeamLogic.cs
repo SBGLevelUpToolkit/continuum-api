@@ -28,9 +28,9 @@ namespace Continuum.WebApi.Logic
 
 
            Data.AvatarType avatar = null;
-           if(team.AvatarId > 0)
+           if(String.IsNullOrEmpty(team.AvatarName))
            {
-               avatar = _teamRepo.GetAvatar(team.AvatarId);
+               avatar = _teamRepo.GetAvatar(team.AvatarName);
            }
            else
            {
@@ -51,7 +51,7 @@ namespace Continuum.WebApi.Logic
 
            return new Models.Team()
            {
-               AvatarId = newTeam.AvatarTypeId,
+               AvatarName = newTeam.AvatarType.Value,
                Id = newTeam.Id,
                Name = newTeam.Name,
                TeamLeadName = newTeam.TeamMembers.Where(i => i.IsAdmin).First().UserId
@@ -94,7 +94,7 @@ namespace Continuum.WebApi.Logic
 
             string adminName = team.TeamMembers.Where(i => i.IsAdmin).FirstOrDefault().UserId;
 
-            return new Models.Team { Name = team.Name, Id = team.Id, AvatarId = team.AvatarTypeId, TeamLeadName = adminName };
+            return new Models.Team { Name = team.Name, Id = team.Id, AvatarName = team.AvatarType.Value, TeamLeadName = adminName };
              
         }
 
@@ -122,6 +122,9 @@ namespace Continuum.WebApi.Logic
             }
 
             _teamRepo.SaveChanges();
+        }
+        public IEnumerable<Models.Avatar> GetAvatars(){
+            return _teamRepo.ListAvatars().Select(i => new Models.Avatar() { Name = i.Value });
         }
     }
 }

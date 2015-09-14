@@ -266,6 +266,7 @@
     <Compile Include="Models\Api\Assessment.cs" />
     <Compile Include="Models\Api\AssessmentItem.cs" />
     <Compile Include="Models\Api\AssessmentResult.cs" />
+    <Compile Include="Models\Api\Avatar.cs" />
     <Compile Include="Models\Api\Capability.cs" />
     <Compile Include="Models\Api\Dimension.cs" />
     <Compile Include="Models\Api\Goal.cs" />
