@@ -60,7 +60,22 @@ namespace Continuum.WebApi.Logic
 
         internal void UpdateGoalById(int id, Models.Goal goal)
         {
+            var team = _teamLogic.GetTeamForUser();
 
+            goal.Id = id;
+            _goalRepository.UpdateGoal(new Data.Goal()
+            {
+                CapabiltyId = goal.CapabilityId,
+                Description = goal.Notes,
+                Completed = goal.Completed,
+                Id = id,
+                DueDate = goal.DueDate,
+                TeamId = team.Id,
+                Title = "Goal"
+            });
+            _goalRepository.SaveChanges();
+
+            /*
             var team = _teamLogic.GetTeamForUser();
 
             var currentGoal = _goalRepository.GetGoalById(id);
@@ -80,7 +95,7 @@ namespace Continuum.WebApi.Logic
             else
             {
                 throw new ApplicationException("Invalid goal Id.");
-            }
+            }*/
         }
 
         internal void DeleteGoal(int id)
