@@ -72,6 +72,9 @@ namespace Continuum.WebApi.Logic
 
                 _goalRepository.UpdateGoal(currentGoal);
                 _goalRepository.SaveChanges();
+
+                string message = String.Format("Updated Goal {0} Status: {1}", currentGoal.Id, currentGoal.Completed);
+                Elmah.ErrorLog.GetDefault(HttpContext.Current).Log(new Elmah.Error() { Message = message });
             }
             else
             {
