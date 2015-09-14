@@ -10,6 +10,7 @@ using Continuum.WebApi.Filters;
 
 namespace Continuum.WebApi.Controllers
 {
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly TeamRepo _teamRepo;
@@ -21,6 +22,10 @@ namespace Continuum.WebApi.Controllers
             _teamLogic = new Logic.TeamLogic(_teamRepo, CurrentUser == null ? this.User : CurrentUser);
         }
 
+        /// <summary>
+        /// Returns the details for the current user. 
+        /// </summary>
+        /// <returns></returns>
         public Models.User Get()
         {
             return _teamLogic.GetUserDetails(CurrentUser == null ? this.User.Identity.Name : CurrentUser.Identity.Name);

@@ -134,9 +134,9 @@ namespace Continuum.WebApi.Logic
             var team = _teamRepo.GetTeamForUser(userId).FirstOrDefault();
             return new Models.User()
             {
-                 UserId = CurrentUserName,
-                IsAdmin = team.TeamMembers.Any(i => i.IsAdmin && i.UserId == CurrentUserName),
-                Teams = GetTeamsForUser(userId)
+                UserId = userId,
+                IsAdmin = team.TeamMembers.Any(i => i.IsAdmin && i.UserId == userId),
+                Teams = GetTeamsForUser(userId),
             };
         }
 
