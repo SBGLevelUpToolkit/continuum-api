@@ -80,7 +80,9 @@ namespace Continuum.WebApi.Logic
             return _teamRepo.All().Select(i => new Models.Team()
             {
                 Name = i.Name,
-                TeamLeadName = i.TeamMembers.Where(j => j.IsAdmin).FirstOrDefault().UserId
+                TeamLeadName = i.TeamMembers.Where(j => j.IsAdmin).FirstOrDefault().UserId,
+                AvatarName = i.AvatarType.Value,
+                Id = i.Id
             }).AsEnumerable();
         }
 
