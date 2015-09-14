@@ -29,24 +29,40 @@ namespace Continuum.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Returns the current active <see cref="Assessment"/> for the current user's team.
+        /// </summary>
+        /// <returns></returns>
         [ApplicationExceptionFilter]
         public Models.Assessment Get()
         {
             return AssessmentLogic.GetAssessment();
         }
 
+        /// <summary>
+        /// Updates the moderated assessment results for the current assessment. Note only the Team Admin can call this operation.
+        /// </summary>
+        /// <param name="assessmentResults"></param>
         [ApplicationExceptionFilter]
         public void Put(IEnumerable<Models.AssessmentResult> assessmentResults)
         {
             AssessmentLogic.UpdateAssessmentResults(assessmentResults);
         }
 
+        /// <summary>
+        /// Updates the assessment results for the current user on the users current assessment.
+        /// </summary>
+        /// <param name="assessmentItems">A collection of <paramref name="Models.AssessmentItem"/></param>
         [ApplicationExceptionFilter]
         public void Post(IEnumerable<Models.AssessmentItem> assessmentItems)
         {
             AssessmentLogic.UpdateAssessmentItems(assessmentItems);
         }
 
+        /// <summary>
+        /// Creates a new assesssment for the current user's team.
+        /// </summary>
+        /// <exception cref="ApplicationException">Throws InternalServerError (500) if a current assessment already exists.</exception>
         [Route("api/assessment/create")]
         [Filters.TeamAdminFilter]
         [ApplicationExceptionFilter]
@@ -55,6 +71,10 @@ namespace Continuum.WebApi.Controllers
             AssessmentLogic.CreateAssessment();
         }
 
+        /// <summary>
+        /// Puts the current assessment into Moderation. Note that only the Team Admin can call this operation.
+        /// </summary>
+        /// <exception cref="ApplicationException">Throws InternalServerError (500) if there is no current assessment or if the current assessment is not in the 'Open' status.</exception>
         [Route("api/assessment/moderate")]
         [Filters.TeamAdminFilter]
         [ApplicationExceptionFilter]
@@ -63,6 +83,10 @@ namespace Continuum.WebApi.Controllers
             AssessmentLogic.ModerateAssessment();
         }
 
+        /// <summary>
+        /// Closes the current assessment. Note that onlt the Team Admin can call this operation.
+        /// </summary>
+        /// <exception cref="ApplicationException">Throws InternalServerError (500) if there is no current assessment or if the current assessment us not in the 'Moderating' status.</exception>
         [Route("api/assessment/close")]
         [Filters.TeamAdminFilter]
         [ApplicationExceptionFilter]

@@ -10,7 +10,12 @@ namespace Continuum.WebApi.Controllers
     [Authorize]
     public class ValuesController : ApiController
     {
+        
         // GET api/values
+        /// <summary>
+        /// Returns some values.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
