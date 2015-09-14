@@ -70,7 +70,8 @@ namespace Continuum.WebApi.Logic
                 Completed = goal.Completed,
                 Id = id,
                 DueDate = goal.DueDate,
-                TeamId = team.Id
+                TeamId = team.Id,
+                Title = "Goal"
             });
             _goalRepository.SaveChanges();
 
