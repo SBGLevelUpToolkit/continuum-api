@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace Continuum.Data
 {
@@ -22,7 +23,7 @@ namespace Continuum.Data
 
         public IEnumerable<Team> All()
         {
-            return _container.Teams.AsEnumerable();
+            return _container.Teams.Include(i=>i.AvatarType).AsEnumerable();
         }
 
         public void Create(Team item)
