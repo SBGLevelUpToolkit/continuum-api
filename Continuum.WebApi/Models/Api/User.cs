@@ -9,5 +9,7 @@ namespace Continuum.WebApi.Models
     {
         public string UserId { get; set; }
         public IEnumerable<Team> Teams{ get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }

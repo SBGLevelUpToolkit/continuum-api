@@ -21,9 +21,9 @@ namespace Continuum.WebApi.Controllers
             _teamLogic = new Logic.TeamLogic(_teamRepo, CurrentUser == null ? this.User : CurrentUser);
         }
 
-        public Models.Team Get()
+        public Models.User Get()
         {
-            return _teamLogic.GetTeamForUser();
+            return _teamLogic.GetUserDetails(CurrentUser == null ? this.User.Identity.Name : CurrentUser.Identity.Name);
         }
 
         [ApplicationExceptionFilter]

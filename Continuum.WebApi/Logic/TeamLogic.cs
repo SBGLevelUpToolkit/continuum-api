@@ -128,5 +128,28 @@ namespace Continuum.WebApi.Logic
         public IEnumerable<Models.Avatar> GetAvatars(){
             return _teamRepo.ListAvatars().Select(i => new Models.Avatar() { Name = i.Value });
         }
+
+        public Models.User GetUserDetails(string userId)
+        {
+            var team = _teamRepo.GetTeamForUser(userId).FirstOrDefault();
+            return new Models.User()
+            {
+                 UserId = CurrentUserName,
+                IsAdmin = team.TeamMembers.Any(i => i.IsAdmin && i.UserId == CurrentUserName),
+                Teams = GetTeamsForUser(userId)
+            };
+        }
+
+        public IEnumerable<Models.Team> GetTeamsForUser(string userId)
+        {
+            var team = _teamRepo.GetTeamForUser(userId);
+            return team.Select(i => new Models.Team()
+            {
+                Name = i.Name,
+                Id = i.Id,
+                AvatarName = i.AvatarType.Value,
+                TeamLeadName = i.TeamMembers.First(j => j.IsAdmin).UserId
+            });
+        }
     }
 }
