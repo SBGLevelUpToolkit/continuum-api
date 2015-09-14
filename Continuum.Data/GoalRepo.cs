@@ -43,8 +43,8 @@ namespace Continuum.Data
 
         public void UpdateGoal(Goal goal)
         {
-            _container.Goals.Attach(goal);
-            _container.SetStateForEntity(goal, System.Data.Entity.EntityState.Modified);
+            //_container.Goals.Attach(goal);
+            //_container.SetStateForEntity(goal, System.Data.Entity.EntityState.Modified);
         }
 
         public void DeleteGoalById(int id)
