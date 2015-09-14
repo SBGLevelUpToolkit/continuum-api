@@ -16,14 +16,14 @@ namespace Continuum.Data
             _container = container;
         }
 
-        public IEnumerable<Data.Goal> GetActiveGoalsForTeam(Team team)
+        public IEnumerable<Data.Goal> GetGoalsForTeam(Team team)
         {
-            return GetActiveGoalsForTeam(team.Id);
+            return GetGoalsForTeam(team.Id);
         }
 
-        public IEnumerable<Data.Goal> GetActiveGoalsForTeam(int teamId)
+        public IEnumerable<Data.Goal> GetGoalsForTeam(int teamId)
         {
-            return _container.Goals.Where(i => i.TeamId == teamId && i.Completed == false);
+            return _container.Goals.Where(i => i.TeamId == teamId);
         }
 
         public void CreateGoal(Goal goal)

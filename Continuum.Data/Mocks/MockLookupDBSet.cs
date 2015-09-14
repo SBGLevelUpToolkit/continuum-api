@@ -13,6 +13,7 @@ namespace Continuum.Data.Mocks
             this.Add(new Data.AssessmentStatus() { Value = "Open" });
             this.Add(new Data.AssessmentStatus() { Value = "Closed" });
             this.Add(new Data.AssessmentStatus() { Value = "Moderating" });
+            this.Add(new Data.AvatarType() { Value = "Avatar" });
         }
     }
 }

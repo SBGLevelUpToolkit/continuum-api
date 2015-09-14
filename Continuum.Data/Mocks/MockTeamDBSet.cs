@@ -14,7 +14,8 @@ namespace Continuum.Data.Mocks
             var team = new Data.Team()
             {
                 Id = 1,
-                Name = "Test Team"
+                Name = "Test Team",
+                AvatarType = new AvatarType() { Value = "Avatar" }
             };
 
             team.TeamMembers.Add(new TeamMember(){ UserId = "alice@example.com", IsAdmin = true, Team = team});

@@ -22,7 +22,7 @@ namespace Continuum.WebApi.Logic
 
         internal IEnumerable<Models.Goal> ListGoalsForTeam(Models.Team team)
         {
-            return _goalRepository.GetActiveGoalsForTeam(team.Id)
+            return _goalRepository.GetGoalsForTeam(team.Id)
                 .Select(i => new Models.Goal() 
                 { 
                     Id = i.Id, 
@@ -61,8 +61,22 @@ namespace Continuum.WebApi.Logic
         internal void UpdateGoalById(int id, Models.Goal goal)
         {
             var team = _teamLogic.GetTeamForUser();
-            _goalRepository.UpdateGoal(new Data.Goal() { Id = id, TeamId = team.Id, CapabiltyId = goal.CapabilityId, DueDate = goal.DueDate, Title= "Goal", Description = goal.Notes, Completed = goal.Completed });
-            _goalRepository.SaveChanges();
+
+            var currentGoal = _goalRepository.GetGoalById(id);
+            if(currentGoal != null)
+            {
+                currentGoal.Completed = goal.Completed;
+                currentGoal.Description = goal.Notes;
+                currentGoal.CapabiltyId = goal.CapabilityId;
+                currentGoal.DueDate = goal.DueDate;
+
+                _goalRepository.UpdateGoal(currentGoal);
+                _goalRepository.SaveChanges();
+            }
+            else
+            {
+                throw new ApplicationException("Invalid goal Id.");
+            }
         }
 
         internal void DeleteGoal(int id)

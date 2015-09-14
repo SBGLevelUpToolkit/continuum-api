@@ -28,7 +28,7 @@ namespace Continuum.WebApi.Logic
 
 
            Data.AvatarType avatar = null;
-           if(String.IsNullOrEmpty(team.AvatarName))
+           if(!String.IsNullOrEmpty(team.AvatarName))
            {
                avatar = _teamRepo.GetAvatar(team.AvatarName);
            }

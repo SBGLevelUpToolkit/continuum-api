@@ -57,8 +57,6 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatCreatingANewTeamIsAllowed()
         {
-  
-
             TeamController teamController = new TeamController(_teamRepository);
             teamController.Request = _request;
 
