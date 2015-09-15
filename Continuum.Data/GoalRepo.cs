@@ -45,6 +45,9 @@ namespace Continuum.Data
         {
             _container.Goals.Attach(goal);
             _container.SetStateForEntity(goal, EntityState.Modified);
+
+            goal.Completed = true;
+            
         }
 
         public void DeleteGoalById(int id)
