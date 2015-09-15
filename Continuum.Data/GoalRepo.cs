@@ -46,7 +46,7 @@ namespace Continuum.Data
             _container.Goals.Attach(goal);
             _container.SetStateForEntity(goal, EntityState.Modified);
 
-            goal.Completed = true;
+            _container.SetStateForEntityProperty(goal, i=>i.Completed, true);
             
         }
 

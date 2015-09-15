@@ -60,5 +60,10 @@ namespace Continuum.Data.Mocks
                 }
             }
         }
+
+
+        public void SetStateForEntityProperty<TEntity, TProperty>(TEntity entity, System.Linq.Expressions.Expression<Func<TEntity, TProperty>> property, bool modified) where TEntity : class
+        {
+        }
     }
 }

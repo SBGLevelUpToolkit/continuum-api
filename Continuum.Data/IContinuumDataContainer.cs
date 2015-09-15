@@ -26,6 +26,6 @@ namespace Continuum.Data
         int SaveChanges();
 
         void SetStateForEntity<T>(T entity, System.Data.Entity.EntityState state) where T : class;
-        //void SetStateForEntityProperty<TEntity, TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> property, System.Data.Entity.EntityState state);
+        void SetStateForEntityProperty<TEntity, TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> property,bool modified) where TEntity : class;
     }
 }
