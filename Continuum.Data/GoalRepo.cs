@@ -51,7 +51,7 @@ namespace Continuum.Data
 
             update.Completed = goal.Completed;
 
-            _container.SetStateForEntityProperty(goal, i=>i.Completed, true);
+            _container.SetStateForEntityProperty(update, i => i.Completed, true);
             
         }
 
