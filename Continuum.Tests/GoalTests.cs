@@ -66,7 +66,7 @@ namespace Continuum.Tests
             Assert.Fail();
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void TestThatUpdateGoalUpdates()
         {
             Data.Team team;
