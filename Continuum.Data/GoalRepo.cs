@@ -43,8 +43,13 @@ namespace Continuum.Data
 
         public void UpdateGoal(Goal goal)
         {
-            _container.Goals.Attach(goal);
-            _container.SetStateForEntity(goal, EntityState.Modified);
+            //_container.Goals.Attach(goal);
+
+            var update = _container.Goals.Find(goal.Id);
+
+            //_container.SetStateForEntity(goal, EntityState.Modified);
+
+            update.Completed = goal.Completed;
 
             _container.SetStateForEntityProperty(goal, i=>i.Completed, true);
             
