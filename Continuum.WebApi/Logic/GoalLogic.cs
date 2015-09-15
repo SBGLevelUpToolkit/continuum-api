@@ -31,7 +31,8 @@ namespace Continuum.WebApi.Logic
                     CapabilityId = i.CapabiltyId, 
                     CapabilityText = i.Capabilty.Description,
                     DueDate = i.DueDate, 
-                    Notes = i.Description 
+                    Notes = i.Description,
+                    Completed = i.Completed
                 });
         }
 
