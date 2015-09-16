@@ -483,17 +483,17 @@
         </member>
         <member name="M:Continuum.WebApi.Controllers.AssessmentController.Get">
             <summary>
-            Returns the current active <see cref="T:Continuum.Data.Assessment"/> for the current user's team.
+            Returns the current active <see cref="T:Continuum.Core.Models.Assessment"/> for the current user's team.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Continuum.WebApi.Controllers.AssessmentController.Put(System.Collections.Generic.IEnumerable{Continuum.WebApi.Models.AssessmentResult})">
+        <member name="M:Continuum.WebApi.Controllers.AssessmentController.Put(System.Collections.Generic.IEnumerable{Continuum.Core.Models.AssessmentResult})">
             <summary>
             Updates the moderated assessment results for the current assessment. Note only the Team Admin can call this operation.
             </summary>
             <param name="assessmentResults"></param>
         </member>
-        <member name="M:Continuum.WebApi.Controllers.AssessmentController.Post(System.Collections.Generic.IEnumerable{Continuum.WebApi.Models.AssessmentItem})">
+        <member name="M:Continuum.WebApi.Controllers.AssessmentController.Post(System.Collections.Generic.IEnumerable{Continuum.Core.Models.AssessmentItem})">
             <summary>
             Updates the assessment results for the current user on the users current assessment.
             </summary>
@@ -528,66 +528,6 @@
             Returns some values.
             </summary>
             <returns></returns>
-        </member>
-        <member name="T:Continuum.WebApi.Models.AssessmentItem">
-            <summary>
-            Represents a user's assessment of a current capability for the team. 
-            </summary>
-        </member>
-        <member name="P:Continuum.WebApi.Models.AssessmentItem.AssesmentId">
-            <summary>
-            The assessment Id.
-            </summary>
-        </member>
-        <member name="P:Continuum.WebApi.Models.AssessmentItem.CapabilityId">
-            <summary>
-            The capability Id that this assessment item refers to.
-            </summary>
-        </member>
-        <member name="P:Continuum.WebApi.Models.AssessmentItem.CapabilityAchieved">
-            <summary>
-            Has the team achieved this capability?
-            </summary>
-        </member>
-        <member name="T:Continuum.WebApi.Models.Capability">
-            <summary>
-             A capability in the model.
-            </summary>
-        </member>
-        <member name="P:Continuum.WebApi.Models.Capability.Description">
-            <summary>
-            The description of the capability.
-            </summary>
-        </member>
-        <member name="P:Continuum.WebApi.Models.Capability.Level">
-            <summary>
-            The associated level of the capability.
-            </summary>
-        </member>
-        <member name="P:Continuum.WebApi.Models.Capability.Predecessors">
-            <summary>
-            The set of capabilities that must be gained before achieving this capability.
-            </summary>
-        </member>
-        <member name="P:Continuum.WebApi.Models.Capability.DisplayOrder">
-            <summary>
-            Used to order the display of this capability on the assessment screen.
-            </summary>
-        </member>
-        <member name="T:Continuum.WebApi.Models.Dimension">
-            <summary>
-            A dimension in the capabilitie model. For example 'Software Design'.
-            </summary>
-        </member>
-        <member name="P:Continuum.WebApi.Models.Dimension.Capabilities">
-            <summary>
-            The set of Capabilities assigned to this dimension.
-            </summary>
-        </member>
-        <member name="P:Continuum.WebApi.Models.Dimension.Name">
-            <summary>
-            The name of this dimension.
-            </summary>
         </member>
     </members>
 </doc>

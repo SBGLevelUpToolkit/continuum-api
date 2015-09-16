@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Continuum.WebApi.Models
+namespace Continuum.Core.Models
 {
     /// <summary>
     /// Represents a user's assessment of a current capability for the team. 

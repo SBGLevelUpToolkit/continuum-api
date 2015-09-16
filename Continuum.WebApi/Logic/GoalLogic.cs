@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
+using Continuum.Core.Models;
 
 namespace Continuum.WebApi.Logic
 {
@@ -20,10 +21,10 @@ namespace Continuum.WebApi.Logic
             _dimensionRepo = dimensionRepo;
         }
 
-        internal IEnumerable<Models.Goal> ListGoalsForTeam(Models.Team team)
+        internal IEnumerable<Goal> ListGoalsForTeam(Team team)
         {
             return _goalRepository.GetGoalsForTeam(team.Id)
-                .Select(i => new Models.Goal() 
+                .Select(i => new Goal() 
                 { 
                     Id = i.Id, 
                     DimensionId = i.Capabilty.DimensionId, 
@@ -36,7 +37,7 @@ namespace Continuum.WebApi.Logic
                 });
         }
 
-        internal void CreateGoal(Models.Goal goal)
+        internal void CreateGoal(Goal goal)
         {
             var team = _teamLogic.GetTeamForUser();
 
@@ -59,7 +60,7 @@ namespace Continuum.WebApi.Logic
             _goalRepository.SaveChanges();
         }
 
-        internal void UpdateGoalById(int id, Models.Goal goal)
+        internal void UpdateGoalById(int id, Goal goal)
         {
           
             var currentGoal = _goalRepository.GetGoalById(id);

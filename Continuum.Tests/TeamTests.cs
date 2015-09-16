@@ -45,7 +45,7 @@ namespace Continuum.Tests
 
             TeamController teamController = new TeamController(_teamRepository);
         
-            WebApi.Models.Team newTeam = new WebApi.Models.Team() 
+            Core.Models.Team newTeam = new Core.Models.Team() 
             {
                 Name = _mockContainer.Teams.First().Name
             };
@@ -60,7 +60,7 @@ namespace Continuum.Tests
             TeamController teamController = new TeamController(_teamRepository);
             teamController.Request = _request;
 
-            WebApi.Models.Team newTeam = new WebApi.Models.Team() 
+            Core.Models.Team newTeam = new Core.Models.Team() 
             {
                 Name = Guid.NewGuid().ToString()
             };
@@ -84,7 +84,7 @@ namespace Continuum.Tests
            teamController.Request = _request;
            teamController.User = princpal;
            
-            WebApi.Models.Team newTeam = new WebApi.Models.Team() 
+            Core.Models.Team newTeam = new Core.Models.Team() 
             {
                 Name = Guid.NewGuid().ToString()
             };

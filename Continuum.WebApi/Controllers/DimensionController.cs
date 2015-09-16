@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Continuum.Core.Models;
 using Continuum.WebApi.Filters;
 
 namespace Continuum.WebApi.Controllers
@@ -20,13 +21,13 @@ namespace Continuum.WebApi.Controllers
     
         }
 
-        public IEnumerable<Models.Dimension> Get()
+        public IEnumerable<Dimension> Get()
         {
             return _dimensionLogic.ListDimensions();
         }
 
         [ApplicationExceptionFilter]
-        public Models.Dimension Get(int id)
+        public Dimension Get(int id)
         {
             if (_dimensionLogic.DimensionExists(id))
             {

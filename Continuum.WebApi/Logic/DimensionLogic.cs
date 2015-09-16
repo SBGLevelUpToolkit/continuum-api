@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Continuum.Core.Models;
 
 namespace Continuum.WebApi.Logic
 {
@@ -16,9 +17,9 @@ namespace Continuum.WebApi.Logic
 
         }
 
-        internal IEnumerable<Models.Dimension> ListDimensions()
+        internal IEnumerable<Dimension> ListDimensions()
         {
-            return _dimensionRepository.All().Select(i => new Models.Dimension()
+            return _dimensionRepository.All().Select(i => new Dimension()
             {
                 Name = i.Name,
                 Id = i.Id,
@@ -26,16 +27,16 @@ namespace Continuum.WebApi.Logic
             }).ToList();
         }
 
-        internal Models.Dimension GetDimensionById(int id)
+        internal Dimension GetDimensionById(int id)
         {
             var result = _dimensionRepository.FindById(id);
 
-            var dimension = new Models.Dimension()
+            var dimension = new Dimension()
             {
                 Id = id,
                 Name = result.Name,
                 ImageName = result.ImageName,
-                Capabilities = result.Capabilities.Select(i => new Models.Capability()
+                Capabilities = result.Capabilities.Select(i => new Capability()
                 {
                     Id = i.Id,
                     Description = i.Description,

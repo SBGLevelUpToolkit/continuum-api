@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Continuum.Data;
+using Continuum.Core.Models;
 using Continuum.WebApi.Filters; 
 
 namespace Continuum.WebApi.Controllers
@@ -34,7 +34,7 @@ namespace Continuum.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [ApplicationExceptionFilter]
-        public Models.Assessment Get()
+        public Assessment Get()
         {
             return AssessmentLogic.GetAssessment();
         }
@@ -44,7 +44,7 @@ namespace Continuum.WebApi.Controllers
         /// </summary>
         /// <param name="assessmentResults"></param>
         [ApplicationExceptionFilter]
-        public void Put(IEnumerable<Models.AssessmentResult> assessmentResults)
+        public void Put(IEnumerable<AssessmentResult> assessmentResults)
         {
             AssessmentLogic.UpdateAssessmentResults(assessmentResults);
         }
@@ -54,7 +54,7 @@ namespace Continuum.WebApi.Controllers
         /// </summary>
         /// <param name="assessmentItems">A collection of <paramref name="Models.AssessmentItem"/></param>
         [ApplicationExceptionFilter]
-        public void Post(IEnumerable<Models.AssessmentItem> assessmentItems)
+        public void Post(IEnumerable<AssessmentItem> assessmentItems)
         {
             AssessmentLogic.UpdateAssessmentItems(assessmentItems);
         }

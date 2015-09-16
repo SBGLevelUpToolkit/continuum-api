@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Continuum.WebApi.Models
+namespace Continuum.Core.Models
 {
     public class Team
     {

@@ -7,6 +7,7 @@ using System.Security;
 using System.Web.Http;
 using Continuum.Data;
 using Continuum.WebApi.Filters;
+using Continuum.Core.Models; 
 
 namespace Continuum.WebApi.Controllers
 {
@@ -26,13 +27,13 @@ namespace Continuum.WebApi.Controllers
         /// Returns the details for the current user. 
         /// </summary>
         /// <returns></returns>
-        public Models.User Get()
+        public Continuum.Core.Models.User Get()
         {
             return _teamLogic.GetUserDetails(CurrentUser == null ? this.User.Identity.Name : CurrentUser.Identity.Name);
         }
 
         [ApplicationExceptionFilter]
-        public void Put(Models.User user)
+        public void Put(Continuum.Core.Models.User user)
         {
             try
             {

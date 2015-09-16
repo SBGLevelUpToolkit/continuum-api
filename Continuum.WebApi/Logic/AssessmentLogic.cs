@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Continuum.Core.Models;
 
 namespace Continuum.WebApi.Logic
 {
@@ -20,16 +21,16 @@ namespace Continuum.WebApi.Logic
             _teamRepo = teamRepo;
         }
 
-        internal Models.Assessment GetAssessment()
+        internal Assessment GetAssessment()
         {
             var team = GetTeamForCurrentUser();
 
             var assessment = GetCurrentAssessmentForTeam(team);
 
-            var assessmentItems = _assessmentRepo.GetCurrentAssessmentItemsForUser(CurrentUserName).Select(i => Models.AssessmentItem.MapFrom(i));
-            var assessmentResults = assessment.AssessmentResults.Select(i => Models.AssessmentResult.MapFrom(i));
+            var assessmentItems = _assessmentRepo.GetCurrentAssessmentItemsForUser(CurrentUserName).Select(i => AssessmentItem.MapFrom(i));
+            var assessmentResults = assessment.AssessmentResults.Select(i => AssessmentResult.MapFrom(i));
 
-            var result = new Models.Assessment()
+            var result = new Assessment()
             {
                 Id = assessment.Id,
                 Status = assessment.Status.Value,
@@ -62,7 +63,7 @@ namespace Continuum.WebApi.Logic
             return team;
         }
 
-        internal void UpdateAssessmentResults(IEnumerable<Models.AssessmentResult> assessmentResults)
+        internal void UpdateAssessmentResults(IEnumerable<AssessmentResult> assessmentResults)
         {
             var team = GetTeamForCurrentUser();
             var assessment = GetCurrentAssessmentForTeam(team);
@@ -78,7 +79,7 @@ namespace Continuum.WebApi.Logic
             _assessmentRepo.SaveChanges(); 
         }
 
-        internal void UpdateAssessmentItems(IEnumerable<Models.AssessmentItem> assessmentItems)
+        internal void UpdateAssessmentItems(IEnumerable<AssessmentItem> assessmentItems)
         {
             var team = GetTeamForCurrentUser();
             var assessment = GetCurrentAssessmentForTeam(team);

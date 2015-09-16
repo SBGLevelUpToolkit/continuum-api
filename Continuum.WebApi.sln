@@ -28,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		deploy.cmd = deploy.cmd
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Continuum.Core", "Continuum.Core\Continuum.Core.csproj", "{530A69E2-59E8-4025-BE4C-7B13E91513E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{1B3480CA-D8D9-4BF4-891C-D59515E59ABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B3480CA-D8D9-4BF4-891C-D59515E59ABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B3480CA-D8D9-4BF4-891C-D59515E59ABD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{530A69E2-59E8-4025-BE4C-7B13E91513E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{530A69E2-59E8-4025-BE4C-7B13E91513E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{530A69E2-59E8-4025-BE4C-7B13E91513E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{530A69E2-59E8-4025-BE4C-7B13E91513E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

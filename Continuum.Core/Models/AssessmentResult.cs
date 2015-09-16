@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Continuum.WebApi.Models
+namespace Continuum.Core.Models
 {
     public class AssessmentResult
     {

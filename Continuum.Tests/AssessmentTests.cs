@@ -82,10 +82,10 @@ namespace Continuum.Tests
                 Team = team
             });
 
-            var result = new Continuum.WebApi.Models.AssessmentResult();
+            var result = new Continuum.Core.Models.AssessmentResult();
             result.AssessmentId = 1;
 
-            _assessmentController.Put(new List<Continuum.WebApi.Models.AssessmentResult>() { result });
+            _assessmentController.Put(new List<Continuum.Core.Models.AssessmentResult>() { result });
         }
 
         [TestMethod]
@@ -96,9 +96,9 @@ namespace Continuum.Tests
             Data.TeamMember teamMember;
             CreateTeamAndTeamMember(out team, out teamMember);
 
-            var result = new Continuum.WebApi.Models.AssessmentResult();
+            var result = new Continuum.Core.Models.AssessmentResult();
 
-            _assessmentController.Put(new List<Continuum.WebApi.Models.AssessmentResult>() { result });
+            _assessmentController.Put(new List<Continuum.Core.Models.AssessmentResult>() { result });
             Assert.Fail();
         }
 
@@ -141,9 +141,9 @@ namespace Continuum.Tests
         {
             var assessmentItem = CreateOpenAssessment();
 
-            var item = new Continuum.WebApi.Models.AssessmentItem();
+            var item = new Continuum.Core.Models.AssessmentItem();
 
-            _assessmentController.Post(new List<Continuum.WebApi.Models.AssessmentItem>() { assessmentItem });
+            _assessmentController.Post(new List<Continuum.Core.Models.AssessmentItem>() { assessmentItem });
 
             Assert.IsTrue(_mockContainer.Assessments.Count() == 1);
             Assert.IsTrue(_mockContainer.Assessments.First().AssessmentItems.Count() == 1);
@@ -151,7 +151,7 @@ namespace Continuum.Tests
 
         }
 
-        private Continuum.WebApi.Models.AssessmentItem CreateOpenAssessment()
+        private Continuum.Core.Models.AssessmentItem CreateOpenAssessment()
         {
             Data.Team team;
             Data.TeamMember teamMember;
@@ -177,7 +177,7 @@ namespace Continuum.Tests
             assessment.AssessmentItems.Add(assessmentItem);
             _mockContainer.Assessments.Add(assessment);
 
-            return new WebApi.Models.AssessmentItem()
+            return new Core.Models.AssessmentItem()
             {
                 AssesmentId = assessmentItem.Id,
                 CapabilityAchieved = assessmentItem.CapabilityAchieved,
@@ -226,11 +226,11 @@ namespace Continuum.Tests
 
             _mockContainer.Assessments.First().Status.Value = "Moderating";
 
-            var result = new Continuum.WebApi.Models.AssessmentResult();
+            var result = new Continuum.Core.Models.AssessmentResult();
             result.AssessmentId = _mockContainer.Assessments.First().Id;
             result.Rating = 3;
 
-            _assessmentController.Put(new List<Continuum.WebApi.Models.AssessmentResult>() { result });
+            _assessmentController.Put(new List<Continuum.Core.Models.AssessmentResult>() { result });
 
             Assert.IsTrue(_mockContainer.Assessments.First().AssessmentResults.Count == 1);
             Assert.IsTrue(_mockContainer.Assessments.First().AssessmentResults.First().Rating == result.Rating.ToString());

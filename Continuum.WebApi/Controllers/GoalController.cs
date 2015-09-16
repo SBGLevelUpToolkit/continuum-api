@@ -4,16 +4,16 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Continuum.Data;
+using Continuum.Core.Models;
 using Continuum.WebApi.Filters;
 
 namespace Continuum.WebApi.Controllers
 {
     public class GoalController : ControllerBase
     {
-        private readonly GoalRepo _goalRepository;
-        private readonly TeamRepo _teamRepo;
-        private readonly DimensionRepo _dimensionRepo;
+        private readonly Continuum.Data.GoalRepo _goalRepository;
+        private readonly Continuum.Data.TeamRepo _teamRepo;
+        private readonly Continuum.Data.DimensionRepo _dimensionRepo;
 
         public GoalController(Data.GoalRepo goalRepository, Data.TeamRepo teamRepo, Data.DimensionRepo dimensionRepo)
         {
@@ -41,7 +41,7 @@ namespace Continuum.WebApi.Controllers
             }
         }
 
-        public IEnumerable<Models.Goal> Get()
+        public IEnumerable<Goal> Get()
         {
             var team = TeamLogic.GetTeamForUser();
             return GoalLogic.ListGoalsForTeam(team).ToList(); 
@@ -49,13 +49,13 @@ namespace Continuum.WebApi.Controllers
 
         [ApplicationExceptionFilter]
         [ValidationResultFilter]
-        public void Post(Models.Goal goal)
+        public void Post(Goal goal)
         {
             GoalLogic.CreateGoal(goal);
         }
 
         [ValidationResultFilter]
-        public void Put(int id, Models.Goal goal)
+        public void Put(int id, Goal goal)
         {
             GoalLogic.UpdateGoalById(id, goal);       
         }

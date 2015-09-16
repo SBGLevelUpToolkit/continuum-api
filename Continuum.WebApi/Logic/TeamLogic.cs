@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security;
 using System.Web;
+using Continuum.Core;
+using Continuum.Core.Models; 
 
 namespace Continuum.WebApi.Logic
 {
@@ -18,7 +20,7 @@ namespace Continuum.WebApi.Logic
             _teamRepo = teamRepo;
         }
 
-        internal Models.Team CreateTeam(Models.Team team)
+        internal Team CreateTeam(Team team)
         {
             
            if (_teamRepo.All().Any(i => i.Name == team.Name.Trim()))
@@ -49,7 +51,7 @@ namespace Continuum.WebApi.Logic
            _teamRepo.SaveChanges();
 
 
-           return new Models.Team()
+           return new Team()
            {
                AvatarName = newTeam.AvatarType.Value,
                Id = newTeam.Id,
@@ -58,7 +60,7 @@ namespace Continuum.WebApi.Logic
            };
         }
 
-        internal void JoinTeam(Models.Team team)
+        internal void JoinTeam(Team team)
         {
             var teamEntry = _teamRepo.FindById(team.Id);
             if (teamEntry == null)
@@ -75,9 +77,9 @@ namespace Continuum.WebApi.Logic
             }
         }
 
-        internal IEnumerable<Models.Team> ListTeams()
+        internal IEnumerable<Team> ListTeams()
         {
-            return _teamRepo.All().Select(i => new Models.Team()
+            return _teamRepo.All().Select(i => new Team()
             {
                 Name = i.Name,
                 TeamLeadName = i.TeamMembers.Where(j => j.IsAdmin).FirstOrDefault().UserId,
@@ -86,21 +88,21 @@ namespace Continuum.WebApi.Logic
             }).AsEnumerable();
         }
 
-        internal Models.Team GetTeamForUser()
+        internal Team GetTeamForUser()
         {
             var team = _teamRepo.GetTeamForUser(CurrentUserName).FirstOrDefault();
             if (team == null)
             {
-                return new Models.Team() { Name = string.Format("{0} is not a member of any team.", CurrentUserName) };
+                return new Team() { Name = string.Format("{0} is not a member of any team.", CurrentUserName) };
             }
 
             string adminName = team.TeamMembers.Where(i => i.IsAdmin).FirstOrDefault().UserId;
 
-            return new Models.Team { Name = team.Name, Id = team.Id, AvatarName = team.AvatarType.Value, TeamLeadName = adminName };
+            return new Team { Name = team.Name, Id = team.Id, AvatarName = team.AvatarType.Value, TeamLeadName = adminName };
              
         }
 
-        internal void UpdateUser(Models.User user)
+        internal void UpdateUser(User user)
         {
             
             if(user.UserId != CurrentUserName){
@@ -125,14 +127,14 @@ namespace Continuum.WebApi.Logic
 
             _teamRepo.SaveChanges();
         }
-        public IEnumerable<Models.Avatar> GetAvatars(){
-            return _teamRepo.ListAvatars().Select(i => new Models.Avatar() { Name = i.Value });
+        public IEnumerable<Avatar> GetAvatars(){
+            return _teamRepo.ListAvatars().Select(i => new Avatar() { Name = i.Value });
         }
 
-        public Models.User GetUserDetails(string userId)
+        public User GetUserDetails(string userId)
         {
             var team = _teamRepo.GetTeamForUser(userId).FirstOrDefault();
-            return new Models.User()
+            return new User()
             {
                 UserId = userId,
                 IsAdmin = team.TeamMembers.Any(i => i.IsAdmin && i.UserId == userId),
@@ -140,10 +142,10 @@ namespace Continuum.WebApi.Logic
             };
         }
 
-        public IEnumerable<Models.Team> GetTeamsForUser(string userId)
+        public IEnumerable<Team> GetTeamsForUser(string userId)
         {
             var team = _teamRepo.GetTeamForUser(userId);
-            return team.Select(i => new Models.Team()
+            return team.Select(i => new Team()
             {
                 Name = i.Name,
                 Id = i.Id,

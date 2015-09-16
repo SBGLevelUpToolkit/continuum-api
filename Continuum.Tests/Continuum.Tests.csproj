@@ -66,11 +66,12 @@
     </When>
     <Otherwise>
       <ItemGroup>
- 	<Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AssessmentScoringTests.cs" />
     <Compile Include="CapabilityTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DimensionTests.cs" />
@@ -80,6 +81,10 @@
     <Compile Include="UserTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Continuum.Core\Continuum.Core.csproj">
+      <Project>{530a69e2-59e8-4025-be4c-7b13e91513e6}</Project>
+      <Name>Continuum.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Continuum.Data\Continuum.Data.csproj">
       <Project>{7dc38092-f952-4a59-bba6-471bf509f10b}</Project>
       <Name>Continuum.Data</Name>

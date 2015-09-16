@@ -35,7 +35,7 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatUserCannotUpdateAnotherUserDetails()
         {
-            Continuum.WebApi.Models.User user = new WebApi.Models.User() { UserId = "test@test.com" };
+            Continuum.Core.Models.User user = new Core.Models.User() { UserId = "test@test.com" };
 
             try
             {
@@ -57,10 +57,10 @@ namespace Continuum.Tests
                   Id = 100
             });
 
-            var teams = new List<Continuum.WebApi.Models.Team>();
-            teams.Add(new WebApi.Models.Team() { Id = 100 });
+            var teams = new List<Continuum.Core.Models.Team>();
+            teams.Add(new Core.Models.Team() { Id = 100 });
 
-            Continuum.WebApi.Models.User user = new WebApi.Models.User()
+            Continuum.Core.Models.User user = new Core.Models.User()
             {
                 UserId = _currentUser.Identity.Name, 
                 Teams = teams
@@ -84,10 +84,10 @@ namespace Continuum.Tests
                 Id = 100
             });
 
-            var teams = new List<Continuum.WebApi.Models.Team>();
-            teams.Add(new WebApi.Models.Team() { Id = 999 });
+            var teams = new List<Continuum.Core.Models.Team>();
+            teams.Add(new Core.Models.Team() { Id = 999 });
 
-            Continuum.WebApi.Models.User user = new WebApi.Models.User()
+            Continuum.Core.Models.User user = new Core.Models.User()
             {
                 UserId = _currentUser.Identity.Name,
                 Teams = teams
@@ -107,11 +107,11 @@ namespace Continuum.Tests
                 Id = 100
             });
 
-            var teams = new List<Continuum.WebApi.Models.Team>();
-            teams.Add(new WebApi.Models.Team() { Id = 100 });
-            teams.Add(new WebApi.Models.Team() { Id = 100 });
+            var teams = new List<Continuum.Core.Models.Team>();
+            teams.Add(new Core.Models.Team() { Id = 100 });
+            teams.Add(new Core.Models.Team() { Id = 100 });
 
-            Continuum.WebApi.Models.User user = new WebApi.Models.User()
+            Continuum.Core.Models.User user = new Core.Models.User()
             {
                 UserId = _currentUser.Identity.Name,
                 Teams = teams
@@ -127,9 +127,9 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatEmptyTeamCollectionThrowsException()
         {
-            var teams = new List<Continuum.WebApi.Models.Team>();
+            var teams = new List<Continuum.Core.Models.Team>();
 
-            Continuum.WebApi.Models.User user = new WebApi.Models.User()
+            Continuum.Core.Models.User user = new Core.Models.User()
             {
                 UserId = _currentUser.Identity.Name,
                 Teams = teams

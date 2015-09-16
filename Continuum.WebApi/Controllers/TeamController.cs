@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using Continuum.Core.Models;
 using Continuum.WebApi.Filters;
 
 namespace Continuum.WebApi.Controllers
@@ -30,13 +31,13 @@ namespace Continuum.WebApi.Controllers
         }
 
         [ApplicationExceptionFilter]
-        public HttpResponseMessage Put(Models.Team team)
+        public HttpResponseMessage Put(Team team)
         {
             if (ModelState.IsValid)
             {
-                Models.Team result = TeamLogic.CreateTeam(team);
+                Team result = TeamLogic.CreateTeam(team);
                 var response = new HttpResponseMessage(HttpStatusCode.Created);
-                response.Content = new ObjectContent(typeof(Models.Team), result, new JsonMediaTypeFormatter());
+                response.Content = new ObjectContent(typeof(Team), result, new JsonMediaTypeFormatter());
                 return response;
             }
             else
@@ -46,18 +47,18 @@ namespace Continuum.WebApi.Controllers
         }
 
         [ApplicationExceptionFilter]
-        public void Post(Models.Team team)
+        public void Post(Team team)
         {
             TeamLogic.JoinTeam(team);
         }
 
-        public IEnumerable<Models.Team> Get()
+        public IEnumerable<Team> Get()
         {
             return TeamLogic.ListTeams();
         }
 
         [Route("api/team/avatars")]
-        public IEnumerable<Models.Avatar> GetAvatars()
+        public IEnumerable<Avatar> GetAvatars()
         {
             return TeamLogic.GetAvatars(); 
         }

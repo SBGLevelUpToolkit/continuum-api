@@ -37,7 +37,7 @@ namespace Continuum.Tests
         {
             _mockContainer.Capabilities.Add(new Data.Capability() { Id = 1 });
 
-            WebApi.Models.Goal goal = new WebApi.Models.Goal()
+            Core.Models.Goal goal = new Core.Models.Goal()
             {
                 CapabilityId = 1,
                 DueDate = DateTime.Now.AddDays(1),
@@ -55,7 +55,7 @@ namespace Continuum.Tests
         {
             _mockContainer.Capabilities.Add(new Data.Capability() { Id = 1 });
 
-            WebApi.Models.Goal goal = new WebApi.Models.Goal()
+            Core.Models.Goal goal = new Core.Models.Goal()
             {
                 CapabilityId = 1,
                 DueDate = DateTime.Now.Subtract(TimeSpan.FromDays(2)),
@@ -75,7 +75,7 @@ namespace Continuum.Tests
 
             _mockContainer.Goals.Add(new Data.Goal() { Completed = false, TeamId = team.Id, Id = 1 });
 
-            WebApi.Models.Goal goal = new WebApi.Models.Goal()
+            Core.Models.Goal goal = new Core.Models.Goal()
             {
                 CapabilityId = 1,
                 DueDate = DateTime.Now.AddDays(1),
