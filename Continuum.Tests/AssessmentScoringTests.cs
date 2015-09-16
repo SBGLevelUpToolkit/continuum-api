@@ -79,7 +79,7 @@ namespace Continuum.Tests
 
             var result = scorer.CalculateScore(assessmentItems);
 
-            Assert.IsTrue(result.DimensionResults.First().Levels.First().Responses == 2);
+            Assert.IsTrue(result.DimensionResults.First().Levels.First().ResponseCount == 2);
             Assert.IsTrue(result.DimensionResults.First().Levels.First().Level == 1);
         }
 
@@ -119,6 +119,34 @@ namespace Continuum.Tests
             var result = scorer.CalculateScore(assessmentItems);
 
             Assert.IsTrue(result.DimensionResults.First().Levels.First().TargetCapabilityCount == 2, "Incorrect capability count.");   
+        }
+
+        [TestMethod]
+        public void LevelAchievedMustNotBeSetIfNotAllUsersMarkedAllCapabilitiesForALevel()
+        {
+             var assessmentItems = CreateAssessmentWithResponses();
+
+            AssessmentScorer scorer = CreateScorer();
+
+            var result = scorer.CalculateScore(assessmentItems);
+
+            Assert.IsTrue(result.DimensionResults.First().Levels.First().LevelAchieved == false, "Level was not achieved."); 
+        }
+
+        [TestMethod]
+        public void LevelAchievedMustBeSetIfAllUsersMarkedAllCapabilitiesForALevel()
+        {
+            var assessmentItems = CreateAssessmentWithResponses();
+
+            var items = assessmentItems as List<Core.Models.AssessmentScoringItem>;
+            items.Add(new Core.Models.AssessmentScoringItem() { DimensionId = 1, CapabilityId = 2, Level = 1, UserId = "Bob" });
+            items.Add(new Core.Models.AssessmentScoringItem() { DimensionId = 1, CapabilityId = 1, Level = 1, UserId = "Fred" });
+
+            AssessmentScorer scorer = CreateScorer();
+
+            var result = scorer.CalculateScore(items);
+
+            Assert.IsTrue(result.DimensionResults.First().Levels.First().LevelAchieved == true, "Level should be achieved.");
         }
     }
 }

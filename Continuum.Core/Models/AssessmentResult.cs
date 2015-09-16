@@ -43,14 +43,14 @@ namespace Continuum.Core.Models
     {
         public int Level { get; set; }
 
-        public int Responses { get; set; }
+        public int ResponseCount { get; set; }
 
         /// <summary>
         /// The number of capabilities defined for this level.
         /// </summary>
         public int TargetCapabilityCount;
 
-        public IEnumerable<CapabilityResult> CapabilityResults { get; set; }
+        public bool LevelAchieved { get; set; }
     }
 
     public class CapabilityResult
