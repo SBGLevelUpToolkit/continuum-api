@@ -33,6 +33,8 @@ namespace Continuum.WebApi
 
             //Add ELMAH Support.
             config.Filters.Add(new Filters.UnhandledExceptionFilter());
+
+            config.Formatters.JsonFormatter.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
         }
     }
 }
