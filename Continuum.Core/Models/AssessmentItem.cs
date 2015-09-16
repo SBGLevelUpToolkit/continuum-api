@@ -30,4 +30,23 @@ namespace Continuum.Core.Models
             return new Models.AssessmentItem() { AssesmentId = assessmentItem.AssessmentId, CapabilityAchieved = assessmentItem.CapabilityAchieved, CapabilityId = assessmentItem.CapabiltyId };
         }
     }
+
+    /// <summary>
+    /// Represents the information needed to generate a score for a dimension. 
+    /// </summary>
+    public class AssessmentScoringItem : AssessmentItem
+    {
+        /// <summary>
+        /// The id of the Dimension that this capability is attached to.
+        /// </summary>
+        public int DimensionId { get; set; }
+
+
+        /// <summary>
+        /// The level that this capability represents.
+        /// </summary>
+        public int Level { get; set; }
+
+        public string UserId { get; set; }
+    }
 }
