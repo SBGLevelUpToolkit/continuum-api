@@ -99,7 +99,7 @@ namespace Continuum.WebApi.Controllers
 
          [Route("api/assessment/score")]
          [ApplicationExceptionFilter]
-        public Core.Models.AssessmentScoringResult Score()
+        public Core.Models.AssessmentScoringResult GetScore()
         {
             return AssessmentLogic.ScoreCurrentAssessment(); 
         }
