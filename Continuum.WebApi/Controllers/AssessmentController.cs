@@ -14,25 +14,27 @@ namespace Continuum.WebApi.Controllers
     {
         private readonly Data.AssessmentRepo _assessmentRepo;
         private readonly Data.TeamRepo _teamRepo;
+        private readonly Data.DimensionRepo _dimensionRepo; 
   
-        public AssessmentController(Data.AssessmentRepo assessmentRepo, Data.TeamRepo teamRepo)
+        public AssessmentController(Data.AssessmentRepo assessmentRepo, Data.TeamRepo teamRepo, Data.DimensionRepo dimensionRepo)
         {
             _assessmentRepo = assessmentRepo;
             _teamRepo = teamRepo;
+            _dimensionRepo = dimensionRepo; 
         }
 
         private Logic.AssessmentLogic AssessmentLogic
         {
             get
             {
-                return new Logic.AssessmentLogic(_assessmentRepo, _teamRepo, CurrentUser == null ? this.User : CurrentUser);
+                return new Logic.AssessmentLogic(_assessmentRepo, _teamRepo, _dimensionRepo , CurrentUser == null ? this.User : CurrentUser);
             }
         }
 
         /// <summary>
-        /// Returns the current active <see cref="Assessment"/> for the current user's team.
+        /// Returns the current active Assessment for the current user's team.
         /// </summary>
-        /// <returns></returns>
+        /// <remarks>Assessment</remarks>
         [ApplicationExceptionFilter]
         public Assessment Get()
         {
@@ -93,6 +95,13 @@ namespace Continuum.WebApi.Controllers
         public void Close()
         {
             AssessmentLogic.CloseAssessment();
+        }
+
+         [Route("api/assessment/score")]
+         [ApplicationExceptionFilter]
+        public Core.Models.AssessmentScoringResult Score()
+        {
+            return AssessmentLogic.ScoreCurrentAssessment(); 
         }
     }
 }

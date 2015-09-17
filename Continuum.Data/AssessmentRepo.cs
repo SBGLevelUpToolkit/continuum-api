@@ -29,7 +29,7 @@ namespace Continuum.Data
 
         public virtual Assessment GetCurrentAssessmentForTeam(int teamId)
         {
-            return _container.Assessments.Where(i => i.TeamId == teamId).FirstOrDefault();
+            return _container.Assessments.Where(i => i.TeamId == teamId && i.Status.Value != "Closed").FirstOrDefault();
         }
 
         public virtual void SaveChanges()
@@ -119,12 +119,16 @@ namespace Continuum.Data
             } 
         }
 
-
         public IEnumerable<AssessmentItem> GetCurrentAssessmentItemsForUser(string userId)
         {
             var teamMember = _container.TeamMembers.Where(i => i.UserId == userId).FirstOrDefault();
             var assessment = GetCurrentAssessmentForTeam(teamMember.TeamId);
             return assessment.AssessmentItems.Where(i => i.TeamMemberId == teamMember.Id).AsEnumerable();
+        }
+
+        public IEnumerable<AssessmentItem> GetAssessmentItems(int assessmentId)
+        {
+            return _container.AssessmentItems.Where(i => i.AssessmentId == assessmentId).AsEnumerable(); 
         }
     }
 }

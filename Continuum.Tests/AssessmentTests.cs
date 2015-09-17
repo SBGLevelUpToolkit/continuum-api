@@ -13,6 +13,7 @@ namespace Continuum.Tests
         private Continuum.Data.AssessmentRepo _assessmentRepo;
         private Continuum.Data.TeamRepo _teamRepo;
         private Continuum.WebApi.Controllers.AssessmentController _assessmentController;
+        private Continuum.Data.DimensionRepo _dimensionRepo; 
  
         public string TestUser
         {
@@ -29,12 +30,14 @@ namespace Continuum.Tests
             _mockContainer = new Data.Mocks.MockContainer(); 
             _assessmentRepo = new Continuum.Data.AssessmentRepo(_mockContainer);
             _teamRepo = new Continuum.Data.TeamRepo(_mockContainer);
+            _dimensionRepo = new Data.DimensionRepo(_mockContainer);
+
 
             var identity = new System.Security.Principal.GenericIdentity("alice@example.com");
             var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
             Continuum.WebApi.Controllers.AssessmentController.CurrentUser = princpal;
 
-            _assessmentController = new Continuum.WebApi.Controllers.AssessmentController(_assessmentRepo, _teamRepo);
+            _assessmentController = new Continuum.WebApi.Controllers.AssessmentController(_assessmentRepo, _teamRepo, _dimensionRepo);
             _assessmentController.User = princpal;
 
         }

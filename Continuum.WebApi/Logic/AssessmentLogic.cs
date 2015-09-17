@@ -10,27 +10,36 @@ namespace Continuum.WebApi.Logic
     {
         private readonly Data.AssessmentRepo _assessmentRepo;
         private readonly Data.TeamRepo _teamRepo;
+        private readonly Data.DimensionRepo _dimensionRepo;
 
-        public AssessmentLogic(Data.AssessmentRepo assessmentRepo, Data.TeamRepo teamRepo, System.Security.Principal.IPrincipal principal)
+        public AssessmentLogic(Data.AssessmentRepo assessmentRepo, Data.TeamRepo teamRepo, Data.DimensionRepo dimensionRepo, System.Security.Principal.IPrincipal principal)
             : base(principal)
         {
             if (assessmentRepo == null) throw new ArgumentException("Value cannot be null", "assessmentRepo");
             if (teamRepo == null) throw new ArgumentException("Value cannot be null", "teamRepo");
+            if (dimensionRepo == null) throw new ArgumentException("Value cannot be null", "dimensionRepo");
 
             _assessmentRepo = assessmentRepo;
             _teamRepo = teamRepo;
         }
 
-        internal Assessment GetAssessment()
+        internal Core.Models.Assessment GetAssessment()
         {
             var team = GetTeamForCurrentUser();
 
             var assessment = GetCurrentAssessmentForTeam(team);
 
-            var assessmentItems = _assessmentRepo.GetCurrentAssessmentItemsForUser(CurrentUserName).Select(i => AssessmentItem.MapFrom(i));
-            var assessmentResults = assessment.AssessmentResults.Select(i => AssessmentResult.MapFrom(i));
+            List<Core.Models.AssessmentItem> assessmentItems = null;
+            Core.Models.AssessmentScoringResult assessmentScoringResult = null;
 
-            var result = new Assessment()
+            if (assessment.Status.Value == "Open")
+            {
+                assessmentItems = _assessmentRepo.GetCurrentAssessmentItemsForUser(CurrentUserName).Select(i => AssessmentItem.MapFrom(i)).ToList();
+            }
+
+            var assessmentResults = assessment.AssessmentResults.Select(i=>  Core.Models.AssessmentResult.MapFrom(i));
+
+            var result = new Core.Models.Assessment()
             {
                 Id = assessment.Id,
                 Status = assessment.Status.Value,
@@ -39,6 +48,28 @@ namespace Continuum.WebApi.Logic
             };
 
             return result;
+        }
+
+        public Core.Models.AssessmentScoringResult ScoreCurrentAssessment()
+        {
+            var team = GetTeamForCurrentUser();
+
+            var assessment = GetCurrentAssessmentForTeam(team);
+
+            var assessmentScoringItems = _assessmentRepo.GetAssessmentItems(assessment.Id).Select(i => new Core.Models.AssessmentScoringItem()
+            {
+                AssesmentId = assessment.Id,
+                UserId = i.TeamMemberId.ToString(),
+                Level = i.Capabilty.LevelId,
+                CapabilityAchieved = i.CapabilityAchieved,
+                CapabilityId = i.CapabiltyId,
+                DimensionId = i.Capabilty.DimensionId
+            });
+
+            var levels = _dimensionRepo.GetCapabilitiesPerLevel();
+            Core.AssessmentScorer scorer = new Core.AssessmentScorer(levels);
+
+            return scorer.CalculateScore(assessmentScoringItems);
         }
 
         private Data.Assessment GetCurrentAssessmentForTeam(Data.Team team)

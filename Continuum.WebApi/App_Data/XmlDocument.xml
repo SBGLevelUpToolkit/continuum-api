@@ -483,9 +483,9 @@
         </member>
         <member name="M:Continuum.WebApi.Controllers.AssessmentController.Get">
             <summary>
-            Returns the current active <see cref="T:Continuum.Core.Models.Assessment"/> for the current user's team.
+            Returns the current active Assessment for the current user's team.
             </summary>
-            <returns></returns>
+            <remarks>Assessment</remarks>
         </member>
         <member name="M:Continuum.WebApi.Controllers.AssessmentController.Put(System.Collections.Generic.IEnumerable{Continuum.Core.Models.AssessmentResult})">
             <summary>
