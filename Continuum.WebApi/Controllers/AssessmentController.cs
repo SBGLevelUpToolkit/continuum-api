@@ -36,9 +36,16 @@ namespace Continuum.WebApi.Controllers
         /// </summary>
         /// <remarks>Assessment</remarks>
         [ApplicationExceptionFilter]
-        public Assessment Get()
+        public IHttpActionResult Get()
         {
-            return AssessmentLogic.GetAssessment();
+            if (AssessmentLogic.AssessmentIsAvailable())
+            {
+                return Content<Core.Models.Assessment>(HttpStatusCode.OK, AssessmentLogic.GetAssessment());
+            }
+            else
+            {
+                return ResponseMessage( new HttpResponseMessage(HttpStatusCode.NoContent));
+            }
         }
 
         /// <summary>

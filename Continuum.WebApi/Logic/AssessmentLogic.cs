@@ -23,6 +23,13 @@ namespace Continuum.WebApi.Logic
             _teamRepo = teamRepo;
         }
 
+        public bool AssessmentIsAvailable()
+        {
+            var team = GetTeamForCurrentUser();
+            var assessment = _assessmentRepo.GetCurrentAssessmentForTeam(team.Id);
+            return assessment != null;
+        }
+
         internal Core.Models.Assessment GetAssessment()
         {
             var team = GetTeamForCurrentUser();
