@@ -160,5 +160,15 @@ namespace Continuum.WebApi.Logic
            _assessmentRepo.CloseAssessment(assessment);
            _assessmentRepo.SaveChanges(); 
         }
+
+        internal void ReopenAssessment()
+        {
+
+            var team = GetTeamForCurrentUser();
+            var assessment = GetCurrentAssessmentForTeam(team);
+
+            _assessmentRepo.ReopenAssessment(assessment);
+            _assessmentRepo.SaveChanges();
+        }
     }
 }

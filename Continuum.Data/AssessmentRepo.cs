@@ -81,6 +81,15 @@ namespace Continuum.Data
             assessment.Status = _container.Lookups.OfType<Data.AssessmentStatus>().Where(i => i.Value == "Closed").First();
         }
 
+        public virtual void ReopenAssessment(Assessment assessment)
+        {
+            if (assessment.Status.Value != "Moderating")
+            {
+                throw new ApplicationException("You cannot reopen a Closed assessment..");
+            }
+
+            assessment.Status = _container.Lookups.OfType<Data.AssessmentStatus>().Where(i => i.Value == "Open").First();
+        }
 
         public void CreateAssessmentForTeam(Team team)
         {

@@ -34,7 +34,7 @@ namespace Continuum.WebApi.Controllers
         /// <summary>
         /// Returns the current active Assessment for the current user's team.
         /// </summary>
-        /// <remarks>Assessment</remarks>
+        /// <remarks>Current Open or Moderating Assessment. Will return 204 if no Assessment is available.</remarks>
         [ApplicationExceptionFilter]
         public IHttpActionResult Get()
         {
@@ -102,6 +102,18 @@ namespace Continuum.WebApi.Controllers
         public void Close()
         {
             AssessmentLogic.CloseAssessment();
+        }
+
+        /// <summary>
+        /// Reopens an assessment in Moderating status. Note that onlt the Team Admin can call this operation.
+        /// </summary>
+        /// <exception cref="ApplicationException">Throws InternalServerError (500) if there is no current assessment or if the current assessment us not in the 'Moderating' status.</exception>
+        [Route("api/assessment/reopen")]
+        [Filters.TeamAdminFilter]
+        [ApplicationExceptionFilter]
+        public void Reopen()
+        {
+            AssessmentLogic.ReopenAssessment();
         }
 
          [Route("api/assessment/score")]

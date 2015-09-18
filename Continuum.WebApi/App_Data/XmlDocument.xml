@@ -485,7 +485,7 @@
             <summary>
             Returns the current active Assessment for the current user's team.
             </summary>
-            <remarks>Assessment</remarks>
+            <remarks>Current Open or Moderating Assessment. Will return 204 if no Assessment is available.</remarks>
         </member>
         <member name="M:Continuum.WebApi.Controllers.AssessmentController.Put(System.Collections.Generic.IEnumerable{Continuum.Core.Models.AssessmentResult})">
             <summary>
@@ -514,6 +514,12 @@
         <member name="M:Continuum.WebApi.Controllers.AssessmentController.Close">
             <summary>
             Closes the current assessment. Note that onlt the Team Admin can call this operation.
+            </summary>
+            <exception cref="T:System.ApplicationException">Throws InternalServerError (500) if there is no current assessment or if the current assessment us not in the 'Moderating' status.</exception>
+        </member>
+        <member name="M:Continuum.WebApi.Controllers.AssessmentController.Reopen">
+            <summary>
+            Reopens an assessment in Moderating status. Note that onlt the Team Admin can call this operation.
             </summary>
             <exception cref="T:System.ApplicationException">Throws InternalServerError (500) if there is no current assessment or if the current assessment us not in the 'Moderating' status.</exception>
         </member>
