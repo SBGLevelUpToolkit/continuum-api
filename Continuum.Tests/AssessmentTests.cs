@@ -43,7 +43,6 @@ namespace Continuum.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ApplicationException))]
         public void TestThatGetWhenNoResultsThrowsException()
         {
             string user = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
@@ -52,7 +51,11 @@ namespace Continuum.Tests
             Data.TeamMember teamMember;
             CreateTeamAndTeamMember(out team, out teamMember);
 
-            _assessmentController.Get();
+            var result = _assessmentController.Get();
+
+            var message = result as System.Web.Http.Results.ResponseMessageResult;
+            Assert.IsNotNull(message);
+            Assert.IsTrue(message.Response.StatusCode == System.Net.HttpStatusCode.NoContent);
         }
 
         [TestMethod]
