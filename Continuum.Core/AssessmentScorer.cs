@@ -18,47 +18,34 @@ namespace Continuum.Core
 
         public Models.AssessmentScoringResult CalculateScore(IEnumerable<Models.AssessmentScoringItem> assessmentItems)
         {
-            int progress = 0;
-            try
+            var result = new Models.AssessmentScoringResult();
+
+            if (assessmentItems == null)
             {
-                var result = new Models.AssessmentScoringResult();
-
-                if (assessmentItems == null)
-                {
-                    result.DimensionResults = new List<Models.DimensionResult>();
-                }
-
-                result.TotalUserCount = assessmentItems.GroupBy(i => i.UserId).Count();
-
-                progress++;
-
-                var groupByDimension = assessmentItems.GroupBy(i => i.DimensionId);
-
-                progress++;
-
-                var dimensionResults = groupByDimension.Select(i => new Models.DimensionResult()
-                {
-                    DimensionId = i.Key,
-                    ResponseCount = i.Count(),
-                    Levels = i.GroupBy(j => j.Level)
-                    .Select(k => new Models.LevelResult()
-                    {
-                        Level = k.Key,
-                        ResponseCount = k.Count(),
-                        TargetCapabilityCount = GetCapabilityCountForLevel(i.Key, k.Key),
-                        LevelAchieved = k.Count() == result.TotalUserCount * GetCapabilityCountForLevel(i.Key, k.Key)
-                    })
-                });
-
-                result.DimensionResults = dimensionResults;
-
-                return result;
+                result.DimensionResults = new List<Models.DimensionResult>();
             }
-            catch (Exception ex)
+
+            result.TotalUserCount = assessmentItems.GroupBy(i => i.UserId).Count();
+
+            var groupByDimension = assessmentItems.GroupBy(i => i.DimensionId);
+
+            var dimensionResults = groupByDimension.Select(i => new Models.DimensionResult()
             {
-                string message = "Error Scoring Assessment. Assessment Items:" + assessmentItems.Count() + "Levels: " + _dimensionCapabilityCount.Count() + " Progress:" + progress;
-                throw new ApplicationException(message);
-            }
+                DimensionId = i.Key,
+                ResponseCount = i.Count(),
+                Levels = i.GroupBy(j => j.Level)
+                .Select(k => new Models.LevelResult()
+                {
+                    Level = k.Key,
+                    ResponseCount = k.Count(),
+                    TargetCapabilityCount = GetCapabilityCountForLevel(i.Key, k.Key),
+                    LevelAchieved = k.Count() == result.TotalUserCount * GetCapabilityCountForLevel(i.Key, k.Key)
+                })
+            });
+
+            result.DimensionResults = dimensionResults;
+
+            return result;
         }
 
         private int GetCapabilityCountForLevel(int dimension, int level)
