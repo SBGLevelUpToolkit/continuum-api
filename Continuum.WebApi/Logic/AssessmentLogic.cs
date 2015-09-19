@@ -76,7 +76,8 @@ namespace Continuum.WebApi.Logic
             var levels = _dimensionRepo.GetCapabilitiesPerLevel();
             Core.AssessmentScorer scorer = new Core.AssessmentScorer(levels);
 
-            return scorer.CalculateScore(assessmentScoringItems);
+            var result = scorer.CalculateScore(assessmentScoringItems);
+            return result;
         }
 
         private Data.Assessment GetCurrentAssessmentForTeam(Data.Team team)
