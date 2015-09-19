@@ -59,25 +59,44 @@ namespace Continuum.WebApi.Logic
 
         public Core.Models.AssessmentScoringResult ScoreCurrentAssessment()
         {
-            var team = GetTeamForCurrentUser();
-
-            var assessment = GetCurrentAssessmentForTeam(team);
-
-            var assessmentScoringItems = _assessmentRepo.GetAssessmentItems(assessment.Id).Select(i => new Core.Models.AssessmentScoringItem()
+            int progress = 0;
+            try
             {
-                AssesmentId = assessment.Id,
-                UserId = i.TeamMemberId.ToString(),
-                Level = i.Capabilty.LevelId,
-                CapabilityAchieved = i.CapabilityAchieved,
-                CapabilityId = i.CapabiltyId,
-                DimensionId = i.Capabilty.DimensionId
-            });
+                var team = GetTeamForCurrentUser();
 
-            var levels = _dimensionRepo.GetCapabilitiesPerLevel();
-            Core.AssessmentScorer scorer = new Core.AssessmentScorer(levels);
+                progress++;
 
-            var result = scorer.CalculateScore(assessmentScoringItems);
-            return result;
+                var assessment = GetCurrentAssessmentForTeam(team);
+
+                progress++;
+
+                var assessmentScoringItems = _assessmentRepo.GetAssessmentItems(assessment.Id).Select(i => new Core.Models.AssessmentScoringItem()
+                {
+                    AssesmentId = assessment.Id,
+                    UserId = i.TeamMemberId.ToString(),
+                    Level = i.Capabilty.LevelId,
+                    CapabilityAchieved = i.CapabilityAchieved,
+                    CapabilityId = i.CapabiltyId,
+                    DimensionId = i.Capabilty.DimensionId
+                });
+
+                progress++;
+
+                var levels = _dimensionRepo.GetCapabilitiesPerLevel();
+
+                progress++;
+
+                Core.AssessmentScorer scorer = new Core.AssessmentScorer(levels);
+
+                progress++;
+
+                var result = scorer.CalculateScore(assessmentScoringItems);
+                return result;
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException("Error in AssessmentLogic" + progress);
+            }
         }
 
         private Data.Assessment GetCurrentAssessmentForTeam(Data.Team team)
