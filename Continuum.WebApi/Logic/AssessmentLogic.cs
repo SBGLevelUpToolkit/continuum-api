@@ -21,6 +21,7 @@ namespace Continuum.WebApi.Logic
 
             _assessmentRepo = assessmentRepo;
             _teamRepo = teamRepo;
+            _dimensionRepo = dimensionRepo;
         }
 
         public bool AssessmentIsAvailable()
