@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace Continuum.Data
 {
@@ -137,7 +138,9 @@ namespace Continuum.Data
 
         public IEnumerable<AssessmentItem> GetAssessmentItems(int assessmentId)
         {
-            return _container.AssessmentItems.Where(i => i.AssessmentId == assessmentId).AsEnumerable(); 
+            return _container.AssessmentItems
+                .Include(x=>x.Capabilty)
+                .Where(i => i.AssessmentId == assessmentId).AsEnumerable(); 
         }
     }
 }
