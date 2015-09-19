@@ -67,7 +67,13 @@ namespace Continuum.Data
 
         public IEnumerable<Tuple<int, int, int>> GetCapabilitiesPerLevel()
         {
-            var levels = _container.Capabilities.GroupBy(i=> new {i.DimensionId, i.LevelId});
+            var levels = _container.Capabilities.GroupBy(i=> new {i.DimensionId, i.LevelId}).AsEnumerable();
+
+            if(levels == null || levels.Count() == 0)
+            {
+                throw new ApplicationException("Level error");
+            }
+
             return levels.Select(j => new Tuple<int, int, int>(j.Key.DimensionId, j.Key.LevelId, j.Count()));
         }
     }
