@@ -57,6 +57,7 @@ namespace Continuum.Core
             catch (Exception ex)
             {
                 string message = "Error Scoring Assessment. Assessment Items:" + assessmentItems.Count() + "Levels: " + _dimensionCapabilityCount.Count() + " Progress:" + progress;
+                throw new ApplicationException(message);
             }
         }
 
