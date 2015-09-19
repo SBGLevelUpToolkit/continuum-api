@@ -39,25 +39,36 @@ namespace Continuum.WebApi.Logic
 
         internal void CreateGoal(Goal goal)
         {
-            var team = _teamLogic.GetTeamForUser();
-
-            var capability = _dimensionRepo.FindCapabilityById(goal.CapabilityId);
-            if (capability == null)
+            Core.Models.Team team = null;
+            try
             {
-                throw new ApplicationException("Invalid capability Id.");
+                team = _teamLogic.GetTeamForUser();
+
+                var capability = _dimensionRepo.FindCapabilityById(goal.CapabilityId);
+                if (capability == null)
+                {
+                    throw new ApplicationException("Invalid capability Id.");
+                }
+
+                var newGoal = new Data.Goal()
+                {
+                    Capabilty = capability,
+                    DueDate = goal.DueDate,
+                    Title = "New Goal",
+                    Description = goal.Notes,
+                    TeamId = team.Id
+                };
+
+                _goalRepository.CreateGoal(newGoal);
+                _goalRepository.SaveChanges();
             }
-
-            var newGoal = new Data.Goal()
+            catch (Exception ex)
             {
-                Capabilty = capability,
-                DueDate = goal.DueDate,
-                Title = "New Goal",
-                Description = goal.Notes,
-                TeamId = team.Id
-            };
+                string message = "Team:" + team.Id + " User:" + CurrentUserName;
 
-            _goalRepository.CreateGoal(newGoal);
-            _goalRepository.SaveChanges();
+                Elmah.ErrorLog.GetDefault(HttpContext.Current).Log(new Elmah.Error(new ApplicationException(message)));
+                throw;
+            }
         }
 
         internal void UpdateGoalById(int id, Goal goal)
