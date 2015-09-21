@@ -104,7 +104,7 @@ namespace Continuum.WebApi.Logic
                     TeamLeadName = team.TeamMembers.Where(j => j.IsAdmin).FirstOrDefault().UserId,
                     AvatarName = team.AvatarType.Value,
                     Id = team.Id, 
-                    TeamMembers = team.TeamMembers.Select(i=> team.Name).ToArray()
+                    TeamMembers = team.TeamMembers.Select(i=> i.UserId).ToArray()
                 };
             }
             else
