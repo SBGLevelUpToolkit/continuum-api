@@ -57,6 +57,18 @@ namespace Continuum.WebApi.Controllers
             return TeamLogic.ListTeams();
         }
 
+        public IHttpActionResult Get(int id)
+        {
+            if(TeamLogic.TeamExists(id))
+            {
+                return Content<Core.Models.Team>(HttpStatusCode.OK, TeamLogic.GetTeam(id));
+            }
+            else 
+            {
+                return NotFound();
+            }
+        }
+
         [Route("api/team/avatars")]
         public IEnumerable<Avatar> GetAvatars()
         {

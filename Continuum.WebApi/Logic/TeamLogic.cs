@@ -88,6 +88,31 @@ namespace Continuum.WebApi.Logic
             }).AsEnumerable();
         }
 
+        internal bool TeamExists(int id)
+        {
+            return _teamRepo.FindById(id) != null;
+        }
+
+        internal Team GetTeam(int id)
+        {
+            var team = _teamRepo.FindById(id);
+            if(team != null)
+            {
+                return new Team()
+                {
+                    Name = team.Name,
+                    TeamLeadName = team.TeamMembers.Where(j => j.IsAdmin).FirstOrDefault().UserId,
+                    AvatarName = team.AvatarType.Value,
+                    Id = team.Id, 
+                    TeamMembers = team.TeamMembers.Select(i=> team.Name).ToArray()
+                };
+            }
+            else
+            {
+                throw new ApplicationException("Team not found");
+            }
+        }
+
         internal Team GetTeamForUser()
         {
             var team = _teamRepo.GetTeamForUser(CurrentUserName).FirstOrDefault();

@@ -9,6 +9,8 @@ namespace Continuum.Core.Models
 {
     public class Team
     {
+        public string[] TeamMembers { get; set; }
+
         [Required(ErrorMessage="The name field is required.")]
         public string Name { get; set; }
 
