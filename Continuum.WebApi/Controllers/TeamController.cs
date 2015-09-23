@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Http.Routing;
 using Continuum.Core.Models;
 using Continuum.WebApi.Filters;
@@ -57,6 +58,12 @@ namespace Continuum.WebApi.Controllers
             return TeamLogic.ListTeams();
         }
 
+        /// <summary>
+        /// Get the details of the specified team.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns><see cref="Core.Models.Team"/></returns>
+        [ResponseTypeAttribute(typeof(Core.Models.Team))]
         public IHttpActionResult Get(int id)
         {
             if(TeamLogic.TeamExists(id))

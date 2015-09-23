@@ -523,6 +523,13 @@
             </summary>
             <exception cref="T:System.ApplicationException">Throws InternalServerError (500) if there is no current assessment or if the current assessment us not in the 'Moderating' status.</exception>
         </member>
+        <member name="M:Continuum.WebApi.Controllers.TeamController.Get(System.Int32)">
+            <summary>
+            Get the details of the specified team.
+            </summary>
+            <param name="id"></param>
+            <returns><see cref="T:Continuum.Core.Models.Team"/></returns>
+        </member>
         <member name="M:Continuum.WebApi.Controllers.UserController.Get">
             <summary>
             Returns the details for the current user. 

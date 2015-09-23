@@ -103,6 +103,7 @@ namespace Continuum.Data
 
             assessment = new Data.Assessment();
             assessment.TeamId = team.Id;
+            assessment.DateCreated = DateTime.Now; 
 
             this.Create(assessment);
         }

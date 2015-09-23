@@ -23,6 +23,7 @@ namespace Continuum.Data
         public int Id { get; set; }
         public int AssessmentStatusId { get; set; }
         public int TeamId { get; set; }
+        public System.DateTime DateCreated { get; set; }
     
         public virtual AssessmentStatus Status { get; set; }
         public virtual Team Team { get; set; }

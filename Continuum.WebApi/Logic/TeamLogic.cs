@@ -98,6 +98,11 @@ namespace Continuum.WebApi.Logic
             var team = _teamRepo.FindById(id);
             if(team != null)
             {
+
+                
+
+
+
                 return new Team()
                 {
                     Name = team.Name,

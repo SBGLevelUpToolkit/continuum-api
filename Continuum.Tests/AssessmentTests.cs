@@ -243,6 +243,16 @@ namespace Continuum.Tests
         }
 
         [TestMethod]
+        public void TestThatAssessmentsIsCreatedWithCorrectDate()
+        {
+            _assessmentController.Create();
+
+            Assert.IsTrue(_mockContainer.Assessments.Count() == 1);
+
+            Assert.IsTrue(_mockContainer.Assessments.First().DateCreated == DateTime.Today);
+        }
+
+        [TestMethod]
         public void TestThatModerateChangesStatus()
         {
             var assessmentItem = CreateOpenAssessment();
