@@ -249,7 +249,7 @@ namespace Continuum.Tests
 
             Assert.IsTrue(_mockContainer.Assessments.Count() == 1);
 
-            Assert.IsTrue(_mockContainer.Assessments.First().DateCreated == DateTime.Today);
+            Assert.IsTrue(_mockContainer.Assessments.First().DateCreated.Date == DateTime.Today.Date);
         }
 
         [TestMethod]
