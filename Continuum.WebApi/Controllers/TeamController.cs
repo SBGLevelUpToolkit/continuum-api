@@ -66,6 +66,28 @@ namespace Continuum.WebApi.Controllers
             TeamLogic.JoinTeam(team);
         }
 
+
+        [HttpPost]
+        [Route("api/team/{id}/join")]
+        [ApplicationExceptionFilter]
+        public IHttpActionResult JoinTeam(int id)
+        {
+            if (TeamLogic.TeamExists(id))
+            {
+                var team = TeamLogic.GetTeam(id);
+                TeamLogic.JoinTeam(team);
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of teams.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Team> Get()
         {
             return TeamLogic.ListTeams();
@@ -93,12 +115,25 @@ namespace Continuum.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Returns a list of available avatars.
+        /// </summary>
+        /// <returns></returns>
         [Route("api/team/avatars")]
         public IEnumerable<Avatar> GetAvatars()
         {
             return TeamLogic.GetAvatars(); 
         }
 
+        /// <summary>
+        /// Deletes the specifified team.
+        /// 
+        /// Will return 404 - Not Found if the team does not exist.
+        /// Will return 401 - Unauthorised if the caller does not have permission to delete the team.
+        /// 
+        /// </summary>
+        /// <param name="id">Id of the team to delete.</param>
+        /// <returns></returns>
         [Authorize(Roles="SiteAdmin")]
         [ApplicationExceptionFilter]
         public IHttpActionResult Delete(int id)
