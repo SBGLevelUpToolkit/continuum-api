@@ -44,6 +44,7 @@ namespace Continuum.WebApi.Controllers
             }
         }
 
+        [TeamAdminFilter]
         [ApplicationExceptionFilter]
         public IHttpActionResult Put(int id, Team team)
         {
@@ -51,6 +52,7 @@ namespace Continuum.WebApi.Controllers
             {
                 if (TeamLogic.TeamExists(id))
                 {
+                    team.Id = id;
                     TeamLogic.UpdateTeam(team);
                     return Ok();
                 }
