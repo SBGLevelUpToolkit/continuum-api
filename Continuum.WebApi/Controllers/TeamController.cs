@@ -98,6 +98,21 @@ namespace Continuum.WebApi.Controllers
         {
             return TeamLogic.GetAvatars(); 
         }
+
+        [Authorize(Roles="SiteAdmin")]
+        [ApplicationExceptionFilter]
+        public IHttpActionResult Delete(int id)
+        {
+            if (TeamLogic.TeamExists(id))
+            {
+                TeamLogic.DeleteTeam(id);
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
        
     }
 }

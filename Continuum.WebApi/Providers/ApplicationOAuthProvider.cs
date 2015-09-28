@@ -46,10 +46,21 @@ namespace Continuum.WebApi.Providers
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
 
+            AddAdministratorClaims(oAuthIdentity, context.UserName);
+
             AuthenticationProperties properties = CreateProperties(user.UserName);
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
+        }
+
+        private void AddAdministratorClaims(ClaimsIdentity identity, string userName)
+        {
+            bool isAdmin = Properties.Settings.Default.AdminList.Contains(userName);
+            if (isAdmin)
+            {
+                identity.AddClaim(new Claim( ClaimTypes.Role, "SiteAdmin"));   
+            }
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
