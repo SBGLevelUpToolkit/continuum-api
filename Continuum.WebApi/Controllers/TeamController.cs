@@ -71,7 +71,7 @@ namespace Continuum.WebApi.Controllers
             if (ModelState.IsValid)
             {
                 Team result = TeamLogic.CreateTeam(team);
-                return Content<Team>(HttpStatusCode.Created, team);
+                return Content<Team>(HttpStatusCode.Created, result);
             }
             else
             {
