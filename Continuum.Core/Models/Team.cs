@@ -19,5 +19,7 @@ namespace Continuum.Core.Models
         public string AvatarName { get; set; }
 
         public int Id { get; set; }
+
+        public int CurrentLevel { get; set; }
     }
 }

@@ -143,5 +143,15 @@ namespace Continuum.Data
                 .Include(x=>x.Capabilty)
                 .Where(i => i.AssessmentId == assessmentId).AsEnumerable(); 
         }
+
+
+
+        public IEnumerable<Assessment> GetClosedAssessmentsForTeam(int teamId)
+        {
+            return _container.Assessments
+                .Include(i => i.AssessmentResults)
+                .Where(j => j.TeamId == teamId)
+                .AsEnumerable();
+        }
     }
 }

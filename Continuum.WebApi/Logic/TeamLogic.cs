@@ -20,7 +20,7 @@ namespace Continuum.WebApi.Logic
             _teamRepo = teamRepo;
         }
 
-        internal Team CreateTeam(Team team)
+        public Team CreateTeam(Team team)
         {
             
            if (_teamRepo.All().Any(i => i.Name == team.Name.Trim()))
@@ -182,6 +182,26 @@ namespace Continuum.WebApi.Logic
                 AvatarName = i.AvatarType.Value,
                 TeamLeadName = i.TeamMembers.First(j => j.IsAdmin).UserId
             });
+        }
+
+        public void DeleteTeam(int id)
+        {
+            if (_principal.IsInRole("SiteAdmin"))
+            {
+                if (TeamExists(id)) 
+                {
+                    _teamRepo.DeleteTeam(id);
+                    _teamRepo.SaveChanges();
+            }
+                else
+                {
+                    throw new ApplicationException("Team does not exist.");
+                }
+            }
+            else
+            {
+                throw new System.Security.SecurityException(CurrentUserName + "is not authorised to delete teams.");
+            }
         }
     }
 }

@@ -173,5 +173,22 @@ namespace Continuum.WebApi.Logic
             _assessmentRepo.ReopenAssessment(assessment);
             _assessmentRepo.SaveChanges();
         }
+
+        public int GetCurrentLevelForTeam()
+        {
+            var team = GetTeamForCurrentUser();
+            var assessments = _assessmentRepo.GetClosedAssessmentsForTeam(team.Id);
+
+            if (assessments.Count() > 0)
+            {
+                var latest = assessments.OrderByDescending(i=>i.DateCreated).First();
+                double averageRating = latest.AssessmentResults.Average(i => Int32.Parse(i.Rating));
+                return (int)averageRating;
+            }
+            else
+            {
+                return 1;
+            }
+        }
     }
 }

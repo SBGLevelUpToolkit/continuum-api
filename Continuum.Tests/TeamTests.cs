@@ -6,6 +6,8 @@ using System.Web.Http;
 using System.Net.Http;
 using System.Web.Http.Hosting;
 using System.Web.Http.Routing;
+using System.Collections.Generic;
+using System.Security;
 
 namespace Continuum.Tests
 {
@@ -16,7 +18,8 @@ namespace Continuum.Tests
 
         Data.Mocks.MockContainer _mockContainer;
         Data.TeamRepo _teamRepository;
-
+        Data.DimensionRepo _dimensionRepo;
+        Data.AssessmentRepo _assessmentRepo;
         
         [TestInitialize]
         public void SetUp()
@@ -34,6 +37,8 @@ namespace Continuum.Tests
 
             _mockContainer = new Data.Mocks.MockContainer();
             _teamRepository = new Data.TeamRepo(_mockContainer);
+            _dimensionRepo = new Data.DimensionRepo(_mockContainer);
+            _assessmentRepo = new Data.AssessmentRepo(_mockContainer);
         }
 
         [TestMethod]
@@ -43,7 +48,7 @@ namespace Continuum.Tests
         
             _mockContainer.Teams.Add(new Data.Team() { Name = "Test Team"});
 
-            TeamController teamController = new TeamController(_teamRepository);
+            TeamController teamController = new TeamController(_teamRepository, _assessmentRepo, _dimensionRepo);
         
             Core.Models.Team newTeam = new Core.Models.Team() 
             {
@@ -57,7 +62,7 @@ namespace Continuum.Tests
         [TestMethod]
         public void TestThatCreatingANewTeamIsAllowed()
         {
-            TeamController teamController = new TeamController(_teamRepository);
+            TeamController teamController = new TeamController(_teamRepository, _assessmentRepo, _dimensionRepo);
             teamController.Request = _request;
 
             Core.Models.Team newTeam = new Core.Models.Team() 
@@ -80,7 +85,7 @@ namespace Continuum.Tests
            var princpal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
 
            TeamController.CurrentUser = princpal;
-           TeamController teamController = new TeamController(_teamRepository);
+           TeamController teamController = CreateTeamController();
            teamController.Request = _request;
            teamController.User = princpal;
            
@@ -105,6 +110,12 @@ namespace Continuum.Tests
 
         }
 
+        private TeamController CreateTeamController()
+        {
+            TeamController teamController = new TeamController(_teamRepository, _assessmentRepo, _dimensionRepo);
+            return teamController;
+        }
+
         [TestMethod]
         public void TestThatTeamCreatedWithDefaultAvatar()
         {
@@ -116,6 +127,137 @@ namespace Continuum.Tests
         {
             
         }
+
+        [TestMethod]
+        public void TestThatTeamWithNoAssessmentsHasDefaultRating()
+        {
+            CreateTeamWithMember();
+
+           var identity = new System.Security.Principal.GenericIdentity("TestUser");
+           var principal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
+
+           Continuum.WebApi.Logic.AssessmentLogic assessmentLogic = new WebApi.Logic.AssessmentLogic(_assessmentRepo, _teamRepository, _dimensionRepo, principal);
+
+           int rating = assessmentLogic.GetCurrentLevelForTeam();
+
+           Assert.IsTrue(rating == 1, "Rating must be 1 if there is not assessment info.");
+            
+        }
+
+        private void CreateTeamWithMember()
+        {
+            var teamMember = new Data.TeamMember() { UserId = "TestUser" };
+            var team = new Data.Team() { Id = 0 };
+            team.TeamMembers.Add(teamMember);
+            teamMember.Team = team;
+            _mockContainer.Teams.Add(team);
+            _mockContainer.TeamMembers.Add(teamMember);
+        }
+
+        [TestMethod]
+        public void TestThatTeamRatingIsAverageOfLatestAssessment()
+        {
+            CreateTeamWithMember();
+
+            CreateAssessmentWithRetults(3, DateTime.Now);
+
+            Continuum.WebApi.Logic.AssessmentLogic assessmentLogic = CreateAssessmentLogic();
+
+           int rating = assessmentLogic.GetCurrentLevelForTeam();
+
+           Assert.IsTrue(rating == 3, "Rating should be average of latest assessment.");     
+        }
+
+        [TestMethod]
+        public void TestThatTeamRatingBasedOnLatestAssessment()
+        {
+         CreateTeamWithMember();
+
+            CreateAssessmentWithRetults(5, DateTime.Now.Subtract(TimeSpan.FromDays(10)));
+            CreateAssessmentWithRetults(3, DateTime.Now);
+
+            Continuum.WebApi.Logic.AssessmentLogic assessmentLogic = CreateAssessmentLogic();
+
+           int rating = assessmentLogic.GetCurrentLevelForTeam();
+
+           Assert.IsFalse(rating == 5, "The latest assessment must be used to generate the rating.");      
+        }
+
+        private void CreateAssessmentWithRetults(int level, DateTime dateCreated)
+        {
+            var assessmentResults = new List<Continuum.Data.AssessmentResult>();
+
+            assessmentResults.Add(new Data.AssessmentResult() { Rating = level.ToString() });
+            assessmentResults.Add(new Data.AssessmentResult() { Rating = level.ToString() });
+            assessmentResults.Add(new Data.AssessmentResult() { Rating = level.ToString() });
+            assessmentResults.Add(new Data.AssessmentResult() { Rating = level.ToString() });
+
+            _mockContainer.Assessments.Add(new Data.Assessment()
+            {
+                DateCreated = dateCreated,
+                AssessmentResults = assessmentResults
+            });
+        }
+
+        private WebApi.Logic.AssessmentLogic CreateAssessmentLogic()
+        {
+            var identity = new System.Security.Principal.GenericIdentity("TestUser");
+            var principal = new System.Security.Principal.GenericPrincipal(identity, new string[] { });
+
+            Continuum.WebApi.Logic.AssessmentLogic assessmentLogic = new WebApi.Logic.AssessmentLogic(_assessmentRepo, _teamRepository, _dimensionRepo, principal);
+            return assessmentLogic;
+        }
+
+        [TestMethod]
+        public void TestThatDeleteDeletesTeam()
+        {
+            var teamLogic = CreateTeamLogicForAdmin();
+
+            var team = new Core.Models.Team() 
+            {
+                Id = 1,
+                Name = Guid.NewGuid().ToString()
+            };
+
+            teamLogic.CreateTeam(team);
+
+            teamLogic.DeleteTeam(team.Id);
+
+            Assert.IsFalse(_mockContainer.Teams.Any(i => i.Id == team.Id), "Team was not deleted.");
+        }
+
+        private WebApi.Logic.TeamLogic CreateTeamLogicForAdmin()
+        {
+            return CreateTeamLogic(new string[] {"SiteAdmin" });
+        }
+
+        private WebApi.Logic.TeamLogic CreateTeamLogic(string[] roles)
+        {
+            var identity = new System.Security.Principal.GenericIdentity("TestUser");
+            var principal = new System.Security.Principal.GenericPrincipal(identity, roles);
+            var teamLogic = new WebApi.Logic.TeamLogic(_teamRepository, principal);
+            return teamLogic;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestThatDeleteForNonExistantTeamThrowsException()
+        {
+            var teamLogic = CreateTeamLogicForAdmin();
+
+            teamLogic.DeleteTeam(-1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SecurityException))]
+        public void TestThatOnlySiteAdminMayDeleteTeam()
+        {
+            var teamLogic = CreateTeamLogic(null);
+
+            teamLogic.DeleteTeam(-1);
+        }
+
+
        
     }
 }

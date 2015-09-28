@@ -83,5 +83,11 @@ namespace Continuum.Data
         {
             return _container.Lookups.OfType<Data.AvatarType>().AsEnumerable();
         }
+
+        public void DeleteTeam(int id)
+        {
+            var team = _container.Teams.Find(id);
+            _container.Teams.Remove(team);
+        }
     }
 }

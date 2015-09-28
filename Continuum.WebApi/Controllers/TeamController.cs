@@ -16,10 +16,23 @@ namespace Continuum.WebApi.Controllers
     public class TeamController : ControllerBase
     {
         private readonly Data.TeamRepo _teamRepo;
+        private readonly Data.AssessmentRepo _assessmentRepo;
+        private readonly Data.DimensionRepo _dimensionRepo;
    
-        public TeamController(Data.TeamRepo teamRepo)
+        public TeamController(Data.TeamRepo teamRepo, Data.AssessmentRepo assessmentRepo, Data.DimensionRepo dimensionRepo)
         {
             _teamRepo = teamRepo;
+            _assessmentRepo = assessmentRepo;
+            _dimensionRepo = dimensionRepo;
+        }
+
+        private Logic.AssessmentLogic AssessmentLogic
+        {
+            get
+            {
+                var user = CurrentUser == null ? this.User : CurrentUser;
+                return new Logic.AssessmentLogic(_assessmentRepo, _teamRepo, _dimensionRepo, user);
+            }
         }
 
         private Logic.TeamLogic TeamLogic
@@ -68,7 +81,11 @@ namespace Continuum.WebApi.Controllers
         {
             if(TeamLogic.TeamExists(id))
             {
-                return Content<Core.Models.Team>(HttpStatusCode.OK, TeamLogic.GetTeam(id));
+                var team = TeamLogic.GetTeam(id);
+
+                team.CurrentLevel = AssessmentLogic.GetCurrentLevelForTeam();
+
+                return Content<Core.Models.Team>(HttpStatusCode.OK, team);
             }
             else 
             {
