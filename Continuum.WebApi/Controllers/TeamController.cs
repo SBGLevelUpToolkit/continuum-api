@@ -45,28 +45,46 @@ namespace Continuum.WebApi.Controllers
         }
 
         [ApplicationExceptionFilter]
-        public HttpResponseMessage Put(Team team)
+        public IHttpActionResult Put(int id, Team team)
         {
             if (ModelState.IsValid)
             {
-                Team result = TeamLogic.CreateTeam(team);
-                var response = new HttpResponseMessage(HttpStatusCode.Created);
-                response.Content = new ObjectContent(typeof(Team), result, new JsonMediaTypeFormatter());
-                return response;
+                if (TeamLogic.TeamExists(id))
+                {
+                    TeamLogic.UpdateTeam(team);
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return BadRequest(ModelState);
             }
         }
 
         [ApplicationExceptionFilter]
-        public void Post(Team team)
+        public IHttpActionResult Post(Team team)
         {
-            TeamLogic.JoinTeam(team);
+            if (ModelState.IsValid)
+            {
+                Team result = TeamLogic.CreateTeam(team);
+                return Content<Team>(HttpStatusCode.Created, team);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
 
+        /// <summary>
+        /// Adds the current user to the team specified by <paramref name="id"/>
+        /// </summary>
+        /// <param name="id">The id of the team to join.</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/team/{id}/join")]
         [ApplicationExceptionFilter]

@@ -150,7 +150,7 @@ namespace Continuum.Data
         {
             return _container.Assessments
                 .Include(i => i.AssessmentResults)
-                .Where(j => j.TeamId == teamId)
+                .Where(j => j.TeamId == teamId && j.Status.Value != "Open")
                 .AsEnumerable();
         }
     }

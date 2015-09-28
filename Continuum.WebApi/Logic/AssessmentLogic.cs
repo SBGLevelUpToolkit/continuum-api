@@ -178,17 +178,18 @@ namespace Continuum.WebApi.Logic
         {
             var team = GetTeamForCurrentUser();
             var assessments = _assessmentRepo.GetClosedAssessmentsForTeam(team.Id);
+            int result = 1;
 
             if (assessments.Count() > 0)
             {
-                var latest = assessments.OrderByDescending(i=>i.DateCreated).First();
-                double averageRating = latest.AssessmentResults.Average(i => Int32.Parse(i.Rating));
-                return (int)averageRating;
+                var latest = assessments.OrderByDescending(i => i.DateCreated).First();
+                if (latest.AssessmentResults.Any())
+                {
+                    result = (int)latest.AssessmentResults.Average(i => Int32.Parse(i.Rating));
+                }
             }
-            else
-            {
-                return 1;
-            }
+
+            return result;
         }
     }
 }

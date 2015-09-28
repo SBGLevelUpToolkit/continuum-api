@@ -203,5 +203,29 @@ namespace Continuum.WebApi.Logic
                 throw new System.Security.SecurityException(CurrentUserName + "is not authorised to delete teams.");
             }
         }
+
+        public void UpdateTeam(Core.Models.Team team)
+        {
+            var current = _teamRepo.FindById(team.Id);
+            if (current != null)
+            {
+                current.Name = team.Name;
+
+                if (!String.IsNullOrEmpty(team.AvatarName))
+                {
+                    current.AvatarType = _teamRepo.GetAvatar(team.AvatarName);
+                }
+                else
+                {
+                    current.AvatarType = _teamRepo.GetDefaultAvatar();
+                }
+
+                _teamRepo.SaveChanges();
+            }
+            else
+            {
+                throw new ApplicationException("Invalid team Id.");
+            }
+        }
     }
 }
