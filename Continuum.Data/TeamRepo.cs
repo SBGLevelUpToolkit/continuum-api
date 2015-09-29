@@ -88,7 +88,9 @@ namespace Continuum.Data
         {
             var team = _container.Teams.Find(id);
 
-            foreach (var teamMember in team.TeamMembers)
+            var teamMembers = team.TeamMembers.ToArray();
+
+            foreach (var teamMember in teamMembers)
             {
                 _container.TeamMembers.Remove(teamMember);
             }
