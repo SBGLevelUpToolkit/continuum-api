@@ -135,7 +135,11 @@ namespace Continuum.WebApi.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Returns a list of members for the specified team. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("api/team/{id}/members")]
         [ResponseType(typeof(IEnumerable<Core.Models.TeamMember>))]
         public IHttpActionResult GetTeamMembers(int id)
@@ -149,6 +153,13 @@ namespace Continuum.WebApi.Controllers
                 return NotFound();
             }
         }
+
+         [Route("api/team/{teamId}/members/{memberId}")]
+        public IHttpActionResult DeleteTeamMember(int teamId, int memberId)
+        {
+            return Ok();
+        }
+
 
         /// <summary>
         /// Returns a list of available avatars.

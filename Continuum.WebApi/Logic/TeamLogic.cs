@@ -135,7 +135,7 @@ namespace Continuum.WebApi.Logic
                 return team.TeamMembers.Select(i => new Core.Models.TeamMember() 
                 {
                      IsAdmin = i.IsAdmin,
-                     UserId = i.UserId
+                     EmailAddress = i.UserId
                 });
             }
             else

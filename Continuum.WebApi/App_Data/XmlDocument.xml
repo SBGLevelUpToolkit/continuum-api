@@ -543,6 +543,13 @@
             <param name="id"></param>
             <returns><see cref="T:Continuum.Core.Models.Team"/></returns>
         </member>
+        <member name="M:Continuum.WebApi.Controllers.TeamController.GetTeamMembers(System.Int32)">
+            <summary>
+            Returns a list of members for the specified team. 
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:Continuum.WebApi.Controllers.TeamController.GetAvatars">
             <summary>
             Returns a list of available avatars.

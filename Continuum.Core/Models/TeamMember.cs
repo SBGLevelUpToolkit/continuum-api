@@ -8,7 +8,9 @@ namespace Continuum.Core.Models
 {
     public class TeamMember
     {
-        public string UserId { get; set; }
+        public int Id { get; set; }
+
+        public string EmailAddress { get; set; }
 
         public bool IsAdmin { get; set; }
 

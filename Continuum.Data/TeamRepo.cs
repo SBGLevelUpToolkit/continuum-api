@@ -87,7 +87,15 @@ namespace Continuum.Data
         public void DeleteTeam(int id)
         {
             var team = _container.Teams.Find(id);
+
+            foreach (var teamMember in team.TeamMembers)
+            {
+                _container.TeamMembers.Remove(teamMember);
+            }
+            
             _container.Teams.Remove(team);
+            
+
         }
     }
 }
