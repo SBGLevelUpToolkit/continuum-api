@@ -99,5 +99,25 @@ namespace Continuum.Data
             
 
         }
+
+        public bool TeamMemberExists(int teamMemberId)
+        {
+            return _container.TeamMembers.Any(i => i.Id == teamMemberId);
+        }
+
+        public void DeleteTeamMember(int teamMemberId)
+        {
+            var teamMember = _container.TeamMembers.Find(teamMemberId);
+
+            var assessmentItems = _container.AssessmentItems.Where(i => i.TeamMemberId == teamMember.Id).ToArray();
+
+            foreach (var assessmentItem in assessmentItems)
+            {
+                _container.AssessmentItems.Remove(assessmentItem);
+            }
+
+            _container.TeamMembers.Remove(teamMember);
+
+        }
     }
 }

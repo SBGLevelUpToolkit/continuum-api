@@ -227,6 +227,30 @@ namespace Continuum.Tests
             Assert.IsFalse(_mockContainer.Teams.Any(i => i.Id == team.Id), "Team was not deleted.");
         }
 
+        [TestMethod]
+        public void TestThatDeletingTeamMemberDeletesTeamMemberAndAssessmentItems()
+        {
+            var teamLogic = CreateTeamLogicForAdmin();
+
+            var team = new Core.Models.Team()
+            {
+                Id = 1,
+                Name = Guid.NewGuid().ToString()
+            };
+
+            teamLogic.CreateTeam(team);
+
+            var user = teamLogic.GetTeamMembers(team.Id).First();
+
+            _mockContainer.AssessmentItems.Add(new Data.AssessmentItem() { TeamMemberId = user.Id });
+
+            teamLogic.DeleteTeamMember(user.Id);
+
+            Assert.IsTrue(_mockContainer.TeamMembers.Count() == 0, "The user was not removed.");
+            Assert.IsFalse(_mockContainer.AssessmentItems.Any(i => i.TeamMemberId == user.Id), "Assessment Items were not removed.");
+            
+        }
+
         private WebApi.Logic.TeamLogic CreateTeamLogicForAdmin()
         {
             return CreateTeamLogic(new string[] {"SiteAdmin" });

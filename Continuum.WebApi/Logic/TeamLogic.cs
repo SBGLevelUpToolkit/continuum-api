@@ -239,5 +239,16 @@ namespace Continuum.WebApi.Logic
                 throw new ApplicationException("Invalid team Id.");
             }
         }
+
+        internal bool TeamMemberExists(int memberId)
+        {
+            return _teamRepo.TeamMemberExists(memberId);
+        }
+
+        public void DeleteTeamMember(int memberId)
+        {
+            _teamRepo.DeleteTeamMember(memberId);
+            _teamRepo.SaveChanges();
+        }
     }
 }

@@ -25,5 +25,10 @@ namespace Continuum.Data.Mocks
             Add(teamMember);
         }
 
+        public override TeamMember Find(params object[] keyValues)
+        {
+            return this.Where(i => i.Id == (int)keyValues.Single()).FirstOrDefault();  
+        }
+
     }
 }

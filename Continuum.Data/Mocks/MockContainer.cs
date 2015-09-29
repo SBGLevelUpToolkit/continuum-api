@@ -19,6 +19,7 @@ namespace Continuum.Data.Mocks
             TeamMembers = new Mocks.MockTeamMembersDBSet();
             Goals = new Mocks.MockGoalsDBSet();
             Capabilities = new Mocks.MockCapabilityDBSet();
+            AssessmentItems = new Mocks.MockAssessmentItemDBSet();
         }
 
         public System.Data.Entity.IDbSet<Dimension> Dimensions { get; set; }

@@ -154,10 +154,19 @@ namespace Continuum.WebApi.Controllers
             }
         }
 
-         [Route("api/team/{teamId}/members/{memberId}")]
+        [HttpDelete]
+        [Route("api/team/{teamId}/members/{memberId}")]
         public IHttpActionResult DeleteTeamMember(int teamId, int memberId)
         {
-            return Ok();
+            if (TeamLogic.TeamExists(teamId) && TeamLogic.TeamMemberExists(memberId))
+            {
+                TeamLogic.DeleteTeamMember(memberId);
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
 
