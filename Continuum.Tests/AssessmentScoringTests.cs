@@ -11,24 +11,13 @@ namespace Continuum.Tests
     [TestClass]
     public class AssessmentScoringTests
     {
-        [TestMethod]
-        public void GivenAssessmentWithNoResultsThenReturnNoScores()
-        {
-            var assessmentItems = new List<Core.Models.AssessmentScoringItem>();
-
-            AssessmentScorer scorer = CreateScorer();
-
-            var result = scorer.CalculateScore(assessmentItems);
-
-            Assert.IsTrue(result.DimensionResults.Count() == 0, "No results should be returned for an Assessment with no assessment items.");
-        }
-
         private static AssessmentScorer CreateScorer()
         {
             var capabilityMap = new List<Tuple<int, int, int>>();
 
             capabilityMap.Add(new Tuple<int, int, int>(1, 1, 2));
             capabilityMap.Add(new Tuple<int, int, int>(1, 2, 3));
+            capabilityMap.Add(new Tuple<int, int, int>(2, 1, 1));
 
             AssessmentScorer scorer = new AssessmentScorer(capabilityMap);
             return scorer;
@@ -44,7 +33,7 @@ namespace Continuum.Tests
 
             var result = scorer.CalculateScore(assessmentItems);
 
-            Assert.IsTrue(result.DimensionResults.Count() == 1, "Only one result per dimension must be returned.");
+            Assert.IsTrue(result.DimensionResults.Where(i=>i.DimensionId == 1).Count() == 1, "Only one result per dimension must be returned.");
             Assert.IsTrue(result.DimensionResults.First().DimensionId == 1, "Incorrect dimension id was returned.");
         }
 
@@ -147,6 +136,19 @@ namespace Continuum.Tests
             var result = scorer.CalculateScore(items);
 
             Assert.IsTrue(result.DimensionResults.First().Levels.First().LevelAchieved == true, "Level should be achieved.");
+        }
+
+        [TestMethod]
+        public void TestThatMissingDimensionsAreAdded()
+        {
+            var assessmentItems = CreateAssessmentWithResponses();
+
+            AssessmentScorer scorer = CreateScorer();
+
+            var result = scorer.CalculateScore(assessmentItems);
+
+            Assert.IsTrue(result.DimensionResults.Where(i=>i.DimensionId == 2).Any(), "The missing dimension was not added.");
+            Assert.IsTrue(result.DimensionResults.Where(i => i.DimensionId == 2).First().Levels.Count() == 1, "The missing level was not added.");  
         }
     }
 }

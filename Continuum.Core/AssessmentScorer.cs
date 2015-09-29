@@ -45,7 +45,51 @@ namespace Continuum.Core
 
             result.DimensionResults = dimensionResults;
 
+            AddMissingDimensionsAndLevels(result);
+
             return result;
+        }
+
+        private void AddMissingDimensionsAndLevels(Models.AssessmentScoringResult result)
+        {
+            List<Models.DimensionResult> dimensions = result.DimensionResults.ToList();
+
+            foreach (var item in _dimensionCapabilityCount)
+            {
+                Models.DimensionResult dimension = null;
+                if (result.DimensionResults.Any(i => i.DimensionId == item.Item1))
+                {
+                    dimension = result.DimensionResults.First(i => i.DimensionId == item.Item1);
+                }
+                else
+                {
+                    dimension = new Models.DimensionResult() { DimensionId = item.Item1 };
+                    dimensions.Add(dimension);
+                }
+
+                AddMissingLevels(dimension, item.Item2);
+            }
+
+            result.DimensionResults = dimensions;
+        }
+
+        private void AddMissingLevels(Models.DimensionResult dimension, int level)
+        {
+            if(dimension.Levels == null)
+            {
+                dimension.Levels = new List<Models.LevelResult>();
+            }
+
+            if (!dimension.Levels.Any(i => i.Level == level))
+            {
+                var levels = dimension.Levels.ToList();
+                levels.Add(new Models.LevelResult()
+                {
+                    Level = level,
+                    LevelAchieved = false
+                });
+                dimension.Levels = levels;
+            }   
         }
 
         private int GetCapabilityCountForLevel(int dimension, int level)
