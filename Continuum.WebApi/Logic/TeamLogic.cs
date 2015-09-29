@@ -132,10 +132,11 @@ namespace Continuum.WebApi.Logic
             var team = _teamRepo.FindById(id);
             if (team != null)
             {
-                return team.TeamMembers.Select(i => new Core.Models.TeamMember() 
+                return team.TeamMembers.Select(i => new Core.Models.TeamMember()
                 {
-                     IsAdmin = i.IsAdmin,
-                     EmailAddress = i.UserId
+                    Id = i.Id,
+                    IsAdmin = i.IsAdmin,
+                    EmailAddress = i.UserId
                 });
             }
             else
