@@ -49,6 +49,7 @@
     <Compile Include="Models\Dimension.cs" />
     <Compile Include="Models\Goal.cs" />
     <Compile Include="Models\Team.cs" />
+    <Compile Include="Models\TeamMember.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

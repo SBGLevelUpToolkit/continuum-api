@@ -283,6 +283,18 @@ namespace Continuum.Tests
             Assert.IsTrue(rating == 1, "Rating must be 1 if there is not assessment info.");
         }
 
+        [TestMethod]
+        public void TestGetTeamMembersForTeam()
+        {
+            CreateTeamWithMember();
+
+            var teamLogic = CreateTeamLogic(null);
+
+            var members = teamLogic.GetTeamMembers(_mockContainer.Teams.First().Id);
+
+            Assert.IsTrue(members.Count() == 1); 
+        }
+
 
        
     }

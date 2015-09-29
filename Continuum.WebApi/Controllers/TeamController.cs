@@ -135,6 +135,21 @@ namespace Continuum.WebApi.Controllers
             }
         }
 
+
+        [Route("api/team/{id}/members")]
+        [ResponseType(typeof(IEnumerable<Core.Models.TeamMember>))]
+        public IHttpActionResult GetTeamMembers(int id)
+        {
+            if (TeamLogic.TeamExists(id))
+            {
+                return Content<IEnumerable<Core.Models.TeamMember>>(HttpStatusCode.OK, TeamLogic.GetTeamMembers(id));
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         /// <summary>
         /// Returns a list of available avatars.
         /// </summary>

@@ -98,11 +98,6 @@ namespace Continuum.WebApi.Logic
             var team = _teamRepo.FindById(id);
             if(team != null)
             {
-
-                
-
-
-
                 return new Team()
                 {
                     Name = team.Name,
@@ -130,6 +125,23 @@ namespace Continuum.WebApi.Logic
 
             return new Team { Name = team.Name, Id = team.Id, AvatarName = team.AvatarType.Value, TeamLeadName = adminName };
              
+        }
+
+        public IEnumerable<Core.Models.TeamMember> GetTeamMembers(int id)
+        {
+            var team = _teamRepo.FindById(id);
+            if (team != null)
+            {
+                return team.TeamMembers.Select(i => new Core.Models.TeamMember() 
+                {
+                     IsAdmin = i.IsAdmin,
+                     UserId = i.UserId
+                });
+            }
+            else
+            {
+                throw new ApplicationException("Team not found");
+            }
         }
 
         internal void UpdateUser(User user)
