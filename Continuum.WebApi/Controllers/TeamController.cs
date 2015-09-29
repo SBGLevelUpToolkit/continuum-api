@@ -154,6 +154,16 @@ namespace Continuum.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete the specified team member.
+        /// 
+        /// Will return 404 if the team or the team member do not exists.
+        /// Will retirn 401 if the called does not have permissions to delete the team member.
+        /// </summary>
+        /// <param name="teamId"></param>
+        /// <param name="memberId"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "SiteAdmin")]
         [HttpDelete]
         [Route("api/team/{teamId}/members/{memberId}")]
         public IHttpActionResult DeleteTeamMember(int teamId, int memberId)

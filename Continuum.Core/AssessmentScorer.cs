@@ -57,9 +57,9 @@ namespace Continuum.Core
             foreach (var item in _dimensionCapabilityCount)
             {
                 Models.DimensionResult dimension = null;
-                if (result.DimensionResults.Any(i => i.DimensionId == item.Item1))
+                if (dimensions.Any(i => i.DimensionId == item.Item1))
                 {
-                    dimension = result.DimensionResults.First(i => i.DimensionId == item.Item1);
+                    dimension = dimensions.First(i => i.DimensionId == item.Item1);
                 }
                 else
                 {
