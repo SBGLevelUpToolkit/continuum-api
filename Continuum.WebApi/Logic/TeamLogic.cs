@@ -82,10 +82,23 @@ namespace Continuum.WebApi.Logic
             return _teamRepo.All().Select(i => new Team()
             {
                 Name = i.Name,
-                TeamLeadName = i.TeamMembers.Where(j => j.IsAdmin).FirstOrDefault().UserId,
+                TeamLeadName = GetAdminName(i.TeamMembers),
                 AvatarName = i.AvatarType.Value,
                 Id = i.Id
             }).AsEnumerable();
+        }
+
+        private string GetAdminName(IEnumerable<Data.TeamMember> teamMembers)
+        {
+            var admin = teamMembers.Where(i => i.IsAdmin).FirstOrDefault();
+            if(admin != null)
+            {
+                return admin.UserId;
+            }
+            else
+            {
+                return "No Admin";
+            }
         }
 
         internal bool TeamExists(int id)
@@ -246,8 +259,17 @@ namespace Continuum.WebApi.Logic
             return _teamRepo.TeamMemberExists(memberId);
         }
 
-        public void DeleteTeamMember(int memberId)
+        public void DeleteTeamMember(int teamId, int memberId)
         {
+            var team = _teamRepo.FindById(teamId);
+
+            int adminCount = team.TeamMembers.Where(i=>i.IsAdmin && i.Id != memberId).Count();
+
+            if(adminCount == 0)
+            {
+                throw new ApplicationException("You may not delete the last administrator in a group.");
+            }
+ 
             _teamRepo.DeleteTeamMember(memberId);
             _teamRepo.SaveChanges();
         }

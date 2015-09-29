@@ -228,7 +228,8 @@ namespace Continuum.Tests
         }
 
         [TestMethod]
-        public void TestThatDeletingTeamMemberDeletesTeamMemberAndAssessmentItems()
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestThaYouCannotDeleteTheLastAdminFromAGroup()
         {
             var teamLogic = CreateTeamLogicForAdmin();
 
@@ -244,11 +245,32 @@ namespace Continuum.Tests
 
             _mockContainer.AssessmentItems.Add(new Data.AssessmentItem() { TeamMemberId = user.Id });
 
-            teamLogic.DeleteTeamMember(user.Id);
+            teamLogic.DeleteTeamMember(team.Id, user.Id);
 
-            Assert.IsTrue(_mockContainer.TeamMembers.Count() == 0, "The user was not removed.");
-            Assert.IsFalse(_mockContainer.AssessmentItems.Any(i => i.TeamMemberId == user.Id), "Assessment Items were not removed.");
-            
+        }
+
+        [TestMethod]
+        public void TestThatDeletingTeamMemberDeletesTeamMemberAndAssessmentItems()
+        {
+            var teamLogic = CreateTeamLogicForAdmin();
+
+            var team = new Core.Models.Team()
+            {
+                Id = 1,
+                Name = Guid.NewGuid().ToString()
+            };
+
+            teamLogic.CreateTeam(team);
+
+            //Create a new team member and add an assessment ite,.
+            _mockContainer.TeamMembers.Add(new Data.TeamMember() { Id = 2 });
+            _mockContainer.AssessmentItems.Add(new Data.AssessmentItem() { TeamMemberId = 2 });
+
+            teamLogic.DeleteTeamMember(team.Id, 2);
+
+            Assert.IsFalse(_mockContainer.TeamMembers.Any(i=>i.Id == 2), "The user was not removed.");
+            Assert.IsFalse(_mockContainer.AssessmentItems.Any(i => i.TeamMemberId == 2), "Assessment Items were not removed.");
+
         }
 
         private WebApi.Logic.TeamLogic CreateTeamLogicForAdmin()

@@ -170,7 +170,7 @@ namespace Continuum.WebApi.Controllers
         {
             if (TeamLogic.TeamExists(teamId) && TeamLogic.TeamMemberExists(memberId))
             {
-                TeamLogic.DeleteTeamMember(memberId);
+                TeamLogic.DeleteTeamMember(teamId, memberId);
                 return Ok();
             }
             else
