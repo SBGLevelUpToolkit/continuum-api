@@ -18,11 +18,11 @@ namespace Continuum.WebApi
 
             if (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME")))
             {
-                container.RegisterType<Data.IContinuumDataContainer, Data.ContinuumDataContainer>(new PerThreadLifetimeManager());
+                container.RegisterType<Data.IContinuumDataContainer, Data.ContinuumDataContainer>(new PerRequestLifetimeManager());            
             }
             else
             {
-                container.RegisterType<Data.IContinuumDataContainer, Data.Mocks.MockContainer>(new PerThreadLifetimeManager());
+                container.RegisterType<Data.IContinuumDataContainer, Data.Mocks.MockContainer>(new PerRequestLifetimeManager());
 
             }
 

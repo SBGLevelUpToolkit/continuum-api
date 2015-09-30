@@ -4,6 +4,15 @@
         <name>Continuum.WebApi</name>
     </assembly>
     <members>
+        <member name="T:Continuum.WebApi.App_Start.UnityWebActivator">
+            <summary>Provides the bootstrapping for integrating Unity with ASP.NET MVC.</summary>
+        </member>
+        <member name="M:Continuum.WebApi.App_Start.UnityWebActivator.Start">
+            <summary>Integrates Unity when the application starts.</summary>
+        </member>
+        <member name="M:Continuum.WebApi.App_Start.UnityWebActivator.Shutdown">
+            <summary>Disposes the Unity container when the application is shut down.</summary>
+        </member>
         <member name="M:Continuum.WebApi.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
             <summary>
             Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
