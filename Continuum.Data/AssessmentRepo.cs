@@ -30,7 +30,10 @@ namespace Continuum.Data
 
         public virtual Assessment GetCurrentAssessmentForTeam(int teamId)
         {
-            return _container.Assessments.Where(i => i.TeamId == teamId && i.Status.Value != "Closed").FirstOrDefault();
+            return _container.Assessments
+                .Where(i => i.TeamId == teamId && i.Status.Value != "Closed")
+                .OrderBy(j=>j.Id)
+                .FirstOrDefault();
         }
 
         public virtual void SaveChanges()

@@ -40,8 +40,8 @@ namespace Continuum.Tests
         private static IEnumerable<Core.Models.AssessmentScoringItem> CreateAssessmentWithResponses()
         {
             var assessmentItems = new List<Core.Models.AssessmentScoringItem>();
-            assessmentItems.Add(new Core.Models.AssessmentScoringItem() { DimensionId = 1 , CapabilityId = 1, Level = 1, UserId = "Bob"});
-            assessmentItems.Add(new Core.Models.AssessmentScoringItem() { DimensionId = 1, CapabilityId = 2, Level = 1, UserId = "Fred" });
+            assessmentItems.Add(new Core.Models.AssessmentScoringItem() { DimensionId = 1 , CapabilityId = 1, Level = 1, UserId = "Bob", CapabilityAchieved=true});
+            assessmentItems.Add(new Core.Models.AssessmentScoringItem() { DimensionId = 1, CapabilityId = 2, Level = 1, UserId = "Fred", CapabilityAchieved = true });
 
             return assessmentItems;
         }
@@ -128,8 +128,8 @@ namespace Continuum.Tests
             var assessmentItems = CreateAssessmentWithResponses();
 
             var items = assessmentItems as List<Core.Models.AssessmentScoringItem>;
-            items.Add(new Core.Models.AssessmentScoringItem() { DimensionId = 1, CapabilityId = 2, Level = 1, UserId = "Bob" });
-            items.Add(new Core.Models.AssessmentScoringItem() { DimensionId = 1, CapabilityId = 1, Level = 1, UserId = "Fred" });
+            items.Add(new Core.Models.AssessmentScoringItem() { DimensionId = 1, CapabilityId = 2, Level = 1, UserId = "Bob", CapabilityAchieved = true });
+            items.Add(new Core.Models.AssessmentScoringItem() { DimensionId = 1, CapabilityId = 1, Level = 1, UserId = "Fred", CapabilityAchieved = true });
 
             AssessmentScorer scorer = CreateScorer();
 

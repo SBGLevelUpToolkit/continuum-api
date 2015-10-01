@@ -53,9 +53,17 @@ namespace Continuum.WebApi.Controllers
         /// </summary>
         /// <param name="assessmentResults"></param>
         [ApplicationExceptionFilter]
-        public void Put(IEnumerable<AssessmentResult> assessmentResults)
+        public IHttpActionResult Put(IEnumerable<AssessmentResult> assessmentResults)
         {
-            AssessmentLogic.UpdateAssessmentResults(assessmentResults);
+            if (ModelState.IsValid)
+            {
+                AssessmentLogic.UpdateAssessmentResults(assessmentResults);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
         /// <summary>

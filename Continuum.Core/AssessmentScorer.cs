@@ -37,9 +37,9 @@ namespace Continuum.Core
                 .Select(k => new Models.LevelResult()
                 {
                     Level = k.Key,
-                    ResponseCount = k.Count(),
+                    ResponseCount = k.Count(x=>x.CapabilityAchieved),
                     TargetCapabilityCount = GetCapabilityCountForLevel(i.Key, k.Key),
-                    LevelAchieved = k.Count() == result.TotalUserCount * GetCapabilityCountForLevel(i.Key, k.Key)
+                    LevelAchieved = k.Count(x => x.CapabilityAchieved) == result.TotalUserCount * GetCapabilityCountForLevel(i.Key, k.Key)
                 })
             });
 
