@@ -98,6 +98,15 @@ namespace Continuum.Data
             _container.Teams.Remove(team);
             
 
+            //assessment results
+
+            //assessment items
+
+            //assessments 
+
+            //goals
+            
+
         }
 
         public bool TeamMemberExists(int teamMemberId)

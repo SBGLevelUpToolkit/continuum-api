@@ -190,10 +190,17 @@ namespace Continuum.WebApi.Logic
         public User GetUserDetails(string userId)
         {
             var team = _teamRepo.GetTeamForUser(userId).FirstOrDefault();
+
+            bool isAdmin = false;
+            if(team != null)
+            {
+                isAdmin = team.TeamMembers.Any(i => i.IsAdmin && i.UserId == userId);
+            }
+
             return new User()
             {
                 UserId = userId,
-                IsAdmin = team.TeamMembers.Any(i => i.IsAdmin && i.UserId == userId),
+                IsAdmin = isAdmin,
                 Teams = GetTeamsForUser(userId),
             };
         }
