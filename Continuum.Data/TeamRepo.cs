@@ -94,19 +94,33 @@ namespace Continuum.Data
             {
                 _container.TeamMembers.Remove(teamMember);
             }
-            
+
             _container.Teams.Remove(team);
-            
 
-            //assessment results
+            var assessments = _container.Assessments.Where(i => i.TeamId == id).ToArray();
 
-            //assessment items
+            foreach (var assessment in assessments)
+            {
+                var assessmentResults = _container.AssessmentResults.Where(i => i.AssessmentId == assessment.Id);
+                foreach (var assessmentResult in assessmentResults)
+                {
+                    _container.AssessmentResults.Remove(assessmentResult);
+                }
 
-            //assessments 
+                var assessmentItems = _container.AssessmentItems.Where(i => i.AssessmentId == assessment.Id);
+                foreach (var assessmentItem in assessmentItems)
+                {
+                    _container.AssessmentItems.Remove(assessmentItem);
+                }
 
-            //goals
-            
+                _container.Assessments.Remove(assessment);
+            }
 
+            var goals = _container.Goals.Where(i => i.TeamId == id);
+            foreach (var goal in goals)
+            {
+                _container.Goals.Remove(goal);
+            }
         }
 
         public bool TeamMemberExists(int teamMemberId)
