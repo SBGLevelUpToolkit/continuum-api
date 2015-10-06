@@ -16,6 +16,8 @@ using Microsoft.Owin.Security.OAuth;
 using Continuum.WebApi.Models;
 using Continuum.WebApi.Providers;
 using Continuum.WebApi.Results;
+using Microsoft.Owin.Security.DataProtection;
+using System.Web.Routing;
 
 namespace Continuum.WebApi.Controllers
 {
@@ -25,6 +27,20 @@ namespace Continuum.WebApi.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+
+        private IIdentityMessageService _mailProvider;
+        public IIdentityMessageService MailProvider
+        {
+            get
+            {
+                if (_mailProvider == null)
+                {
+                    _mailProvider = new Providers.MailProvider();
+                }
+                return _mailProvider;
+            }
+            set { _mailProvider = value; }
+        }
 
         public AccountController()
         {
@@ -337,8 +353,35 @@ namespace Continuum.WebApi.Controllers
             {
                 return GetErrorResult(result);
             }
+            else
+            {
+                await SendConfirmationEmail(user);
+            }
 
             return Ok();
+        }
+
+        private async Task SendConfirmationEmail(ApplicationUser user)
+        {
+            UserManager.EmailService = this.MailProvider;
+
+            var provider = new DpapiDataProtectionProvider("TestWebAPI");
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+
+            var newRouteValues = new RouteValueDictionary(new { userId = user.Id, code = code });
+            newRouteValues.Add("httproute", true);
+            System.Web.Mvc.UrlHelper urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext, RouteTable.Routes);
+            string callbackUrl = urlHelper.Action(
+                "ConfirmEmail",
+                "Account",
+                newRouteValues,
+                HttpContext.Current.Request.Url.Scheme
+                );
+
+            string emailTitle = "Please confirm your account";
+            string emailBody = "<html><body><p>Confirmation Code: <a href='" + callbackUrl + "'>Please click Here to confirm your email</a></p><body></html>";
+
+            await UserManager.SendEmailAsync(user.Id, emailTitle, emailBody);
         }
 
         // POST api/Account/RegisterExternal

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using Continuum.WebApi.Models;
 
 namespace Continuum.Tests
 {
@@ -143,6 +144,31 @@ namespace Continuum.Tests
             {
                 Assert.IsTrue(ex.Response.StatusCode == System.Net.HttpStatusCode.InternalServerError);
             }
+        }
+
+        //[TestMethod]
+        public void TestThatRegistrationSendsConfirmationMail()
+        {
+            Continuum.WebApi.Controllers.AccountController account = new WebApi.Controllers.AccountController();
+            var mock = new MockMailProvider();
+            account.MailProvider = mock;
+
+            Random r = new Random();
+
+            RegisterBindingModel model = new RegisterBindingModel()
+            {
+                 Email = r.Next() + "@example.com",
+                 Password = "Password1!",
+                 ConfirmPassword = "Password1!"
+            };
+
+            var result = account.Register(model);
+
+            result.Wait(); 
+
+            Assert.IsTrue(mock.MailWasSent, "Mail was not sent");
+            Assert.IsTrue(mock.Message.Destination == model.Email);
+
         }
     }
 }
