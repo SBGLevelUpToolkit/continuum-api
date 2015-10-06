@@ -387,7 +387,7 @@ namespace Continuum.WebApi.Controllers
         {
             UserManager.EmailService = this.MailProvider;
 
-            var provider = new DpapiDataProtectionProvider("TestWebAPI");
+            //var provider = new DpapiDataProtectionProvider("TestWebAPI");
             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
             var newRouteValues = new RouteValueDictionary(new { userId = user.Id, code = code });
@@ -404,6 +404,41 @@ namespace Continuum.WebApi.Controllers
             string emailBody = "<html><body><p>Confirmation Code: <a href='" + callbackUrl + "'>Please click Here to confirm your email</a></p><body></html>";
 
             await UserManager.SendEmailAsync(user.Id, emailTitle, emailBody);
+        }
+
+        [AllowAnonymous]
+        [Route("ResetPassword")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> ResetPassword(string emailAddress)
+        {
+            ApplicationUser user = UserManager.FindByEmail(emailAddress);
+            if (user != null)
+            {
+                if(user.EmailConfirmed)
+                {
+                    var passwordResetToken = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+
+                    var newRouteValues = new RouteValueDictionary(new { userId = user.Id, code = passwordResetToken });
+                    newRouteValues.Add("httproute", true);
+                    System.Web.Mvc.UrlHelper urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext, RouteTable.Routes);
+                    string callbackUrl = urlHelper.Action(
+                        "ConfirmResetPassword",
+                        "Account",
+                        newRouteValues,
+                        HttpContext.Current.Request.Url.Scheme
+                        );
+
+                    string emailTitle = "Password Reset";
+                    string emailBody = "<html><body><p>Reset password.: <a href='" + callbackUrl + "'>Please click Here to reset your password.</a></p><body></html>";
+
+                    await UserManager.SendEmailAsync(user.Id, emailTitle, emailBody);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, "You cannot reset the password because the user's email address has not been confirmed.");
+                }
+            }
+            return Request.CreateResponse(HttpStatusCode.NotFound);
         }
 
         // POST api/Account/RegisterExternal
