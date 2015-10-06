@@ -441,6 +441,27 @@ namespace Continuum.WebApi.Controllers
             return Request.CreateResponse(HttpStatusCode.NotFound);
         }
 
+        [AllowAnonymous]
+        [Route("ConfirmResetPassword")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> ConfirmResetPassowrd(string emailAddress, string code, string password)
+        {
+            ApplicationUser user = UserManager.FindByEmail(emailAddress);
+            if (user != null)
+            {
+                var result = await UserManager.ResetPasswordAsync(user.Id, code, password);
+                if (result.Succeeded)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, result);
+                }
+            }
+            return Request.CreateResponse(HttpStatusCode.NotFound);
+        }
+
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
