@@ -18,6 +18,7 @@ using Continuum.WebApi.Providers;
 using Continuum.WebApi.Results;
 using Microsoft.Owin.Security.DataProtection;
 using System.Web.Routing;
+using System.Net;
 
 namespace Continuum.WebApi.Controllers
 {
@@ -359,6 +360,27 @@ namespace Continuum.WebApi.Controllers
             }
 
             return Ok();
+        }
+
+        [AllowAnonymous]
+        [Route("ConfirmEmail")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> ConfirmEmail(string userId, string code)
+        {
+            ApplicationUser user = UserManager.FindById(userId);
+            if (user != null)
+            {
+                var result = await UserManager.ConfirmEmailAsync(userId, code);
+                if (result.Succeeded)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, result);
+                }
+            }
+            return Request.CreateResponse(HttpStatusCode.NotFound);
         }
 
         private async Task SendConfirmationEmail(ApplicationUser user)
