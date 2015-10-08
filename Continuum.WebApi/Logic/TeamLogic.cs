@@ -101,6 +101,26 @@ namespace Continuum.WebApi.Logic
             }
         }
 
+        public void AddUserToTeam(int id, TeamMember member)
+        {
+            Data.TeamMember teamMember = null;
+
+            var team = _teamRepo.FindById(id);
+            if (team.TeamMembers.Any(i => i.UserId == member.EmailAddress))
+            {
+                teamMember = team.TeamMembers.Where(i => i.UserId == member.EmailAddress).First();
+            }
+            else
+            {
+                teamMember = new Data.TeamMember() { UserId = member.EmailAddress };
+                team.TeamMembers.Add(teamMember);
+            }
+
+            teamMember.IsAdmin = member.IsAdmin;
+
+            _teamRepo.SaveChanges();
+        }
+
         internal bool TeamExists(int id)
         {
             return _teamRepo.FindById(id) != null;

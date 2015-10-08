@@ -341,6 +341,21 @@ namespace Continuum.Tests
             Assert.IsTrue(members.Count() == 1); 
         }
 
+        [TestMethod]
+        public void AddUserToTeam()
+        {
+            CreateTeamWithMember();
+
+            var team = _teamRepository.All().First();
+
+            var teamLogic = CreateTeamLogicForAdmin();
+
+            var member = new Core.Models.TeamMember() { EmailAddress = "newuser@user.com", IsAdmin =true };
+            teamLogic.AddUserToTeam(team.Id, member);
+
+            Assert.IsTrue(team.TeamMembers.Any(i=>i.UserId == member.EmailAddress && i.IsAdmin == true));
+        }
+
 
        
     }

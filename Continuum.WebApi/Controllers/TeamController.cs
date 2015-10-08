@@ -67,6 +67,38 @@ namespace Continuum.WebApi.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Adds a member to a team. If the member is already a member of the team the record is updated.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="teamMember"></param>
+        /// <returns></returns>
+        [TeamAdminFilter]
+        [ApplicationExceptionFilter]
+        [Route("api/team/{id}/members")]
+        [HttpPost]
+        public IHttpActionResult UpdateTeamMembers(int id, TeamMember teamMember)
+        {
+            if (ModelState.IsValid)
+            {
+                if (TeamLogic.TeamExists(id))
+                {
+                    TeamLogic.AddUserToTeam(id, teamMember);
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound(); 
+                }
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
+
+
         [ApplicationExceptionFilter]
         public IHttpActionResult Post(Team team)
         {
