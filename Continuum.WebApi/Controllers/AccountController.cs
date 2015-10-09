@@ -391,14 +391,9 @@ namespace Continuum.WebApi.Controllers
             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
             var newRouteValues = new RouteValueDictionary(new { userId = user.Id, code = code });
-            newRouteValues.Add("httproute", true);
-            System.Web.Mvc.UrlHelper urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext, RouteTable.Routes);
-            string callbackUrl = urlHelper.Action(
-                "ConfirmEmail",
-                "Account",
-                newRouteValues,
-                HttpContext.Current.Request.Url.Scheme
-                );
+
+
+            string callbackUrl = "http://continuuumapp.azurewebsites.net/dist/#/confirmation?code=" + code;
 
             string emailTitle = "Please confirm your account";
             string emailBody = "<html><body><p>Confirmation Code: <a href='" + callbackUrl + "'>Please click Here to confirm your email</a></p><body></html>";
