@@ -390,6 +390,9 @@ namespace Continuum.WebApi.Controllers
             //var provider = new DpapiDataProtectionProvider("TestWebAPI");
             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
+            //Encode for safety
+            code = System.Web.HttpUtility.UrlEncode(code);
+
             var newRouteValues = new RouteValueDictionary(new { userId = user.Id, code = code });
 
 
