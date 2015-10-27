@@ -409,12 +409,17 @@ namespace Continuum.WebApi.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> ResetPassword(string emailAddress)
         {
+            UserManager.EmailService = this.MailProvider;
+
             ApplicationUser user = UserManager.FindByEmail(emailAddress);
             if (user != null)
             {
-                if(user.EmailConfirmed)
+                if (user.EmailConfirmed)
                 {
                     var passwordResetToken = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+
+                    //Encode for safety
+                    passwordResetToken = System.Web.HttpUtility.UrlEncode(passwordResetToken);
 
                     var newRouteValues = new RouteValueDictionary(new { userId = user.Id, code = passwordResetToken });
                     newRouteValues.Add("httproute", true);
@@ -430,13 +435,17 @@ namespace Continuum.WebApi.Controllers
                     string emailBody = "<html><body><p>Reset password.: <a href='" + callbackUrl + "'>Please click Here to reset your password.</a></p><body></html>";
 
                     await UserManager.SendEmailAsync(user.Id, emailTitle, emailBody);
+                    return Request.CreateResponse(HttpStatusCode.OK);
                 }
                 else
                 {
                     return Request.CreateResponse(HttpStatusCode.InternalServerError, "You cannot reset the password because the user's email address has not been confirmed.");
                 }
             }
-            return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
         }
 
         [AllowAnonymous]
