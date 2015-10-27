@@ -421,7 +421,7 @@ namespace Continuum.WebApi.Controllers
                     //Encode for safety
                     passwordResetToken = System.Web.HttpUtility.UrlEncode(passwordResetToken);
 
-                    var newRouteValues = new RouteValueDictionary(new { userId = user.Id, code = passwordResetToken });
+                    var newRouteValues = new RouteValueDictionary(new { userId = user.Email, code = passwordResetToken });
                     newRouteValues.Add("httproute", true);
                     System.Web.Mvc.UrlHelper urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext, RouteTable.Routes);
                     string callbackUrl = urlHelper.Action(
