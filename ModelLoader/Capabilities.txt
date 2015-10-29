@@ -1,120 +1,120 @@
-﻿Strategy Alignment;Traveler;1;Any alignment to Strategy is coincidental or opportunistic ;0
-Strategy Alignment;Artisan;2;Upfront engagement with stakeholders to ensure Business and Technical Alignment ;1
-Strategy Alignment;Artisan;3;The product/project vision is explicitly aligned to strategy;1
-Strategy Alignment;Artisan;4;Post implementation view to confirm strategy alignment ;1
-Strategy Alignment;Expert;5;Occasional engagement with stakeholders throughout delivery cycle to review business and technical alignment ;2,3,4
-Strategy Alignment;Expert;6;Backlog items are created to deal with strategy alignment issues ;0
-Strategy Alignment;Professional;7;Frequent engagement with Stakeholders to review Business and technical alignment ;5
-Strategy Alignment;Professional;8;Team presents product to Architecture and Design teams with the intent of picking up alignment issues ;5
-Strategy Alignment;Professional;9;Metrics to measure strategy elements defined and tracked;0
-Strategy Alignment;Master ;10;All major strategy alignment backlog items have been resolved;6
-Strategy Alignment;Master ;11;All requirements are attached to business metric;9
-Strategy Alignment;Master ;12;Metrics are tracked over time and improvements targets are set and achieved;9
+﻿Strategy Alignment;Traveler;1;Any alignment to Strategy is coincidental or opportunistic.;0
+Strategy Alignment;Artisan;2;Upfront engagement with stakeholders to ensure Business and Technical Alignment.;1
+Strategy Alignment;Artisan;3;The product/project vision is explicitly aligned to strategy.;1
+Strategy Alignment;Artisan;4;Post implementation review to confirm strategy alignment.;1
+Strategy Alignment;Expert;5;Occasional engagement with stakeholders throughout delivery cycle to review business and technical alignment.;2,3,4
+Strategy Alignment;Expert;6;Backlog items are created to deal with strategy alignment issues.;0
+Strategy Alignment;Professional;7;Frequent engagement with Stakeholders to review Business and technical alignment.;5
+Strategy Alignment;Professional;8;Team presents product to Architecture and Design teams with the intent of picking up alignment issues.;5
+Strategy Alignment;Professional;9;Metrics to measure strategy elements defined and tracked.;0
+Strategy Alignment;Master ;10;All major strategy alignment backlog items have been resolved.;6
+Strategy Alignment;Master ;11;All requirements are attached to business metric.;9
+Strategy Alignment;Master ;12;Metrics are tracked over time and improvements targets are set and achieved.;9
 Strategy Alignment;Master ;13;Team independently innovates by creating new features or optimisations in support of or extending the strategy. ;9
-Planning and Requirements ;Traveler;14;Team is not involved in estimates;0
-Planning and Requirements ;Traveler;15;No Specific prioritization of requirements;0
-Planning and Requirements ;Traveler;16;Iteration lengths are erratic and based on the amount of functionality;0
-Planning and Requirements ;Traveler;17;The team does not know their velocity;0
-Planning and Requirements ;Traveler;18;No Stakeholder management in place ;0
-Planning and Requirements ;Artisan;19;Team performs estimates up-front ;14
-Planning and Requirements ;Artisan;20;Requirements are prioritized based on business value;15
-Planning and Requirements ;Artisan;21;Iteration lengths are fixed;16
-Planning and Requirements ;Artisan;22;The team knows their velocity ;17
-Planning and Requirements ;Artisan;23;Stakeholders have been identified and a formal communication plan is in place ;18
-Planning and Requirements ;Expert;24;Team performs estimation iteratively ;19
-Planning and Requirements ;Expert;25;The MVP and MVPS have been identified;20
-Planning and Requirements ;Expert;26;The teams velocity is predictable ;22
-Planning and Requirements ;Expert;27;All backlog items are sized by the teams;0
-Planning and Requirements ;Expert;28;Stakeholders attend showcase;23
-Planning and Requirements ;Professional;29;Team tracks performance against estimates ;24
-Planning and Requirements ;Professional;30;Requirements are developed on a just Ðin Ðtime basis;25
-Planning and Requirements ;Professional;31;Analytics are implemented to determine the effectiveness of requirements ;25
-Planning and Requirements ;Professional;32;The amount of functionality for each iteration is determined by the teams velocity ;26
-Planning and Requirements ;Professional;33;Technical debt and defects are tracked on the backlog and form part of the estimated team velocity;27
-Planning and Requirements ;Professional;34;Stakeholders actively participate in retrospective ;28
-Planning and Requirements ;Master ;35;Requirements are defined with an expected outcome with an objective measure;30,31
-Planning and Requirements ;Master ;36;Release planning is performed based on the teams current velocity;32,33
-Planning and Requirements ;Master ;37;A formal beta program is in place to allow extended stakeholders and customers to evaluate the software and provide feedback. ;34
-Coding Practices;Traveler;38;No standards or mechanism's for ensuring code quality ;0
-Coding Practices;Artisan;39;Standards are defined but they are inconsistently applied ;38
-Coding Practices;Artisan;40;Training process of new team members are in place ;0
-Coding Practices;Expert;41;There are mechanismÕs in place to ensure that standards are followed;39
-Coding Practices;Expert;42;Process's and practices are understood and followed by all;40
-Coding Practices;Expert;43;Metrics are defined but not necessarily reviewed and acted on;0
-Coding Practices;Expert;44;The team proactively improves the code ;0
-Coding Practices;Professional;45;Code metrics are part of build automation and continuous integration ;43
-Coding Practices;Professional;46;Code metrics are tracked for trends and adjustments made on a continuous basis ;43
-Coding Practices;Professional;47;The team regularly performs katas with the objective of improving their skills ;44
-Coding Practices;Professional;48;Code is regularly refactored as part of the iteration ;44
-Coding Practices;Master ;49;Standards and Practices are regularly reviewed and updated;41
-Coding Practices;Master ;50;Processes and Practices are regularly reviewed and updated;42
-Coding Practices;Master ;51;The code metrics are assessed and backlog items created to drive improvement ;45,46
-Coding Practices;Master ;52;Technical debt is minimized ;0
-Continuous Integration ;Traveler;53;No version management of artefacts and reports;0
-Continuous Integration ;Traveler;54;Deployments & Rollbacks are manual;0
-Continuous Integration ;Traveler;55;Build is performed manually and infrequently.;0
-Continuous Integration ;Traveler;56;Build is owned by a specific person;0
-Continuous Integration ;Traveler;57;Testing is manual;0
-Continuous Integration ;Traveler;58;Development environments manually provisioned and shared between teams;0
-Continuous Integration ;Artisan;59;Source code is under version management;53
-Continuous Integration ;Artisan;60;Build is automated and tests are run as part of the build;55
-Continuous Integration ;Artisan;61;Testing partially automated Ð less than 50% code coverage.;57
-Continuous Integration ;Expert;62;Team checks code into version management system on daily basis.;59
-Continuous Integration ;Expert;63;All artefacts are under version management.;59
-Continuous Integration ;Expert;64;Build and Deployment to development environment are automated.;54,60
-Continuous Integration ;Expert;65;Build status and broken builds are visible to all.;56
-Continuous Integration ;Expert;66;Testing partially automated Ð greater than 50% code coverage.;61
-Continuous Integration ;Expert;67;Release and Change Management partially automated.;0
-Continuous Integration ;Professional;68;Automated build and test cycle every time a change is committed;64
-Continuous Integration ;Professional;69;Build metrics gathered, visible, and acted on. Builds are not left broken and code is not committed on a broke build.;65
-Continuous Integration ;Professional;70;Deployment to test environment is automated.;66
-Continuous Integration ;Professional;71;Non-functional testing is automated.;66
-Continuous Integration ;Professional;72;Testing is automated as much as is practical.;66
-Continuous Integration ;Professional;73;Environments can be provisioned at on demand.;58
-Continuous Integration ;Master ;74;Build and deployment are automated as much as is practical;68
-Continuous Integration ;Master ;75;The build pipeline extends directly into production;68
-Continuous Integration ;Master ;76;Tests are run in parallel across multiple machines;70,71,72
-Continuous Integration ;Master ;77;Trunk-based development is the standard practice and integration happens continuously. Branches are rarely created and are short lived.;0
-Continuous Integration ;Master ;78;Check-ins occur multiple times each day.;0
-Continuous Integration ;Master ;79;Environment & infrastructure specifications are managed and versioned along with all other artefacts.;73
-Continuous Integration ;Master ;80;The CI build creates and provisions environments to allow scalability for testing.;73
-Continuous Integration ;Master ;81;Release and Change Management fully integrated into deployment processes.;67
-Continuous Integration ;Master ;82;The product is always in releasable state.;67
-Continuous Integration ;Master ;83;Automated release process, release to customers is a business decision. ;67
-Incident Management;Traveler;84;A separate process for handling problems and incidents is in place;0
-Incident Management;Artisan;85;An incident management process is in place and understood, but probably inconsistent.;84
-Incident Management;Artisan;86;Key people are identified for incident management.;84
-Incident Management;Artisan;87;High number of handoffs and multiple teams involved in incident resolution.;0
-Incident Management;Expert;88;Incidents and problems feed into backlog;85
-Incident Management;Expert;89;Operation requirements are identified and tracked in the backlog;86
-Incident Management;Expert;90;Problem management includes an urgency to address the root cause;0
-Incident Management;Expert;91;Root cause analysis is performed inconsistently;0
-Incident Management;Expert;92;Level 1, 2, 3 support structure in place;87
-Incident Management;Expert;93;Instrumentation (monitoring) in place.;0
-Incident Management;Professional;94;Defects are resolved once and deployed automatically across all environments.;88,89
-Incident Management;Professional;95;Defects resolution includes full regression tests;88,90
-Incident Management;Professional;96;System health is proactively monitored.;88,91
-Incident Management;Professional;97;Root cause analysis is mandatory and regularly trended.;90,91
-Incident Management;Master ;98;Feature teams do own incident management;94,95,96
-Incident Management;Master ;99;Fail Forward (failing in a way that enables you to identify and overcome underlying problem, encapsulates the way forward and reduce the likelihood of failure the next time around);94,95,97
-Incident Management;Master ;100;Feature Teams resolve issues themselves.;92
-Incident Management;Master ;101;Team actively manages, monitors and reviews what happens in production, feedback loop is enabled and acted on.;93
-Risk and Issue Management ;Traveler;102;Risk Management does not exist or is just a box to tick in order to get through a process (i.e. something done to keep risk and audit people happy).;0
-Risk and Issue Management ;Traveler;103;There is no awareness or transparency of current risks and issues in the team.;0
-Risk and Issue Management ;Artisan;104;Risks have been identified and are captured using an appropriate artefact such as a risk story wall or risk register.;102
-Risk and Issue Management ;Artisan;105;Risks are discussed as part of the iteration planning process.;102
-Risk and Issue Management ;Artisan;106;Each identified risk has been assigned a risk mitigation or action plan. ;103
-Risk and Issue Management ;Expert;107;"Risks, issues and blockers are discussed and updated in appropriate detail as part of all sessions (stand-ups, iteration planning, showcases, steering committee meetings)";104,105
-Risk and Issue Management ;Expert;108;Unmitigated or uncontrollable risks are easily identifiable.;106
-Risk and Issue Management ;Expert;109;Risks, controls and action plans are assigned to appropriate owners: someone who understand the risk, has responsibility and accountability for managing the risk, and has the authority to implement controls and actions.;0
-Risk and Issue Management ;Professional;110;The cost and benefits of risk mitigations are evaluated and recorded before they are implemented;108
-Risk and Issue Management ;Professional;111;Risk management roles, responsibilities and accountabilities have been formally defines and agreed upon (such as in position descriptions and KRAs);109
-Risk and Issue Management ;Professional;112;The effective management of risks are considered a success criteria when implementing changes or new systems, processes and products.;0
-Risk and Issue Management ;Professional;113;Regular check points with Business Stakeholders to ensure they are aware of all risks and issues.;0
-Risk and Issue Management ;Professional;114;Time to resolve issues is tracked.;0
-Risk and Issue Management ;Master ;115;Risk mitigations and actions are explicitly designed to increase positive outcomes and reduce negative outcomes.;110
-Risk and Issue Management ;Master ;116;The business participates in developing mitigation strategies;111
-Risk and Issue Management ;Master ;117;Risk management is used to identify potential opportunities and drive strategy by thinking about risk in terms of uncertainty (which could be positive or negative);112
+Planning and Requirements ;Traveler;14;Team is not involved in estimates.;0
+Planning and Requirements ;Traveler;15;No Specific prioritization of requirements.;0
+Planning and Requirements ;Traveler;16;Iteration lengths are erratic and based on the amount of functionality.;0
+Planning and Requirements ;Traveler;17;The team does not know their velocity.;0
+Planning and Requirements ;Traveler;18;No Stakeholder management in place.;0
+Planning and Requirements ;Artisan;19;Team performs estimates up-front.;14
+Planning and Requirements ;Artisan;20;Requirements are prioritized based on business value.;15
+Planning and Requirements ;Artisan;21;Iteration lengths are fixed.;16
+Planning and Requirements ;Artisan;22;The team knows their velocity.;17
+Planning and Requirements ;Artisan;23;Stakeholders have been identified and a communication plan is in place.;18
+Planning and Requirements ;Expert;24;Team performs estimation iteratively.;19
+Planning and Requirements ;Expert;25;When the team estimates the estimates include all activities to reach 'Done'.;19
+Planning and Requirements ;Expert;26;The MVP and MVPS have been identified.;20
+Planning and Requirements ;Expert;27;The teams velocity is predictable.;22
+Planning and Requirements ;Expert;28;All backlog items are sized by the teams.;0
+Planning and Requirements ;Expert;29;Stakeholders attend showcase.;23
+Planning and Requirements ;Professional;30;Team tracks performance against estimates.;24,25
+Planning and Requirements ;Professional;31;Requirements are developed on a just Ðin Ðtime basis.;26
+Planning and Requirements ;Professional;32;Analytics are implemented to determine the effectiveness of requirements.;26
+Planning and Requirements ;Professional;33;The amount of functionality for each iteration is determined by the teams velocity.;27
+Planning and Requirements ;Professional;34;Technical debt and defects are tracked on the backlog and form part of the estimated team velocity.;28
+Planning and Requirements ;Professional;35;Stakeholders actively participate in retrospective.;29
+Planning and Requirements ;Master ;36;Requirements are defined with an expected outcome with an objective measure.;31,32
+Planning and Requirements ;Master ;37;Release planning is performed based on the teams current velocity.;33,34
+Planning and Requirements ;Master ;38;A process is in place (e.g. a formal beta program)  to allow extended stakeholders and customers to evaluate the software and provide feedback. ;35
+Coding Practices;Traveler;39;No standards or mechanism's for ensuring code quality.;0
+Coding Practices;Artisan;40;Guidelines and/or standards are defined. ;39
+Coding Practices;Artisan;41;Consistent training process for new team members is in place.;0
+Coding Practices;Expert;42;There are mechanismÕs in place to ensure that standards are followed.;40
+Coding Practices;Expert;43;Process's and practices are understood and followed by all.;41
+Coding Practices;Expert;44;Metrics are defined but not necessarily reviewed and acted on.;0
+Coding Practices;Expert;45;The team proactively improves the code.;0
+Coding Practices;Professional;46;Code metrics are part of build automation and continuous integration.;44
+Coding Practices;Professional;47;Code metrics are tracked for trends and adjustments made on a continuous basis.;44
+Coding Practices;Professional;48;The team regularly performs katas with the objective of improving their skills.;45
+Coding Practices;Professional;49;Code is regularly refactored as part of the iteration.;45
+Coding Practices;Master ;50;Standards and Practices are regularly reviewed and updated.;42
+Coding Practices;Master ;51;Processes and Practices are regularly reviewed and updated.;43
+Coding Practices;Master ;52;The code metrics are assessed and backlog items created to drive improvement.;46,47
+Coding Practices;Master ;53;Technical debt is minimized.;0
+Continuous Integration ;Traveler;54;No version management of artefacts and reports.;0
+Continuous Integration ;Traveler;55;Deployments & Rollbacks are manual.;0
+Continuous Integration ;Traveler;56;Build is performed manually and infrequently.;0
+Continuous Integration ;Traveler;57;Build is owned by a specific person.;0
+Continuous Integration ;Traveler;58;Testing is manual.;0
+Continuous Integration ;Traveler;59;Development environments manually provisioned and shared between teams.;0
+Continuous Integration ;Artisan;60;Source code is under version management.;54
+Continuous Integration ;Artisan;61;Build is automated and tests are run as part of the build.;56
+Continuous Integration ;Artisan;62;Testing partially automated, and code coverage grater than 0 ;58
+Continuous Integration ;Expert;63;Team checks code into version management system on daily basis.;60
+Continuous Integration ;Expert;64;All artefacts are under version management.;60
+Continuous Integration ;Expert;65;Build and Deployment to development environment are automated.;55,61
+Continuous Integration ;Expert;66;Anyone in the team can start build at any point in time;57
+Continuous Integration ;Expert;67;Build status and broken builds are visible to all.;0
+Continuous Integration ;Expert;68;Testing partially automated Ð greater than 50% code coverage.;62
+Continuous Integration ;Expert;69;Release and Change Management partially automated.;0
+Continuous Integration ;Professional;70;Automated build and test cycle every time a change is committed;65
+Continuous Integration ;Professional;71;Build metrics gathered, visible, and acted on. ;0
+Continuous Integration ;Professional;72;Builds are not left broken and code is not committed on a broken build.;0
+Continuous Integration ;Professional;73;Deployment to test environment is automated.;68
+Continuous Integration ;Professional;74;Non-functional testing is automated.;68
+Continuous Integration ;Professional;75;Testing is automated as much as is practical.;68
+Continuous Integration ;Professional;76;Environments can be provisioned at on demand.;59
+Continuous Integration ;Master ;77;Build and deployment are automated as much as is practical;70
+Continuous Integration ;Master ;78;The build pipeline extends directly into production;70
+Continuous Integration ;Master ;79;Tests are run in parallel across multiple machines;73,74,75
+Continuous Integration ;Master ;80;Trunk-based development is the standard practice and integration happens continuously. Branches are rarely created and are short lived.;0
+Continuous Integration ;Master ;81;Check-ins occur multiple times each day.;0
+Continuous Integration ;Master ;82;Environment & infrastructure specifications are managed and versioned along with all other artefacts.;76
+Continuous Integration ;Master ;83;The CI build creates and provisions environments to allow scalability for testing.;76
+Continuous Integration ;Master ;84;Release and Change Management fully integrated into deployment processes.;69
+Continuous Integration ;Master ;85;The product is always in releasable state.;69
+Continuous Integration ;Master ;86;Automated release process, release to customers is a business decision. ;69
+Incident Management;Traveler;87;The process for handling problems and incidents is ad-hoc. ;0
+Incident Management;Artisan;88;An incident management process is in place and understood.;87
+Incident Management;Artisan;89;Key people are identified for incident management.;87
+Incident Management;Artisan;90;The number of handoffs and teams involved in incident resolution is minimal.;0
+Incident Management;Expert;91;Incidents and problems feed into backlog;88
+Incident Management;Expert;92;Operation requirements are identified and tracked in the backlog;89
+Incident Management;Expert;93;Problem management includes an urgency to address the root cause;0
+Incident Management;Expert;94;Root cause analysis is consistently performed.;0
+Incident Management;Expert;95;Level 1, 2, 3 support structure in place;90
+Incident Management;Expert;96;Instrumentation (monitoring) in place.;0
+Incident Management;Professional;97;Defects are resolved once and deployed automatically across all environments.;91,92
+Incident Management;Professional;98;Defects resolution includes full regression tests;91,92
+Incident Management;Professional;99;System health is proactively monitored.;91,92
+Incident Management;Professional;100;Root cause analysis is highly valued and regularly trended.;93,94
+Incident Management;Master ;101;Feature teams do own incident management;97,98,99
+Incident Management;Master ;102;Fail Forward (failing in a way that enables you to identify and overcome underlying problem, encapsulates the way forward and reduce the likelihood of failure the next time around);97,98,99
+Incident Management;Master ;103;Team actively manages, monitors and reviews what happens in production, feedback loop is enabled and acted on.;96
+Risk and Issue Management ;Traveler;104;Risk Management does not exist or is just a box to tick in order to get through a process (i.e. something done to keep risk and audit people happy).;0
+Risk and Issue Management ;Traveler;105;There is no awareness or transparency of current risks and issues in the team.;0
+Risk and Issue Management ;Artisan;106;Risks have been identified and are captured using an appropriate artefact such as a risk story wall or risk register.;104
+Risk and Issue Management ;Artisan;107;Each identified risk has been assigned a risk mitigation or action plan.;105
+Risk and Issue Management ;Artisan;108; Risks are discussed as part of the iteration planning process.;105
+Risk and Issue Management ;Expert;109;Risks, issues and blockers are discussed and updated in appropriate detail as part of all sessions (stand-ups; iteration planning; showcases; steering committee meetings);106
+Risk and Issue Management ;Expert;110;Unmitigated or uncontrollable risks are easily identifiable.;107,108
+Risk and Issue Management ;Expert;111;Risks, controls and action plans are assigned to appropriate owners: someone who understand the risk, has responsibility and accountability for managing the risk, and has the authority to implement controls and actions.;0
+Risk and Issue Management ;Professional;112;The cost and benefits of risk mitigations are evaluated and recorded before they are implemented.;110
+Risk and Issue Management ;Professional;113;Risk management roles, responsibilities and accountabilities have been  defined and agreed upon.;111
+Risk and Issue Management ;Professional;114;Regular check points with Business Stakeholders to ensure they are aware of all risks and issues.;0
+Risk and Issue Management ;Master ;115;Risk mitigations and actions are explicitly designed to increase positive outcomes and reduce negative outcomes.;112
+Risk and Issue Management ;Master ;116;The business participates in developing mitigation strategies;113
+Risk and Issue Management ;Master ;117;Risk management is used to identify potential opportunities and drive strategy by thinking about risk in terms of uncertainty (which could be positive or negative);0
 Risk and Issue Management ;Master ;118;Measures and metrics exist to demonstrate the effectiveness of risk management and where improvement is required.;0
 Risk and Issue Management ;Master ;119;The financial impact of risk and issues is clearly understood. ;0
 Software Design;Traveler;120;Speculative design and technical decisions are made on an ad hoc basis. There is no vision or long team technical planning.;0
@@ -124,130 +124,126 @@ Software Design;Artisan;123;Regular design reviews in place;120
 Software Design;Artisan;124;Design assumptions are tracked and validated during iterations;121
 Software Design;Expert;125;Design issues are tracked and prioritised in the backlog.;123
 Software Design;Expert;126;Non-functional requirements are documented and tracked.;124
-Software Design;Expert;127;Clear interfaces defined between modules;0
-Software Design;Expert;128;Designer is a member of the feature team.;0
-Software Design;Professional;129;There is a partial traceability between design and requirements;125
-Software Design;Professional;130;Design requirements are expressed as automated tests;0
+Software Design;Expert;127;Clear interfaces defined between modules.;122
+Software Design;Expert;128;Design is owned by the team. ;0
+Software Design;Professional;129;There is a partial traceability between design and requirements.;125
+Software Design;Professional;130;Design requirements are expressed as automated tests.;0
 Software Design;Professional;131;Non-functional requirements are defined and associated metrics tracked automatically.;126
 Software Design;Professional;132;Where practical all modules of the system can be simulated.;127
 Software Design;Professional;133;Where possible design is captured in a model and code generated.;0
-Software Design;Master ;134;There is full traceability between design and requirements;129
-Software Design;Master ;135;Design activities are performed on a Just In Time basis.;129
-Teaming ;Traveler;136;The team cannot make decisions without consultation ;0
-Teaming ;Traveler;137;The teams goals and visions are unclear;0
-Teaming ;Traveler;138;The team doesn't clearly understand the entire stakeholder landscape ;0
+Software Design;Master ;134;There is full traceability between design and requirements.;129
+Software Design;Master ;135;Design activities are performed on a Just In Time basis.;0
+Teaming ;Traveler;136;The team cannot make decisions without consultation .;0
+Teaming ;Traveler;137;The teams goals and visions are unclear.;0
+Teaming ;Traveler;138;The team doesn't clearly understand the entire stakeholder landscape.;0
 Teaming ;Artisan;139;Team vision and goals are agreed, captured and understood.;137
-Teaming ;Artisan;140;There is a clear understanding of who are the teams stakeholders. (Consumers, partners and clients);138
-Teaming ;Artisan;141;There is a clear definition of what the teams success is (definition of ÔdoneÕ);0
+Teaming ;Artisan;140;There is a clear understanding of who are the teams stakeholders. (Consumers, partners and clients).;138
+Teaming ;Artisan;141;There is a clear definition of what the teams success is (definition of ÔdoneÕ).;0
 Teaming ;Expert;142;The team actively seeks feedback in an effort to achieve the goals;139
-Teaming ;Expert;143;Transparency and high level of collaboration are in place, both within the team and to and from the stakeholders.;140
-Teaming ;Expert;144;Blockers and external dependencies are minimized and managed and the team knows what these are.;141
-Teaming ;Professional;145;Balanced participation is in place. Team members contribute as appropriate and each members opinion is valued.;143
-Teaming ;Professional;146;Team uses adequate measures to monitor success.;144
-Teaming ;Master ;147;All decision-making is internal to the team;136
-Teaming ;Master ;148;Complete collective ownership is in place, both when team is successful and when it fails,;145
-Teaming ;Master ;149;Team is actively improving. Retrospectives are driving improvement.;146
-Release Management;Traveler;150;Releases are dreaded as they cause multiple issues, outages and customer complaints;0
-Release Management;Traveler;151;Cycle time is extremely long and roll back may not be possible;0
-Release Management;Traveler;152;Deployment is mostly manual and requires long working days and overtime by team members to meet deadlines.;0
-Release Management;Traveler;153;There is a high level of coordination required between stakeholders, on the day of the release;0
-Release Management;Traveler;154;Pace and delivery of work is inconsistent throughout the release cycle;0
-Release Management;Traveler;155;Separate artefacts are created for each environment;0
-Release Management;Artisan;156;Releases are planned to a regular cycle and feature are tracked and managed to the regular time frame, which is still relatively long.;150,151
-Release Management;Artisan;157;Planned release can extend close to the deadline because the team is not ready.;152,153
-Release Management;Artisan;158;Releases are still reliant on the skills and knowledge of key individuals;154,155
-Release Management;Artisan;159;Standard artefacts are defined, and if they are produced, are created mostly by manual means;154,155
-Release Management;Expert;160;Release cycles are planned on a regular schedule and seldom extended. The cycle time is shorter.;156
-Release Management;Expert;161;The confidence level for the release is high, but there is still reliance on individual skill to ensure the deployment will work in production.;157
-Release Management;Expert;162;There is transactional process handling the release to operations and support teams.;158,159
-Release Management;Professional;163;Releases and deployments are mostly automated, but require manual configuration and coordination between teams.;160
-Release Management;Professional;164;Operations teams collaborate closely with the delivery team and contribute to minimize the risk of failure in production.;161
-Release Management;Master ;165;The team controls the release;163
-Release Management;Master ;166;Releases can be deployed at any time and are fully automated.;163
-Release Management;Master ;167;Release notes are automatically generated.;163
-Release Management;Master ;168;The product owner is able to determine when release goes into production;163
-Release Management;Master ;169;Operations team is part of the product/program team;164
-Release Management;Master ;170;Release are Routine and not dependent on the talents of key individuals;162
-Release Management;Master ;171;Dark launching is enabled.;0
-Quality Assurance;Traveler;172;Testing is manual;0
-Quality Assurance;Traveler;173;There is a high amount of rework due to testing late in the lifecycle.;0
-Quality Assurance;Traveler;174;Non-functional testing is not considered upfront.;0
-Quality Assurance;Traveler;175;Test cases are designed based only on the requirements document;0
-Quality Assurance;Traveler;176;Quality is owned by testing team only;0
-Quality Assurance;Traveler;177;Absence of unit/integration testing;0
-Quality Assurance;Traveler;178;Functional, non-functional and integration testing serve primarily as end-of-lifecycle gatekeeper.;0
-Quality Assurance;Traveler;179;There is very little reuse of Quality Assurance assets.;0
-Quality Assurance;Artisan;180;Regression test packs are partially automated;172,173,174
-Quality Assurance;Artisan;181;Regression packs run frequently but on an ad hoc basis;172,173,175
-Quality Assurance;Artisan;182;Test cases designed by the team, with testing, development and business analysts;176
-Quality Assurance;Artisan;183;Tests are written upfront;0
-Quality Assurance;Expert;184;Regression test packs are fully automated;180,181
-Quality Assurance;Expert;185;Regression test packs are run as part of the build;180,182
-Quality Assurance;Expert;186;50% coverage automated testing;180,183
-Quality Assurance;Expert;187;Automated smoke testing is in place;180,184
-Quality Assurance;Expert;188;Automated performance testing is in place;180,185
-Quality Assurance;Expert;189;Non-functional requirements are defined and measured;175
-Quality Assurance;Expert;190;Test cases designed by the team as part of the iteration;182
-Quality Assurance;Expert;191;Unit tests are created using TDD.;183
-Quality Assurance;Professional;192;Automated infrastructure testing is in place;184,185,186,187,188
-Quality Assurance;Professional;193;Automated security testing is in place;184,185,186,187,189
-Quality Assurance;Professional;194;Tests are automated as much as is practical;184,185,186,187,190
-Quality Assurance;Professional;195;Quality metrics and trends are tracked;190
-Quality Assurance;Professional;196;Anyone can execute the tests.;191
-Quality Assurance;Master ;197;Active process is in place to understand root cause and respond to it.;192,193,194
-Quality Assurance;Master ;198;Test artefacts are treated with the same importance as code and continually refactored and maintained.;195
-Quality Assurance;Master ;199;Performance testing metrics are defined early in the process.;195
-Quality Assurance;Master ;200;Tests drive release decisions;196
-Environments;Traveler;201;Data migrations un-versioned and performed manually.;0
-Environments;Traveler;202;Test data is not controllable;0
-Environments;Traveler;203;Environments are heavily governed;0
-Environments;Traveler;204;Environments are not refreshed regularly;0
-Environments;Traveler;205;Test environments and test data are frequently unavailable;0
-Environments;Traveler;206;Environments are provisioned manually;0
-Environments;Traveler;207;Key man dependencies;0
-Environments;Artisan;208;Changes are done with automated scripts versioned with application;201
-Environments;Artisan;209;A separate test environment maybe available, but is shared with other teams.;202,203,204,205
-Environments;Artisan;210;Tests are delayed due to other teamsÕ activities affecting the availability of the environment;202,203,204,206
-Environments;Artisan;211;An external group maintains the environment. ;202,203,204,207
-Environments;Artisan;212;Test environments are available during specific dates/time slots;202,203,204,208
-Environments;Artisan;213;Ability to deploy basic virtual environments ;0
-Environments;Artisan;214;Developers have a separate environment dedicated for dev activities, ;0
-Environments;Expert;215;Database changes are performed automatically as part of deployment process.;208
-Environments;Expert;216;Test environments are readily available. Can be reproduced with manual work + coordination between operational teams.;209,210,211,212
-Environments;Expert;217;Access to a production-like environment is restricted to a small group of closely-related application teams, and delays at this level are unusual.;0
-Environments;Expert;218;Environment provisioning partially automated.;206
-Environments;Expert;219;Some virtual environments have interfaces available ÔstubsÕ to run end-to-end testing.;214
-Environments;Professional;220;Database upgrades and rollbacks are tested with every deployment;215
-Environments;Professional;221;Database performance is monitored and optimized.;215
-Environments;Professional;222;Minimal manual work is required to replicate and configure environments but this can be completed within hours.;216
-Environments;Professional;223;Multiple test environments are readily available for the exclusive use of the team, including a production-like environment thatÕs allows a reasonable level of non-functional and cross-system integration testing and reliable acceptance testing.;216
-Environments;Professional;224;Dev workstations are easily configured and can be built in an automated manner.;213
-Environments;Professional;225;Virtual environments have all interfaces available ÔstubsÕ to run end-to-end testing;219
-Environments;Master ;226;Data and environments are treated as code, versioned and frequently re-loaded;220,221
-Environments;Master ;227;Release to release feedback loop of database performance and deployment process is in place.;220,222
-Environments;Master ;228;Proactive monitoring is in place with shortest possible time to resolve failure.;220,223
-Environments;Master ;229;IP is built into the process, including automated deployment, provisioning, configurations and data. Integral part of the build pipeline.;222,223
-Environments;Master ;230;Environments are managed by the team, the team able to create complete simulated environment on demand;222,224
-Environments;Master ;231;All environments are managed effectively;222,225
-Environments;Master ;232;Provisioning is fully automated;218
-Environments;Master ;233;Main dependencies are simulated across the board;207
-Environments;Master ;234;Virtualization is used if applicable.;225
-Feature teaming;Traveler;235;The team doesnÕt have all cross-functional and cross-component knowledge and skills to complete end-to-end customer feature.;0
-Feature teaming;Traveler;236;The team members are not dedicated.;0
-Feature teaming;Traveler;237;The is a low level of collaboration between team members.;0
-Feature teaming;Traveler;238;There are multiple handoffs and dependencies on the external teams and stakeholders.;0
-Feature teaming;Artisan;239;The key skills are part of the team. This includes cross-functional and cross-component skills.;235,236,237
-Feature teaming;Artisan;240;Handoffs are identified.;238
-Feature teaming;Artisan;241;Triad is established across three functions, quality, product and technical. Triad is committed to execute a strategy together that gets specific, intended results.;0
-Feature teaming;Expert;242;The team members are dedicated to the team.;239
-Feature teaming;Expert;243;Cross-functional and cross-component skills are within the team, the team works on a complete feature, across all components and disciplines (analysis, programming, testing, É);239
-Feature teaming;Expert;244;New members are efficiently integrated into feature team.;239
-Feature teaming;Expert;245;Triad is fully-functioning and not dependent on external validation and external authority.;241
-Feature teaming;Expert;246;Goals are clearly prioritized and timeously achieved;0
-Feature teaming;Professional;247;T-shaped skills emerge (team members can perform more than one function);242,243,244
-Feature teaming;Professional;248;The team is self-organizing. The team is self-managed and has necessary autonomy to modify the design of their team and/or aspects of the organisational context in which the operate.;242,243,245
-Feature teaming;Professional;249;Metrics are in place to ensure constant improvement.;246
-Feature teaming;Master ;250;All decision-making is internal to the team, who can make decisions on how to deliver artefacts, and as to quality measures applied to artefacts.;247,248
-Feature teaming;Master ;251;T-shaped skill profile is a majority.;247,249
-Feature teaming;Master ;252;Team is responsible for all aspects of feature delivery, from equipment requisition to production.;247,250
-Feature teaming;Master ;253;Continuous improvement is in place, driven by retrospectives within the team and across the teams;249
+Teaming ;Expert;143;Transparency and high level of collaboration  within the team are in place.;0
+Teaming ;Expert;144;Transparency and high level of collaboration to and from the stakeholders are in place.;140
+Teaming ;Expert;145; Impact of blockers and dependencies are minimised and managed and the team knows what these are.;141
+Teaming ;Professional;146;Balanced participation is in place. Team members contribute as appropriate and each members opinion is valued.;143
+Teaming ;Professional;147;Team uses adequate measures to monitor success.;145
+Teaming ;Master ;148;All decision-making is internal to the team;136
+Teaming ;Master ;149;Complete collective ownership is in place, both when team is successful and when it fails,;146
+Teaming ;Master ;150;Team is actively improving. Retrospectives are driving improvement.;147
+Release Management;Traveler;151;Cycle time is extremely long.;0
+Release Management;Traveler;152;Deployment is mostly manual, very complex and requires high level of coordination between stakeholders on the day of the release ;0
+Release Management;Traveler;153;Pace and delivery of work is inconsistent throughout the release cycle;0
+Release Management;Traveler;154;Separate build artefacts are created for each environment;0
+Release Management;Artisan;155;Releases are planned to a regular cycle and features are tracked and managed to the regular time frame.;151
+Release Management;Artisan;156;Planned release dates are seldom moved out. ;152
+Release Management;Artisan;157;The process for handing the release to operations and support teams is in place.;0
+Release Management;Artisan;158;Standard build artefacts are defined and produced (release notes, binaries, configurations, test coverage reports...);154
+Release Management;Expert;159;Releases and deployments are mostly automated (might require manual configuration and coordination between teams).;155
+Release Management;Expert;160;The confidence level for the release is high.;156,157
+Release Management;Professional;161;Release notes are automatically generated.;159
+Release Management;Professional;162;Releases are not reliant on the knowledge of the key individuals.;160
+Release Management;Professional;163;Operations teams collaborate closely with the delivery team and contribute to minimize the risk of failure in production.;160
+Release Management;Professional;164;Release metrics and trends are tracked;0
+Release Management;Master ;165;Releases can be deployed at any time and are fully automated.;161
+Release Management;Master ;166;The team controls the release;162
+Release Management;Master ;167;The product owner is able to determine when release goes into production;161
+Release Management;Master ;168;Operations team is part of the product/program team;163
+Release Management;Master ;169;Releases are Routine. No roll backs, always roll forward. ;0
+Release Management;Master ;170;Dark launching is enabled (Features can be released in switched of state).;0
+Quality Assurance;Traveler;171;Testing is manual.;0
+Quality Assurance;Traveler;172;There is a high amount of rework due to testing late in the lifecycle.;0
+Quality Assurance;Traveler;173;Non-functional testing is not considered upfront.;0
+Quality Assurance;Traveler;174;Test cases are designed based only on the requirements document, mainly by testing team.;0
+Quality Assurance;Traveler;175;Absence of unit/integration testing.;0
+Quality Assurance;Traveler;176;There is very little reuse of Quality Assurance assets.;0
+Quality Assurance;Artisan;177;Regression test packs are partially automated.;171,172,173
+Quality Assurance;Artisan;178;Regression packs run frequently but on an ad hoc basis.;171,172,173
+Quality Assurance;Artisan;179;Test cases designed by the team, with testing, development and business analysts.;174
+Quality Assurance;Expert;180;Regression test packs are fully automated.;177,178
+Quality Assurance;Expert;181;Regression test packs are run as part of the build.;177,178
+Quality Assurance;Expert;182;50% coverage automated testing.;177,178
+Quality Assurance;Expert;183;Automated smoke testing is in place.;177,178
+Quality Assurance;Expert;184;Automated performance testing is in place.;177,178
+Quality Assurance;Expert;185;Non-functional requirements are defined and measured.;0
+Quality Assurance;Expert;186;Test cases designed by the team as part of the iteration.;179
+Quality Assurance;Expert;187;Unit tests are created using TDD.;0
+Quality Assurance;Professional;188;Automated infrastructure testing is in place.;180,181,182,183,184
+Quality Assurance;Professional;189;Automated security testing is in place.;180,181,182,183,184
+Quality Assurance;Professional;190;Tests are automated as much as is practical.;180,181,182,183,184
+Quality Assurance;Professional;191;Quality metrics and trends are tracked.;0
+Quality Assurance;Professional;192;Anyone can execute the tests.;0
+Quality Assurance;Master ;193;Active process is in place to understand root cause and respond to it.;0
+Quality Assurance;Master ;194;Test artefacts are treated with the same importance as code and continually refactored and maintained.;186
+Quality Assurance;Master ;195;Performance testing metrics are defined early in the process.;191
+Quality Assurance;Master ;196;Tests drive release decisions.;0
+Environments;Traveler;197;Data migrations un-versioned and performed manually.;0
+Environments;Traveler;198;Test data is not controllable.;0
+Environments;Traveler;199;Environments are heavily governed.;0
+Environments;Traveler;200;Environments are not refreshed regularly.;0
+Environments;Traveler;201;Test environments and test data are frequently unavailable.;0
+Environments;Traveler;202;Environments are provisioned manually.;0
+Environments;Traveler;203;Key man dependencies.;0
+Environments;Artisan;204;Changes to database are done with automated scripts versioned with application.;197
+Environments;Artisan;205;A separate test environment is available.;198,199,200,201
+Environments;Artisan;206;Test environment is shared with other teams.;198,199,200,201
+Environments;Artisan;207;An external group maintains the environment. ;198,199,200,201
+Environments;Artisan;208;Test environments are available during specific dates/time slots.;198,199,200,201
+Environments;Artisan;209;Ability to deploy basic virtual environments.;0
+Environments;Artisan;210;Team has a dedicated development  environment.;0
+Environments;Expert;211;Database changes are performed automatically as part of deployment process.;204
+Environments;Expert;212;Test environments are readily available. Can be reproduced with manual work + coordination between operational teams.;205,206,207,208
+Environments;Expert;213;Access to a production-like environment is restricted to a small group of closely-related application teams, and delays at this level are unusual.;0
+Environments;Expert;214;Environment provisioning partially automated.;202
+Environments;Expert;215;Some virtual environments have interfaces available ÔstubsÕ to run end-to-end testing.;209
+Environments;Professional;216;Database upgrades and rollbacks are tested with every deployment.;211
+Environments;Professional;217;Database performance is monitored and optimized.;211
+Environments;Professional;218;Minimal manual work is required to replicate and configure environments but this can be completed within hours.;212,213
+Environments;Professional;219;Multiple test environments are readily available for the exclusive use of the team, including a production-like environment thatÕs allows a reasonable level of non-functional and cross-system integration testing and reliable acceptance testing.;212,213
+Environments;Professional;220;Dev workstations are easily configured and can be built in an automated manner.;0
+Environments;Professional;221;Virtual environments have all interfaces available ÔstubsÕ to run end-to-end testing.;215
+Environments;Master ;222;Data and environments are treated as code, versioned and frequently re-loaded.;216,217
+Environments;Master ;223;Release to release feedback loop of database performance and deployment process is in place.;216,217
+Environments;Master ;224;Proactive monitoring is in place with shortest possible time to resolve failure.;216,217
+Environments;Master ;225;IP is built into the process, including automated deployment, provisioning, configurations and data. Integral part of the build pipeline.;218,219
+Environments;Master ;226;Environments are managed by the team, the team able to create complete simulated environment on demand.;218,219
+Environments;Master ;227;All environments are managed effectively.;218,219
+Environments;Master ;228;Provisioning is fully automated.;214
+Environments;Master ;229;Main dependencies are simulated across the board.;0
+Environments;Master ;230;Virtualization is used if applicable.;221
+Feature teams;Traveler;231;The team doesnÕt have all cross-functional and cross-component knowledge and skills to complete end-to-end customer feature.;0
+Feature teams;Traveler;232;The team members are not dedicated.;0
+Feature teams;Traveler;233;The is a low level of collaboration between team members.;0
+Feature teams;Traveler;234;There are multiple handoffs and dependencies on the external teams and stakeholders.;0
+Feature teams;Artisan;235;The key skills are part of the team. This includes cross-functional and cross-component skills.;231,232
+Feature teams;Artisan;236;Handoffs are identified.;234
+Feature teams;Artisan;237;Triad is established across three functions, quality, product and technical. Triad is committed to execute a strategy together that gets specific, intended results.;0
+Feature teams;Expert;238;The team members are dedicated to the team.;232
+Feature teams;Expert;239;Cross-functional and cross-component skills are within the team, the team works on a complete feature, across all components and disciplines (analysis, programming, testing, ...).;235
+Feature teams;Expert;240;New members are efficiently integrated into feature team.;235
+Feature teams;Expert;241;Triad is fully-functioning and not dependent on external validation and external authority.;237
+Feature teams;Expert;242;Goals are clearly prioritized and timeously achieved.;0
+Feature teams;Professional;243;T-shaped skills emerge (team members can perform more than one function).;239,240
+Feature teams;Professional;244;The team is self-organizing. The team is self-managed and has necessary autonomy to modify the design of their team and/or aspects of the organisational context in which the operate.;239,240
+Feature teams;Professional;245;Metrics are in place to ensure constant improvement.;242
+Feature teams;Master ;246;All decision-making is internal to the team, who can make decisions on how to deliver artefacts, and as to quality measures applied to artefacts.;243,244
+Feature teams;Master ;247;T-shaped skill profile is a majority.;243,244
+Feature teams;Master ;248;Team is responsible for all aspects of feature delivery, from equipment requisition to production.;243,244
+Feature teams;Master ;249;Continuous improvement is in place, driven by retrospectives within the team and across the teams.;245

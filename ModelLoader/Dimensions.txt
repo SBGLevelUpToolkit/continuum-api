@@ -9,4 +9,4 @@ Teaming;icon_teaming_small.png
 Release Management;icon_release_management_small.png
 Quality Assurance;icon_quality_assurance_small.png
 Environments;icon_environments_small.png
-Feature teaming;icon_feature_teams_small.png
+Feature teams;icon_feature_teams_small.png
