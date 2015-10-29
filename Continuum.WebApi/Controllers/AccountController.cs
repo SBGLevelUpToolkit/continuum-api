@@ -420,9 +420,7 @@ namespace Continuum.WebApi.Controllers
                     //Encode for safety
                     passwordResetToken = System.Web.HttpUtility.UrlEncode(passwordResetToken);
 
-
-                    string callbackUrl = "http://continuumapp.azurewebsites.net/dist/#/resetPassword?email=" + user.Email + "&code=" + passwordResetToken;
-
+                    string callbackUrl = String.Format(System.Configuration.ConfigurationManager.AppSettings["ResetCallbackUrl"], user.Email, passwordResetToken);
 
                     string emailTitle = "Password Reset";
                     string emailBody = "<html><body><p>Reset password.: <a href='" + callbackUrl + "'>Please click Here to reset your password.</a></p><body></html>";
