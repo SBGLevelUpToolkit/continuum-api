@@ -87,39 +87,60 @@ namespace Continuum.Data
         public void DeleteTeam(int id)
         {
             var team = _container.Teams.Find(id);
+            RemoveTeamMembers(team);
 
+            _container.Teams.Remove(team);
+            RemoveAssessments(id);
+            RemoveGoals(id);
+        }
+
+        private void RemoveGoals(int id)
+        {
+            var goals = _container.Goals.Where(i => i.TeamId == id);
+            foreach (var goal in goals)
+            {
+                _container.Goals.Remove(goal);
+            }
+        }
+
+        private void RemoveAssessments(int id)
+        {
+            var assessments = _container.Assessments.Where(i => i.TeamId == id).ToArray();
+
+            foreach (var assessment in assessments)
+            {
+                RemoveAssessmentResult(assessment);
+                RemoveAssessmentItems(assessment);
+
+                _container.Assessments.Remove(assessment);
+            }
+        }
+
+        private void RemoveAssessmentItems(Assessment assessment)
+        {
+            var assessmentItems = _container.AssessmentItems.Where(i => i.AssessmentId == assessment.Id);
+            foreach (var assessmentItem in assessmentItems)
+            {
+                _container.AssessmentItems.Remove(assessmentItem);
+            }
+        }
+
+        private void RemoveAssessmentResult(Assessment assessment)
+        {
+            var assessmentResults = _container.AssessmentResults.Where(i => i.AssessmentId == assessment.Id);
+            foreach (var assessmentResult in assessmentResults)
+            {
+                _container.AssessmentResults.Remove(assessmentResult);
+            }
+        }
+
+        private void RemoveTeamMembers(Team team)
+        {
             var teamMembers = team.TeamMembers.ToArray();
 
             foreach (var teamMember in teamMembers)
             {
                 _container.TeamMembers.Remove(teamMember);
-            }
-
-            _container.Teams.Remove(team);
-
-            var assessments = _container.Assessments.Where(i => i.TeamId == id).ToArray();
-
-            foreach (var assessment in assessments)
-            {
-                var assessmentResults = _container.AssessmentResults.Where(i => i.AssessmentId == assessment.Id);
-                foreach (var assessmentResult in assessmentResults)
-                {
-                    _container.AssessmentResults.Remove(assessmentResult);
-                }
-
-                var assessmentItems = _container.AssessmentItems.Where(i => i.AssessmentId == assessment.Id);
-                foreach (var assessmentItem in assessmentItems)
-                {
-                    _container.AssessmentItems.Remove(assessmentItem);
-                }
-
-                _container.Assessments.Remove(assessment);
-            }
-
-            var goals = _container.Goals.Where(i => i.TeamId == id);
-            foreach (var goal in goals)
-            {
-                _container.Goals.Remove(goal);
             }
         }
 
