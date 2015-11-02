@@ -20,8 +20,12 @@ namespace Continuum.WebApi
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //TODO - dont run in rpod
-            GlobalConfiguration.Configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+            bool debug = false;
+            Boolean.TryParse(System.Configuration.ConfigurationManager.AppSettings["EnableDebugSettings"], out debug);
+            if (debug)
+            {
+                GlobalConfiguration.Configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+            }
         }
     }
 }
