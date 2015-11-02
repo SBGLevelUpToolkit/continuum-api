@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/21/2015 11:30:31
+-- Date Created: 10/30/2015 14:13:40
 -- Generated from EDMX file: C:\Users\nickmck\Source\Repos\continuum-api\Continuum.Data\ContinuumData.edmx
 -- --------------------------------------------------
 
@@ -17,53 +17,23 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_CapabiltyLevel]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Capabilities] DROP CONSTRAINT [FK_CapabiltyLevel];
-GO
-IF OBJECT_ID(N'[dbo].[FK_DimensionCapabilty]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Capabilities] DROP CONSTRAINT [FK_DimensionCapabilty];
-GO
-IF OBJECT_ID(N'[dbo].[FK_OrganisationTeam]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Teams] DROP CONSTRAINT [FK_OrganisationTeam];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AssessmentAssessmentStatus]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Assessments] DROP CONSTRAINT [FK_AssessmentAssessmentStatus];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TeamAssessment]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Assessments] DROP CONSTRAINT [FK_TeamAssessment];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TeamGoal]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Goals] DROP CONSTRAINT [FK_TeamGoal];
-GO
 IF OBJECT_ID(N'[dbo].[FK_AssessmentAssessmentItem]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[AssessmentItems] DROP CONSTRAINT [FK_AssessmentAssessmentItem];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TeamTeamMember]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[TeamMembers] DROP CONSTRAINT [FK_TeamTeamMember];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AssessmentItemTeamMember]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AssessmentItems] DROP CONSTRAINT [FK_AssessmentItemTeamMember];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AssessmentItemCapabilty]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AssessmentItems] DROP CONSTRAINT [FK_AssessmentItemCapabilty];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AssessmentAssessmentResult]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[AssessmentResults] DROP CONSTRAINT [FK_AssessmentAssessmentResult];
 GO
+IF OBJECT_ID(N'[dbo].[FK_AssessmentAssessmentStatus]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Assessments] DROP CONSTRAINT [FK_AssessmentAssessmentStatus];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AssessmentItemCapabilty]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AssessmentItems] DROP CONSTRAINT [FK_AssessmentItemCapabilty];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AssessmentItemTeamMember]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AssessmentItems] DROP CONSTRAINT [FK_AssessmentItemTeamMember];
+GO
 IF OBJECT_ID(N'[dbo].[FK_AssessmentResultDimension]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[AssessmentResults] DROP CONSTRAINT [FK_AssessmentResultDimension];
-GO
-IF OBJECT_ID(N'[dbo].[FK_GoalCapabilty]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Goals] DROP CONSTRAINT [FK_GoalCapabilty];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TeamAvatarType]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Teams] DROP CONSTRAINT [FK_TeamAvatarType];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CapabilityCapabilityRequirement]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CapabilityRequirements] DROP CONSTRAINT [FK_CapabilityCapabilityRequirement];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CapabilityRequirementCapability]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CapabilityRequirements] DROP CONSTRAINT [FK_CapabilityRequirementCapability];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AssessmentStatus_inherits_Lookup]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Lookups_AssessmentStatus] DROP CONSTRAINT [FK_AssessmentStatus_inherits_Lookup];
@@ -71,52 +41,82 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_AvatarType_inherits_Lookup]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Lookups_AvatarType] DROP CONSTRAINT [FK_AvatarType_inherits_Lookup];
 GO
+IF OBJECT_ID(N'[dbo].[FK_CapabilityCapabilityRequirement]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CapabilityRequirements] DROP CONSTRAINT [FK_CapabilityCapabilityRequirement];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CapabilityRequirementCapability]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CapabilityRequirements] DROP CONSTRAINT [FK_CapabilityRequirementCapability];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CapabiltyLevel]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Capabilities] DROP CONSTRAINT [FK_CapabiltyLevel];
+GO
+IF OBJECT_ID(N'[dbo].[FK_DimensionCapabilty]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Capabilities] DROP CONSTRAINT [FK_DimensionCapabilty];
+GO
+IF OBJECT_ID(N'[dbo].[FK_GoalCapabilty]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Goals] DROP CONSTRAINT [FK_GoalCapabilty];
+GO
+IF OBJECT_ID(N'[dbo].[FK_OrganisationTeam]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Teams] DROP CONSTRAINT [FK_OrganisationTeam];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TeamAssessment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Assessments] DROP CONSTRAINT [FK_TeamAssessment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TeamAvatarType]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Teams] DROP CONSTRAINT [FK_TeamAvatarType];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TeamGoal]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Goals] DROP CONSTRAINT [FK_TeamGoal];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TeamTeamMember]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[TeamMembers] DROP CONSTRAINT [FK_TeamTeamMember];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Dimensions]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Dimensions];
-GO
-IF OBJECT_ID(N'[dbo].[Capabilities]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Capabilities];
-GO
-IF OBJECT_ID(N'[dbo].[Levels]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Levels];
-GO
-IF OBJECT_ID(N'[dbo].[Organisations]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Organisations];
-GO
-IF OBJECT_ID(N'[dbo].[Teams]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Teams];
-GO
-IF OBJECT_ID(N'[dbo].[Assessments]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Assessments];
-GO
-IF OBJECT_ID(N'[dbo].[Lookups]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Lookups];
-GO
-IF OBJECT_ID(N'[dbo].[Goals]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Goals];
-GO
 IF OBJECT_ID(N'[dbo].[AssessmentItems]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AssessmentItems];
-GO
-IF OBJECT_ID(N'[dbo].[TeamMembers]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[TeamMembers];
 GO
 IF OBJECT_ID(N'[dbo].[AssessmentResults]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AssessmentResults];
 GO
+IF OBJECT_ID(N'[dbo].[Assessments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Assessments];
+GO
+IF OBJECT_ID(N'[dbo].[Capabilities]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Capabilities];
+GO
 IF OBJECT_ID(N'[dbo].[CapabilityRequirements]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CapabilityRequirements];
+GO
+IF OBJECT_ID(N'[dbo].[Dimensions]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Dimensions];
+GO
+IF OBJECT_ID(N'[dbo].[Goals]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Goals];
+GO
+IF OBJECT_ID(N'[dbo].[Levels]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Levels];
+GO
+IF OBJECT_ID(N'[dbo].[Lookups]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Lookups];
 GO
 IF OBJECT_ID(N'[dbo].[Lookups_AssessmentStatus]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Lookups_AssessmentStatus];
 GO
 IF OBJECT_ID(N'[dbo].[Lookups_AvatarType]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Lookups_AvatarType];
+GO
+IF OBJECT_ID(N'[dbo].[Organisations]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Organisations];
+GO
+IF OBJECT_ID(N'[dbo].[TeamMembers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TeamMembers];
+GO
+IF OBJECT_ID(N'[dbo].[Teams]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Teams];
 GO
 
 -- --------------------------------------------------
@@ -173,7 +173,8 @@ GO
 CREATE TABLE [dbo].[Assessments] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [AssessmentStatusId] int  NOT NULL,
-    [TeamId] int  NOT NULL
+    [TeamId] int  NOT NULL,
+    [DateCreated] datetime  NOT NULL
 );
 GO
 

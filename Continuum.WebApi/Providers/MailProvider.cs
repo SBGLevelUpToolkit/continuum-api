@@ -20,7 +20,14 @@ namespace Continuum.WebApi.Providers
 
             var mail = new SendGridMessage();
             mail.From = new MailAddress("registration@continuum.net");
-            mail.Cc = new MailAddress[] { new MailAddress("nickm40@gmail.com"), new MailAddress("brett.dex@gmail.com") };
+
+            string ccList = System.Configuration.ConfigurationManager.AppSettings["EmailCCList"];
+            if (!String.IsNullOrEmpty(ccList))
+            {
+                var ccAddressess = ccList.Split(';').Select(i=> new MailAddress(i)).ToArray();
+                mail.Cc =  ccAddressess;
+            }
+            
             mail.To = new MailAddress[] { new MailAddress(message.Destination) };
             mail.Subject = message.Subject;
             mail.Html = message.Body;
