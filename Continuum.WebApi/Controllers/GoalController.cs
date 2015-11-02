@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Continuum.Core.Models;
 using Continuum.WebApi.Filters;
 
@@ -47,22 +48,55 @@ namespace Continuum.WebApi.Controllers
             return GoalLogic.ListGoalsForTeam(team).ToList(); 
         }
 
+        /// <summary>
+        /// Creates a new Goal.
+        /// </summary>
+        /// <param name="goal"></param>
+        /// <returns></returns>
         [ApplicationExceptionFilter]
         [ValidationResultFilter]
-        public void Post(Goal goal)
+        [ResponseType(typeof(Goal))]
+        public IHttpActionResult Post(Goal goal)
         {
-            GoalLogic.CreateGoal(goal);
+            if (ModelState.IsValid)
+            {
+                var created = GoalLogic.CreateGoal(goal);
+
+                string uri = Url.Link("Default", new { id = created.Id });
+
+                return Created(uri, created);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
         [ValidationResultFilter]
-        public void Put(int id, Goal goal)
+        public IHttpActionResult Put(int id, Goal goal)
         {
-            GoalLogic.UpdateGoalById(id, goal);       
+            if (GoalLogic.GoalExists(id))
+            {
+                GoalLogic.UpdateGoalById(id, goal);
+                return Content(HttpStatusCode.OK, GoalLogic.GetGoal(id));
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
-            GoalLogic.DeleteGoal(id); 
+            if (GoalLogic.GoalExists(id))
+            {
+                GoalLogic.DeleteGoal(id);
+                return Ok(); 
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }

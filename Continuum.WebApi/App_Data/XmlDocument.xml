@@ -532,6 +532,13 @@
             </summary>
             <exception cref="T:System.ApplicationException">Throws InternalServerError (500) if there is no current assessment or if the current assessment us not in the 'Moderating' status.</exception>
         </member>
+        <member name="M:Continuum.WebApi.Controllers.GoalController.Post(Continuum.Core.Models.Goal)">
+            <summary>
+            Creates a new Goal.
+            </summary>
+            <param name="goal"></param>
+            <returns></returns>
+        </member>
         <member name="M:Continuum.WebApi.Controllers.TeamController.UpdateTeamMembers(System.Int32,Continuum.Core.Models.TeamMember)">
             <summary>
             Adds a member to a team. If the member is already a member of the team the record is updated.
