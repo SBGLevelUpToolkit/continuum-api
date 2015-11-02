@@ -37,7 +37,7 @@ namespace Continuum.WebApi.Logic
                 });
         }
 
-        internal void CreateGoal(Goal goal)
+        internal Goal CreateGoal(Goal goal)
         {
             var team = _teamLogic.GetTeamForUser();
 
@@ -58,6 +58,18 @@ namespace Continuum.WebApi.Logic
 
             _goalRepository.CreateGoal(newGoal);
             _goalRepository.SaveChanges();
+
+            return new Goal()
+                {
+                    Id = newGoal.Id,
+                    DimensionId = newGoal.Capabilty.DimensionId,
+                    DimensionText = newGoal.Capabilty.Dimension.Name,
+                    CapabilityId = newGoal.CapabiltyId,
+                    CapabilityText = newGoal.Capabilty.Description,
+                    DueDate = newGoal.DueDate,
+                    Notes = newGoal.Description,
+                    Completed = newGoal.Completed
+                };
         }
 
         internal void UpdateGoalById(int id, Goal goal)
@@ -79,10 +91,32 @@ namespace Continuum.WebApi.Logic
             }
         }
 
+        public bool GoalExists(int id)
+        {
+            return _goalRepository.GoalExists(id);
+        }
+
         internal void DeleteGoal(int id)
         {
             _goalRepository.DeleteGoalById(id);
             _goalRepository.SaveChanges(); 
+        }
+
+        internal Core.Models.Goal GetGoal(int id)
+        {
+            var goal = _goalRepository.GetGoalById(id);
+
+            return new Goal()
+                {
+                    Id = goal.Id,
+                    DimensionId = goal.Capabilty.DimensionId,
+                    DimensionText = goal.Capabilty.Dimension.Name,
+                    CapabilityId = goal.CapabiltyId,
+                    CapabilityText = goal.Capabilty.Description,
+                    DueDate = goal.DueDate,
+                    Notes = goal.Description,
+                    Completed = goal.Completed
+                };
         }
     }
 }

@@ -3,12 +3,16 @@ using Continuum.WebApi.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Web.Http;
+using System.Net.Http;
+using System.Web.Http.Hosting;
+using System.Web.Http.Routing;
 
 namespace Continuum.Tests
 {
     [TestClass]
     public class GoalTests
     {
+        HttpRequestMessage _request;
 
         Data.IContinuumDataContainer _mockContainer;
         Data.TeamRepo _teamRepo;
@@ -19,6 +23,17 @@ namespace Continuum.Tests
         [TestInitialize]
         public void Setup() 
         {
+            var config = new HttpConfiguration();
+
+            config.Routes.MapHttpRoute(
+                name: "Default",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional });
+
+            _request = new HttpRequestMessage(HttpMethod.Get, "http://localhost");
+            _request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
+            _request.Properties[HttpPropertyKeys.HttpRouteDataKey] = new HttpRouteData(new HttpRoute());
+
             _mockContainer = new Data.Mocks.MockContainer();
             _teamRepo = new Data.TeamRepo(_mockContainer);
             _goalRepo = new Data.GoalRepo(_mockContainer);
@@ -30,12 +45,16 @@ namespace Continuum.Tests
 
             _controller = new GoalController(_goalRepo, _teamRepo, _dimensionRepo);
             _controller.User = princpal;
+            _controller.Request = _request;
         }
 
+        /*
+         * Replaced by runscope. These tests need to be converted to work against the Logic layer. 
+         
         [TestMethod]
         public void TestThatCreateGoalCreates()
         {
-            _mockContainer.Capabilities.Add(new Data.Capability() { Id = 1 });
+            _mockContainer.Capabilities.Add(new Data.Capability() { Id = 1, Dimension = new Data.Dimension() });
 
             Core.Models.Goal goal = new Core.Models.Goal()
             {
@@ -47,7 +66,7 @@ namespace Continuum.Tests
             _controller.Post(goal);
 
             Assert.IsTrue(_mockContainer.Goals.Count() == 1);
-        }
+        }*/
 
         [TestMethod]
         [ExpectedException(typeof(ApplicationException))]
