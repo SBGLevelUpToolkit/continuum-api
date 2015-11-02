@@ -25,17 +25,17 @@ namespace Continuum.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Dimension> Dimensions { get; set; }
-        public virtual DbSet<Capability> Capabilities { get; set; }
-        public virtual DbSet<Level> Levels { get; set; }
-        public virtual DbSet<Organisation> Organisations { get; set; }
-        public virtual DbSet<Team> Teams { get; set; }
-        public virtual DbSet<Assessment> Assessments { get; set; }
-        public virtual DbSet<Lookup> Lookups { get; set; }
-        public virtual DbSet<Goal> Goals { get; set; }
-        public virtual DbSet<AssessmentItem> AssessmentItems { get; set; }
-        public virtual DbSet<TeamMember> TeamMembers { get; set; }
-        public virtual DbSet<AssessmentResult> AssessmentResults { get; set; }
-        public virtual DbSet<CapabilityRequirement> CapabilityRequirements { get; set; }
+        public virtual IDbSet<Dimension> Dimensions { get; set; }
+        public virtual IDbSet<Capability> Capabilities { get; set; }
+        public virtual IDbSet<Level> Levels { get; set; }
+        public virtual IDbSet<Organisation> Organisations { get; set; }
+        public virtual IDbSet<Team> Teams { get; set; }
+        public virtual IDbSet<Assessment> Assessments { get; set; }
+        public virtual IDbSet<Lookup> Lookups { get; set; }
+        public virtual IDbSet<Goal> Goals { get; set; }
+        public virtual IDbSet<AssessmentItem> AssessmentItems { get; set; }
+        public virtual IDbSet<TeamMember> TeamMembers { get; set; }
+        public virtual IDbSet<AssessmentResult> AssessmentResults { get; set; }
+        public virtual IDbSet<CapabilityRequirement> CapabilityRequirements { get; set; }
     }
 }

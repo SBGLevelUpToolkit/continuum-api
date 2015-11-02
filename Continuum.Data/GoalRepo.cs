@@ -60,5 +60,10 @@ namespace Continuum.Data
         {
             return _container.Goals.Find(id);
         }
+
+        public bool GoalExists(int id)
+        {
+            return _container.Goals.Any(i => i.Id == id);
+        }
     }
 }
