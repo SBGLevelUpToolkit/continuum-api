@@ -72,7 +72,7 @@ namespace Continuum.Tests
         [ExpectedException(typeof(ApplicationException))]
         public void TestThatCreateGoalInPastThrowsException()
         {
-            _mockContainer.Capabilities.Add(new Data.Capability() { Id = 1 });
+            _mockContainer.Capabilities.Add(new Data.Capability() { Id = 1, Dimension = new Data.Dimension() { Id = 1, Name = "Bob" } });
 
             Core.Models.Goal goal = new Core.Models.Goal()
             {
@@ -83,6 +83,22 @@ namespace Continuum.Tests
 
             _controller.Post(goal);
             Assert.Fail();
+        }
+        [Ignore]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestThatCreateGoalNoNotesWorks()
+        {
+            _mockContainer.Capabilities.Add(new Data.Capability() { Id = 1, Dimension = new Data.Dimension() { Id = 1, Name = "Bob" } });
+
+            Core.Models.Goal goal = new Core.Models.Goal()
+            {
+                CapabilityId = 1,
+                DueDate = DateTime.Now.AddDays(2)
+            };
+
+            _controller.Post(goal);
+            Assert.IsTrue(goal.Id>0);
         }
 
         //[TestMethod]
