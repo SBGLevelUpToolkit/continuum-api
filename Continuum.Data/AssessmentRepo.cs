@@ -32,7 +32,7 @@ namespace Continuum.Data
         {
             return _container.Assessments
                 .Where(i => i.TeamId == teamId)
-                .OrderBy(j=>j.Id)
+                .OrderByDescending(j=>j.DateCreated)
                 .FirstOrDefault();
         }
 
